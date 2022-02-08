@@ -1,0 +1,43 @@
+{
+  "name": "libras4all_2",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
+    "@tensorflow/tfjs": "^3.7.0",
+    "@tensorflow/tfjs-react-native": "^0.5.0",
+    "expo-camera": "^11.0.3",
+    "expo-file-system": "^11.0.2",
+    "expo-gl": "^10.3.0",
+    "expo-gl-cpp": "^10.3.0",
+    "jpeg-js": "^0.4.3",
+    "react": "17.0.1",
+    "react-native": "0.64.2",
+    "react-native-canvas": "^0.1.38",
+    "react-native-fs": "^2.18.0",
+    "react-native-image-picker": "^4.0.3",
+    "react-native-unimodules": "^0.14.10",
+    "react-native-webview": "^11.17.1",
+    "whatwg-fetch": "^3.6.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.12.5",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "babel-jest": "^26.6.3",
+    "eslint": "7.14.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.66.2",
+    "react-test-renderer": "17.0.2"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
