@@ -7,7 +7,6 @@
  */
 
 import React, {useRef,useState, useEffect } from 'react';
-import type {Node} from 'react';
 import * as tf from '@tensorflow/tfjs';
 import '@tensorflow/tfjs-react-native';
 import { cameraWithTensors } from '@tensorflow/tfjs-react-native';
@@ -23,7 +22,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {drawRect} from "./utilities"; 
+import {drawRect} from "./utilities";
 import Canvas from 'react-native-canvas';
 
 
@@ -31,7 +30,7 @@ import Canvas from 'react-native-canvas';
 const TensorCamera = cameraWithTensors(Camera);
 
 let modeloTensorFlow = null;
-const App:  () => Node =() => {
+export default function App() {
 
   let requestAnimationFrameId = 0;
 
@@ -43,21 +42,21 @@ const App:  () => Node =() => {
       await tf.ready();
       // Signal to the app that tensorflow.js can now be used.
       console.log('ready is on');
-      
+
       await tf.setBackend('rn-webgl');
       console.log('backend is on');
 
-      // 3. TODO - Load network 
+      // 3. TODO - Load network
       const net = await tf.loadGraphModel('https://libras4alltfod.s3.br-sao.cloud-object-storage.appdomain.cloud/model.json')
       console.log('modelo is on');
-     
+
       modeloTensorFlow = net;
-    
+
       // Loop and detect hands
       // setInterval(() => {
       //   detect(net, images);
       // }, 16.7);
-            
+
     }catch(err) {
       console.log('erro no tensorflow');
       console.log(err);
@@ -70,7 +69,7 @@ const App:  () => Node =() => {
       if (modeloTensorFlow != null) {
         const imageTensor = images.next().value;
         await detect(modeloTensorFlow, imageTensor);
-      } 
+      }
 
       tf.dispose(images);
       requestAnimationFrameId = requestAnimationFrame(loop);
@@ -81,17 +80,20 @@ const App:  () => Node =() => {
 
 
   const detect = async (net, images) => {
-   
+
       // Get Video Properties
       const video = images;
-      //video = video.expandDims(axis=0);  
+      //video = video.expandDims(axis=0);
       const videoWidth = 1600;
       const videoHeight = 1200;
 
       // Set video width
       // webcamRef.current.video.width = videoWidth;
       // webcamRef.current.video.height = videoHeight;
+      camRef.current.props.cameraTextureHeight = videoHeight;
+      camRef.current.props.cameraTextureWidth = videoWidth;
 
+     
       // Set canvas height and width
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
@@ -105,17 +107,17 @@ const App:  () => Node =() => {
 
       console.log('classes');
       console.log(await obj[0].array());
-      
+
       const boxes = await obj[3].array();
       const classes = await obj[0].array();
       const scores = await obj[5].array();
-    
+
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
 
       // 5. TODO - Update drawing utility
-      // drawSomething(obj, ctx)  
-      requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.9, videoWidth, videoHeight, ctx)}); 
+      // drawSomething(obj, ctx)
+      requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.8, videoWidth, videoHeight, ctx)});
 
       tf.dispose(video);
       tf.dispose(resized);
@@ -123,7 +125,7 @@ const App:  () => Node =() => {
       tf.dispose(expanded);
       tf.dispose(obj);
 
-    
+
   };
 
 
@@ -133,7 +135,7 @@ const App:  () => Node =() => {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [model, setModel] = useState();
- 
+
   const [type, setType] = useState(Camera.Constants.Type.front);
 
 
@@ -154,7 +156,7 @@ const App:  () => Node =() => {
     };
   }, [requestAnimationFrameId]);
 
-  
+
 
 
   if (hasPermission === null) {
@@ -164,23 +166,19 @@ const App:  () => Node =() => {
     return <Text>No access to camera</Text>;
   }
 
-  // const isDarkMode = useColorScheme() === 'dark';
 
-  // const backgroundStyle = {
-  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  // };
 
   return (
     <View style={styles.container}>
     <TensorCamera
-      ref={camRef} 
-      style={styles.camera} 
+      ref={camRef}
+      style={styles.camera}
       type={type}
       cameraTextureHeight={1200}
       cameraTextureWidth={1600}
       resizeHeight={480}
       resizeWidth={640}
-      onReady={handleCameraStream} 
+      onReady={handleCameraStream}
       autorender={true}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -241,4 +239,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default App;
+

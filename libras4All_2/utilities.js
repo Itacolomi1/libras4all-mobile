@@ -24,7 +24,7 @@ export const drawRect = (boxes, classes, scores, threshold, imgWidth, imgHeight,
             // DRAW!!
             ctx.beginPath()
             ctx.fillText(labelMap[text]['name'] + ' - ' + Math.round(scores[i]*100)/100, x*imgWidth, y*imgHeight-10)
-            ctx.rect(x*imgWidth, y*imgHeight, width*imgWidth/2, height*imgHeight/2);
+            ctx.rect(x*imgWidth -10, y*imgHeight, width*imgWidth/2, height*imgHeight/2);
             ctx.stroke()
         }
     }
