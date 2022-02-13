@@ -247,10 +247,13 @@
 // });
 
 import React from 'react';
-import Rotas from './src/rotas';
-
+// import Rotas from './src/rotas';
+import TelaPadrao from './src/componentes/TelaPadrao';
+import Login from './src/telas/Login';
 
 export default function App () {
-  return <Rotas></Rotas>
+  return <TelaPadrao>
+            <Login />
+          </TelaPadrao> 
 }
 
