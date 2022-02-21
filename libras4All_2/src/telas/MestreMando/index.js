@@ -1,12 +1,13 @@
 import React, {useRef,useState, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import '@tensorflow/tfjs-react-native';
-import { cameraWithTensors } from '@tensorflow/tfjs-react-native';
+import { cameraWithTensors, bundleResourceIO  } from '@tensorflow/tfjs-react-native';
 import { Camera } from 'expo-camera';
 import { StyleSheet,
   Text,
   View,
   TouchableOpacity,
+  Dimensions,   
 } from 'react-native';
 
 import {drawRect} from './utilities';
@@ -31,9 +32,16 @@ export default function MestreMando() {
   
         await tf.setBackend('rn-webgl');
         console.log('backend is on');
+        
+        // Get reference to bundled model assets 
+        const modelJson = require('../../assets/model/model.json');
+        const modelWeights = require('../../assets/model/group-shard.bin');
+
   
         // 3. TODO - Load network
-        const net = await tf.loadGraphModel('https://libras4alltfod.s3.br-sao.cloud-object-storage.appdomain.cloud/model.json')
+        // const net = await tf.loadGraphModel('https://libras4alltfod.s3.br-sao.cloud-object-storage.appdomain.cloud/model.json')
+        const net = await tf.loadGraphModel(
+          bundleResourceIO(modelJson, modelWeights));
         console.log('modelo is on');
   
         modeloTensorFlow = net;
@@ -69,9 +77,18 @@ export default function MestreMando() {
   
         // Get Video Properties
         const video = images;
-        const videoWidth = 1600;
-        const videoHeight = 1200;
-  
+        const videoWidth = Dimensions.get('window').width;
+        const videoHeight = Dimensions.get('window').height;    
+
+        // console.log('video widht');
+        // console.log(videoWidth);
+
+        // console.log('video height');
+        // console.log(videoHeight);
+
+
+
+
         // Set video width
         camRef.current.props.cameraTextureHeight = videoHeight;
         camRef.current.props.cameraTextureWidth = videoWidth;
@@ -81,26 +98,45 @@ export default function MestreMando() {
         canvasRef.current.width = videoWidth;
         canvasRef.current.height = videoHeight;
   
+        video.isDisposedInternal = true;
         // 4. TODO - Make Detections
         //const img = tf.browser.fromPixels(video);
+        // console.log('Images variable');
+        // console.log(images);
         const resized = tf.image.resizeBilinear(video, [640,480]);
+        // resized.isDisposedInternal = true;
+        // console.log('resized variable');
+        // console.log(resized);
+
         const casted = resized.cast('int32');
+
+        // console.log('casted variable');
+        // console.log(casted);
+
         const expanded = casted.expandDims(0);
+
+        // console.log('expanded variable');
+        // console.log(expanded);
+
+        // faz a previsão.
         const obj = await net.executeAsync(expanded);
+
+        // console.log('obj variable');
+        // console.log(obj);
   
-        console.log('classes');
-        console.log(await obj[0].array());
+        // console.log('classes');
+        // console.log(await obj[4].array());
   
-        const boxes = await obj[3].array();
-        const classes = await obj[0].array();
-        const scores = await obj[5].array();
+        const boxes = await obj[2].array();
+        const classes = await obj[4].array();
+        const scores = await obj[1].array();
   
         // Draw mesh
         const ctx = canvasRef.current.getContext("2d");
   
         // 5. TODO - Update drawing utility
         // drawSomething(obj, ctx)
-        requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.8, videoWidth, videoHeight, ctx)});
+        requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.7, videoWidth, videoHeight, ctx)});
   
         tf.dispose(video);
         tf.dispose(resized);
@@ -118,6 +154,7 @@ export default function MestreMando() {
   
     const [hasPermission, setHasPermission] = useState(null);
     const [model, setModel] = useState();
+
   
     const [type, setType] = useState(Camera.Constants.Type.front);
   
@@ -150,18 +187,21 @@ export default function MestreMando() {
     }
   
   
-  
-    return (
+ 
+    return ( 
+
       <>
       <View style={styles.container}>
       <TensorCamera
         ref={camRef}
         style={styles.camera}
         type={type}
+        //ratio={'4:3'}
         cameraTextureHeight={1200}
         cameraTextureWidth={1600}
         resizeHeight={480}
         resizeWidth={640}
+        resizeDepth={3}
         onReady={handleCameraStream}
         autorender={true}>
         <View style={styles.buttonContainer}>
@@ -194,6 +234,16 @@ const styles = StyleSheet.create({
     },
     camera: {
       flex: 1,
+      position: 'absolute',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      left: 0,
+      right: 0,
+      textAlign: 'center',
+      //elevation: 9,
+      zIndex: 9,
+      width: 392.72,
+      height: 823.63,
     },
     buttonContainer: {
       flex: 1,
@@ -216,8 +266,8 @@ const styles = StyleSheet.create({
       marginRight: "auto",
       left: 0,
       right: 0,
-      textAlign: "center",
-      elevation: 8,
+      textAlign: "center",    
+      zIndex: 8,
       width: 640,
       height: 480,
     }
