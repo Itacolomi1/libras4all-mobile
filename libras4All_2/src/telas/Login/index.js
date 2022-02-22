@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {Text,View, TextInput} from 'react-native';
+import {Text,View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image} from 'react-native';
 import Botao from '../../componentes/Botao'
 import estilos from './estilos';
 
@@ -10,25 +10,43 @@ export default function Login() {
 
 
     return <>
-        <Text style={estilos.Titlo}>LOGIN</Text>
-        <View style={estilos.fundo}>
+         <SafeAreaView style={estilos.fundo}>
+            <StatusBar backgroundColor="rgb(35, 36, 95)"/>
+        
+            <View style={estilos.engloba}>
+                <Text style={estilos.Titulo}>LOGIN</Text>
+            </View>
+            <View style={estilos.icon_area}>
+            <Image source={require('../Images/email.png')} style={estilos.input_icon} />
             <TextInput 
                 style={estilos.login__input}
-                placeholder='librinho@gmail.com'
+                placeholder="Email"
+                placeholderTextColor="#acacac" 
                 onChangeText={novoEmail => setUserEmail(novoEmail)}
-                defaultValue={userEmail}/>
+                defaultValue={userEmail}
+                />
+                </View>
+                <View style={estilos.icon_area}>
+                <Image source={require('../Images/cadeado.png')} style={estilos.input_icon} />
+           
             <TextInput 
                 style={estilos.login__input}
                 placeholder='Senha'
+                placeholderTextColor="#acacac" 
                 onChangeText={novoPassword => setPassword(novoPassword)}
                 defaultValue={password}
                 secureTextEntry={true}/>
+                </View>
             <View style={estilos.botao}>
-                <Botao valor="Logar" acao={() => {Logar(userEmail,password)}} />
-                <Botao valor="Cadastre-se" acao={() => {console.log("Cadastro")}} />
+                <TouchableOpacity  style={estilos.login_button}>
+                    <Text style={estilos.texto_button}>Logar</Text>
+                </TouchableOpacity> 
+                <TouchableOpacity  style={estilos.cadastro_button}>
+                    <Text style={estilos.texto_button}>Cadastre-se</Text>
+                </TouchableOpacity>           
             </View>
    
-        </View>
+        </SafeAreaView>
     </>
 }
 
