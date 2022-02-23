@@ -8,20 +8,8 @@ export default StyleSheet.create({
         justifyContent: "center",
         color: "black"
     },
-    login__logomarca:{
-        marginBottom: 10
-    },
-    login__msg:(text='none')=>({
-        fontWeight:"bold",
-        fontSize: 22,
-        color:"red",
-        marginBottom: 15,
-        display: text
-    }),
-    login__form:{
-        width: "80%"
-    },
-    login__input:{
+    
+    cadastro__input:{
         fontSize: 15,       
         color: "black",
         width: "80%",
@@ -57,7 +45,7 @@ export default StyleSheet.create({
         
         
     },
-    login_button:{
+    salvar_button:{
         justifyContent: 'center',
         backgroundColor: "rgb(35, 36, 95)",
         alignSelf:"center",
@@ -66,16 +54,6 @@ export default StyleSheet.create({
         alignSelf: "center",
         marginBottom: 30,
         height: 50,
-
-    },
-    cadastro_button:{
-        justifyContent: 'center',
-        backgroundColor: "#037ca9",
-        alignSelf:"center",
-        borderRadius: 5,
-        width: "80%",
-        alignSelf: "center",
-        height: 50
 
     },
     Titulo:{
