@@ -1,11 +1,35 @@
 import React, {useState,useEffect} from 'react';
 import {Text,View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image} from 'react-native';
 import estilos from './estilos';
+import * as settings from '../../assets/config/appSettings.json'
 
 export default function Cadastro() {
     const [userNome, setUserNome] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
+
+
+    const Cadastrar = () => {
+        const corpo = JSON.stringify({"nome":userNome,"email":userEmail,"senha":password});
+        console.log(corpo);
+        fetch( settings.backend.url + '/usuario',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"nome":userNome,"email":userEmail,"senha":password})
+        })
+        .then(response => {
+            if(response.ok){
+                console.log('Cadastrado com sucesso');
+            }
+        })  
+        .catch(error => {
+          console.log('deu errado');
+          console.error(error);
+        });
+    }
+
     return <>
         <SafeAreaView style={estilos.fundo}>
             <StatusBar backgroundColor="rgb(35, 36, 95)"/>
@@ -45,31 +69,14 @@ export default function Cadastro() {
                 secureTextEntry={true}/>
                 </View>
             <View style={estilos.botao}>               
-                <TouchableOpacity  style={estilos.salvar_button}>
+                <TouchableOpacity 
+                style={estilos.salvar_button}
+                onPress={Cadastrar}
+                >
                     <Text style={estilos.texto_button}>Salvar</Text>
                 </TouchableOpacity>           
             </View>
    
         </SafeAreaView>
     </>
-}
-const Cadastrar = (userNome,userEmail,password) => {
-    const corpo = JSON.stringify({"nome":userNome,"email":userEmail,"senha":password});
-    console.log(corpo);
-    fetch('https://libras4all.herokuapp.com/api/usuario/cadastro',{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({"nome":userNome,"email":userEmail,"senha":password})
-    })
-    .then(response => response.json())
-    .then(responseJson => {
-        console.log('deu certo');
-        console.log(responseJson);
-    })
-    .catch(error => {
-      console.log('deu errado');
-      console.error(error);
-    });
 }
