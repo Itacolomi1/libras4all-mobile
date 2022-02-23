@@ -7,7 +7,8 @@ import { StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  Dimensions,   
+  Dimensions,
+  Platform   
 } from 'react-native';
 
 import {drawRect} from './utilities';
@@ -16,10 +17,19 @@ import Canvas from 'react-native-canvas';
 
 const TensorCamera = cameraWithTensors(Camera);
 let modeloTensorFlow = null;
+const {width, height} = Dimensions.get('window');
 
+const labelMap = {
+  1:{name:'A', color:'red'},
+  2:{name:'B', color:'yellow'},
+  3:{name:'C', color:'lime'},
+  4:{name:'D', color:'blue'},
+}
 
 export default function MestreMando() {
-    let requestAnimationFrameId = 0;
+  let context = useRef();
+  let canvas = useRef();
+  let requestAnimationFrameId = 0;
 
     const getModel = async () => {
       console.log('Começa a carregar o tensorflow');
@@ -44,12 +54,7 @@ export default function MestreMando() {
           bundleResourceIO(modelJson, modelWeights));
         console.log('modelo is on');
   
-        modeloTensorFlow = net;
-  
-        // Loop and detect hands
-        // setInterval(() => {
-        //   detect(net, images);
-        // }, 16.7);
+        modeloTensorFlow = net;  
   
       }catch(err) {
         console.log('erro no tensorflow');
@@ -71,6 +76,73 @@ export default function MestreMando() {
       loop();
   
     };
+
+    function drawRectangle(boxes, classes, scores, threshold, scaleWidth, scaleHeight){
+
+      if(!context.current || !canvas.current) {
+        console.log('Canvas não iniciado');
+        return;
+      }
+
+      const flipHorizontal = Platform.OS == 'ios'? false: true;
+
+      // limpar previsões antigas;
+      context.current.clearRect(0,0,width,height);
+
+      // Desenha o retangulo pra cada previsão
+
+      for(let i=0; i<=boxes.length; i++){
+        if(boxes[i] && classes[i] && scores[i]>threshold){
+
+          // extrair as variáveis
+          const [y,x,height,width] = boxes[i];
+          const text = classes[i];
+
+          console.log('previsão');
+          console.log(labelMap[text]['name'] + ' ' + scores[i]);
+          // escalar as coordenadas baseadas no 'ratio' calculado
+          const boundingBoxX = flipHorizontal? 
+            canvas.current.width - x * scaleWidth - width * scaleWidth 
+            : x * scaleWidth;
+          
+          const boundingBoxY = y * scaleHeight;
+
+          console.log(boundingBoxX);
+          console.log(boundingBoxY);
+          //desenha o retangulo
+          context.current.strokeRect(100,boundingBoxY, width * scaleWidth, height * scaleHeight);
+
+          //desenhar a Label
+          context.current.strokeText(
+            text,
+            boundingBoxX -5,
+            boundingBoxY - 5
+          );
+
+        }
+      
+      
+      }
+
+
+    }
+
+    async function handleCanvas(can) {
+      
+      if(can){
+        
+        can.width = width;
+        can.height = height;
+        const ctx = can.getContext('2d');
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 3;
+   
+        context.current = ctx;
+        canvas.current = can;
+     
+      }
+
+    }
   
   
     const detect = async (net, images) => {
@@ -78,65 +150,46 @@ export default function MestreMando() {
         // Get Video Properties
         const video = images;
         const videoWidth = Dimensions.get('window').width;
-        const videoHeight = Dimensions.get('window').height;    
-
-        // console.log('video widht');
-        // console.log(videoWidth);
-
-        // console.log('video height');
-        // console.log(videoHeight);
-
-
-
+        const videoHeight = Dimensions.get('window').height;
 
         // Set video width
-        camRef.current.props.cameraTextureHeight = videoHeight;
-        camRef.current.props.cameraTextureWidth = videoWidth;
+        //camRef.current.props.cameraTextureHeight = videoHeight;
+        //camRef.current.props.cameraTextureWidth = videoWidth;
   
        
         // Set canvas height and width
-        canvasRef.current.width = videoWidth;
-        canvasRef.current.height = videoHeight;
+        //canvasRef.current.width = videoWidth;
+        //canvasRef.current.height = videoHeight;
   
-        video.isDisposedInternal = true;
+        //video.isDisposedInternal = true;
         // 4. TODO - Make Detections
-        //const img = tf.browser.fromPixels(video);
-        // console.log('Images variable');
-        // console.log(images);
+     
         const resized = tf.image.resizeBilinear(video, [640,480]);
         // resized.isDisposedInternal = true;
-        // console.log('resized variable');
-        // console.log(resized);
 
         const casted = resized.cast('int32');
 
-        // console.log('casted variable');
-        // console.log(casted);
-
         const expanded = casted.expandDims(0);
 
-        // console.log('expanded variable');
-        // console.log(expanded);
 
         // faz a previsão.
         const obj = await net.executeAsync(expanded);
-
-        // console.log('obj variable');
-        // console.log(obj);
-  
-        // console.log('classes');
-        // console.log(await obj[4].array());
   
         const boxes = await obj[2].array();
         const classes = await obj[4].array();
         const scores = await obj[1].array();
   
         // Draw mesh
-        const ctx = canvasRef.current.getContext("2d");
+        //const ctx = canvasRef.current.getContext("2d");
   
         // 5. TODO - Update drawing utility
         // drawSomething(obj, ctx)
-        requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.7, videoWidth, videoHeight, ctx)});
+        
+        const scaleWidth = width/ images.shape[1];
+        const scaleHeight = height/ images.shape[0];
+
+        //requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.7, videoWidth, videoHeight, ctx)});
+        requestAnimationFrame(()=>{drawRectangle(boxes[0], classes[0], scores[0], 0.7, scaleWidth, scaleHeight)});
   
         tf.dispose(video);
         tf.dispose(resized);
@@ -185,7 +238,10 @@ export default function MestreMando() {
     if (hasPermission === false) {
       return <Text>No access to camera</Text>;
     }
-  
+    
+    let textureDims = Platform.OS == 'ios'
+        ? {height: 1920, width: 1080}
+        : {height: 1200, width: 1600}
   
  
     return ( 
@@ -195,15 +251,15 @@ export default function MestreMando() {
       <TensorCamera
         ref={camRef}
         style={styles.camera}
-        type={type}
-        //ratio={'4:3'}
-        cameraTextureHeight={1200}
-        cameraTextureWidth={1600}
+        type={type}       
+        cameraTextureHeight={textureDims.height}
+        cameraTextureWidth={textureDims.width}
         resizeHeight={480}
         resizeWidth={640}
         resizeDepth={3}
         onReady={handleCameraStream}
-        autorender={true}>
+        autorender={true}
+        useCustomShadersToResize={false}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -218,7 +274,7 @@ export default function MestreMando() {
           </TouchableOpacity>
         </View>
       </TensorCamera>
-      <Canvas ref={canvasRef}
+      <Canvas ref={handleCanvas}
         style={styles.canvas}/>
     </View> 
     </>
@@ -233,17 +289,19 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     camera: {
-      flex: 1,
-      position: 'absolute',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      left: 0,
-      right: 0,
-      textAlign: 'center',
-      //elevation: 9,
-      zIndex: 9,
-      width: 392.72,
-      height: 823.63,
+      // flex: 1,
+      // position: 'absolute',
+      // marginLeft: 'auto',
+      // marginRight: 'auto',
+      // left: 0,
+      // right: 0,
+      // textAlign: 'center',
+      // //elevation: 9,
+      // zIndex: 9,
+      // width: 392.72,
+      // height: 823.63,
+      width: '100%',
+      height: '100%'
     },
     buttonContainer: {
       flex: 1,
@@ -262,13 +320,13 @@ const styles = StyleSheet.create({
     },
     canvas: {
       position: "absolute",
-      marginLeft: "auto",
-      marginRight: "auto",
-      left: 0,
-      right: 0,
-      textAlign: "center",    
-      zIndex: 8,
-      width: 640,
-      height: 480,
+      //marginLeft: "auto",
+      //marginRight: "auto",
+      //left: 0,
+      //right: 0,
+      //textAlign: "center",    
+      zIndex: 10000000,
+      width: '100%',
+      height: '100%',
     }
   });
