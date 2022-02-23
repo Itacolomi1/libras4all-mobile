@@ -3,7 +3,7 @@ import {Text,View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image} 
 import * as settings from '../../assets/config/appSettings.json'
 import estilos from './estilos';
 
-export default function Login() {
+export default function Login({navigation}) {
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -30,6 +30,9 @@ export default function Login() {
         });
     }
 
+    function goToCadastro(){
+        navigation.navigate('Cadastro');
+    }
 
 
     return <>
@@ -67,7 +70,10 @@ export default function Login() {
                 >
                     <Text style={estilos.texto_button}>Logar</Text>
                 </TouchableOpacity> 
-                <TouchableOpacity  style={estilos.cadastro_button}>
+                <TouchableOpacity 
+                    style={estilos.cadastro_button}
+                    onPress={goToCadastro}
+                    >
                     <Text style={estilos.texto_button}>Cadastre-se</Text>
                 </TouchableOpacity>           
             </View>

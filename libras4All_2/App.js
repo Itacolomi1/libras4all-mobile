@@ -250,10 +250,19 @@ import React from 'react';
 // import Rotas from './src/rotas';
 import TelaPadrao from './src/componentes/TelaPadrao';
 import Login from './src/telas/Login';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Cadastro from './src/telas/Cadastro';
+const Stack = createNativeStackNavigator();
 
 export default function App () {
-  return <TelaPadrao>
-            <Login />
-          </TelaPadrao> 
+  return <NavigationContainer>
+            <TelaPadrao>
+              <Stack.Navigator>
+                <Stack.Screen name='Login' component={Login}/>
+                <Stack.Screen name='Cadastro' component={Cadastro}/>            
+              </Stack.Navigator>
+            </TelaPadrao> 
+          </NavigationContainer>
 }
 

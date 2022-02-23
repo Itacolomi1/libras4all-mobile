@@ -12,7 +12,8 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
     "@react-navigation/bottom-tabs": "^5.11.7",
-    "@react-navigation/native": "^5.9.2",
+    "@react-navigation/native": "6.0.0",
+    "@react-navigation/native-stack": "6.0.0",
     "@tensorflow/tfjs": "^3.7.0",
     "@tensorflow/tfjs-react-native": "^0.5.0",
     "cmd": "^0.1.0",
