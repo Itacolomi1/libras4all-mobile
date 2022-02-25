@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text,View, Dimensions, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image} from 'react-native';
+import {Text,View, Dimensions, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert} from 'react-native';
 import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
 
@@ -7,13 +7,14 @@ const dimensions = Dimensions.get('window');
 const imageHeight = Math.round(dimensions.width * 9 / 17);
 const imageWidth = dimensions.width;
 
-export default function InserirPin() {
+export default function InserirPin({navigation}) {
 
     const [pin,setPin] = useState('0');
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDk3MTNkY2U2NDQyMDAxNjhhZDk5MCIsImlhdCI6MTY0NTY0MTc5M30.-nV2_60oHvjkj_GhGrqOQKwRT-q7vhDpys3S5fJPjks';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDk3MTNkY2U2NDQyMDAxNjhhZDk5MCIsImlhdCI6MTY0NTc0NTE5Nn0.R4FrcBzipiPGjS9jr8qURmNyWiAhqu1M1PoAob3_u6E';
     const salaId = '6205b1a6b80a183bb4d1ba61';
+    const usuerId ='62098e5d07f21e001662f9a2';
     
-    const ValidarPin = () => {   
+     const ValidarPin =  () => {   
 
         fetch( settings.backend.url + `/sala/validarCodigo/${salaId}/${pin}`,{
             method: 'GET',
@@ -24,14 +25,46 @@ export default function InserirPin() {
            
         })
         .then(response => response.json())
-        .then(responsejson =>{
-            console.log('Deu certo');
+        .then(responsejson =>{            
             console.log(responsejson);
+            if(responsejson){
+                 adicionarAluno();
+            }else{
+                Alert.alert('Código incorreto');
+            }
         })
         .catch(error => {
           console.log('deu errado');
           console.error(error);
         });
+    }
+
+    function adicionarAluno(){
+        const corpo = JSON.stringify({"idSala": salaId, "idAluno":usuerId })
+        fetch( settings.backend.url + `/sala/adicionarAluno`,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': 'Bearer ' + token
+            },
+            body: corpo
+           
+        })
+        .then(response => response.json())
+        .then(responsejson =>{            
+            console.log(responsejson);
+            if(responsejson){
+                Alert.alert('Seja Bem-Vindo');
+                navigation.navigate('Sala de Espera');
+            }else{
+                Alert.alert('Código incorreto');
+            }
+        })
+        .catch(error => {
+          console.log('deu errado');
+          console.error(error);
+        });
+
     }
     return <>
          <SafeAreaView style={estilos.fundo}>

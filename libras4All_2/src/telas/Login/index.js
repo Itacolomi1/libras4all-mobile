@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text,View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image} from 'react-native';
+import {Text,View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert} from 'react-native';
 import * as settings from '../../assets/config/appSettings.json'
 import estilos from './estilos';
 
@@ -23,6 +23,8 @@ export default function Login({navigation}) {
         .then(responseJson => {
             console.log('deu certo');
             console.log(responseJson);
+            Alert.alert('Logado com sucesso');
+            navigation.navigate('Home');
         })
         .catch(error => {
           console.log('deu errado');

@@ -247,9 +247,11 @@
 // });
 
 import React from 'react';
-// import Rotas from './src/rotas';
 import TelaPadrao from './src/componentes/TelaPadrao';
 import Login from './src/telas/Login';
+import InserirPin from './src/telas/InserirPin';
+import Home from './src/telas/Home'
+import SalaEspera from './src/telas/SalaEspera';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cadastro from './src/telas/Cadastro';
@@ -260,7 +262,10 @@ export default function App () {
             <TelaPadrao>
               <Stack.Navigator>
                 <Stack.Screen name='Login' component={Login}/>
-                <Stack.Screen name='Cadastro' component={Cadastro}/>            
+                <Stack.Screen name='Cadastro' component={Cadastro}/>
+                <Stack.Screen name='Inserir Pin' component={InserirPin}/>
+                <Stack.Screen name='Home' component={Home}/>
+                <Stack.Screen name='Sala de Espera' component={SalaEspera}/>                              
               </Stack.Navigator>
             </TelaPadrao> 
           </NavigationContainer>

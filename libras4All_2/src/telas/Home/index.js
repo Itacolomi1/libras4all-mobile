@@ -1,8 +1,16 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 
-export default function Home() {
+export default function Home({navigation}) {
+
+    function gotoPin(){
+        navigation.navigate('Inserir Pin');
+    }
+
     return <>
         <Text>Tela Home</Text>
+        <TouchableOpacity onPress={()=>{gotoPin()}}>
+            <Text>Inserir Pin</Text>
+        </TouchableOpacity>
     </>
 }
