@@ -23,8 +23,7 @@ export default function Login({navigation}) {
         .then(responseJson => {
             console.log('deu certo');
             console.log(responseJson);
-            Alert.alert('Logado com sucesso');
-            navigation.navigate('Home');
+            navigation.navigate('Home', {userID: responseJson._id, token: responseJson.token});
         })
         .catch(error => {
           console.log('deu errado');

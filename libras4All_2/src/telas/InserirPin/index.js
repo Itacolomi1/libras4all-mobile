@@ -7,12 +7,12 @@ const dimensions = Dimensions.get('window');
 const imageHeight = Math.round(dimensions.width * 9 / 17);
 const imageWidth = dimensions.width;
 
-export default function InserirPin({navigation}) {
+export default function InserirPin({route , navigation}) {
 
-    const [pin,setPin] = useState('0');
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDk3MTNkY2U2NDQyMDAxNjhhZDk5MCIsImlhdCI6MTY0NTc0NTE5Nn0.R4FrcBzipiPGjS9jr8qURmNyWiAhqu1M1PoAob3_u6E';
-    const salaId = '6205b1a6b80a183bb4d1ba61';
-    const usuerId ='62098e5d07f21e001662f9a2';
+    const [pin,setPin] = useState('0');    
+    const salaId = '6205b1a6b80a183bb4d1ba61';    
+    const{userID,token} = route.params;
+  
     
      const ValidarPin =  () => {   
 
@@ -40,7 +40,7 @@ export default function InserirPin({navigation}) {
     }
 
     function adicionarAluno(){
-        const corpo = JSON.stringify({"idSala": salaId, "idAluno":usuerId })
+        const corpo = JSON.stringify({"idSala": salaId, "idAluno":userID })
         fetch( settings.backend.url + `/sala/adicionarAluno`,{
             method: 'PUT',
             headers: {
