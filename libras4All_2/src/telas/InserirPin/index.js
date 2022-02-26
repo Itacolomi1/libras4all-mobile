@@ -25,8 +25,7 @@ export default function InserirPin({route , navigation}) {
            
         })
         .then(response => response.json())
-        .then(responsejson =>{            
-            console.log(responsejson);
+        .then(responsejson =>{                        
             if(responsejson != undefined){                
                 salaId =  responsejson._id;    
                 adicionarAluno();
@@ -52,11 +51,10 @@ export default function InserirPin({route , navigation}) {
            
         })
         .then(response => response.json())
-        .then(responsejson =>{            
-            console.log(responsejson);
+        .then(responsejson =>{                        
             if(responsejson){
                 Alert.alert('Seja Bem-Vindo');
-                navigation.navigate('Sala de Espera',{userID: userID,token: token});
+                navigation.navigate('Sala de Espera',{userID: userID,token: token, salaID: salaId});
             }else{
                 Alert.alert('Código incorreto');
             }

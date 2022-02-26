@@ -3,45 +3,96 @@ import {Text} from 'react-native';
 import * as settings from '../../assets/config/appSettings.json'
 
 export default function SalaEspera({route, navigation}) {
-    const {userID,token} = route.params
-    const salaId = '6205b1a6b80a183bb4d1ba61';
+    const {userID,token, salaID} = route.params
+    let Alunos = [];
+    let AlunosTrue = [];
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
           // Screen was focused
           // Do something
-            console.log('Hello, primeira coisa que fiz quando entrei');
-
+         getIdsUser();
         });
     
         return unsubscribe;
     }, [navigation]);
 
     function getIdsUser() {
-
-        const corpo = JSON.stringify({"email":userEmail,"senha":password});
-        console.log(corpo);
-        fetch( settings.backend.url + `/sala/listarAlunos/${salaId}`,{
-            method: 'POST',
+     
+        fetch(settings.backend.url + `/sala/listarAlunos/${salaID}`,{
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify({"email":userEmail,"senha":password})
+        
         })
         .then(response => response.json())
         .then(responseJson => {
-            console.log('deu certo');
-            console.log(responseJson);
-            navigation.navigate('Home', {userID: responseJson._id, token: responseJson.token});
+           
+            Alunos = responseJson;
+            getAlunos();
+            
         })
         .catch(error => {
           console.log('deu errado');
           console.error(error);
         });
+    }
 
+    async function getAlunos(){
+
+        // console.log('Lista de Alunos antes');
+        // console.log(AlunosTrue);
+
+        // AlunosTrue = Alunos.map( async (elemento)=>{
+        //     let primeiro_aluno = await getAluno(elemento);
+        //     return primeiro_aluno;
+        // });
+        
+        //testando
+        // console.log('Lista de Alunos depois');
+        // console.log(AlunosTrue);
+        let primeiro_aluno = await getAluno(Alunos[0]);
+        console.log('Olha o primeiro Alunooo');
+        console.log(primeiro_aluno);
 
     }
 
-    console.log('Segunda coisa');
+    async function getAluno(elemento) {
+        let retorno = '';
+        await fetch(settings.backend.url + `/usuario/${elemento._id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+    
+        })
+            .then((response) =>{
+
+                if(response.ok){
+                    console.log('retornando resposta');
+                    console.log(response.json());
+                    return response.json();
+                }
+            })
+            // .then(responseJson => {
+            //     console.log('peguei o aluno');      
+            //     retorno = responseJson;
+            //   console.log(retorno);
+            //   console.log('retornando o aluno');
+            //   return retorno;
+            // })
+            .catch(error => {
+                console.log('deu errado');
+                console.error(error);
+            });
+        
+    
+    }
+    
+
+
     
 
 
