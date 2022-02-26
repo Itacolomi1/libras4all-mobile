@@ -9,14 +9,14 @@ const imageWidth = dimensions.width;
 
 export default function InserirPin({route , navigation}) {
 
-    const [pin,setPin] = useState('0');    
-    const salaId = '6205b1a6b80a183bb4d1ba61';    
+    const [pin,setPin] = useState('0');
+    let salaId = '0';      
     const{userID,token} = route.params;
   
     
-     const ValidarPin =  () => {   
+     const ValidarPin =  async () => {   
 
-        fetch( settings.backend.url + `/sala/validarCodigo/${salaId}/${pin}`,{
+        fetch( settings.backend.url + `/sala/validarCodigo/${pin}`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -27,8 +27,9 @@ export default function InserirPin({route , navigation}) {
         .then(response => response.json())
         .then(responsejson =>{            
             console.log(responsejson);
-            if(responsejson){
-                 adicionarAluno();
+            if(responsejson != undefined){                
+                salaId =  responsejson._id;    
+                adicionarAluno();
             }else{
                 Alert.alert('Código incorreto');
             }
@@ -40,7 +41,7 @@ export default function InserirPin({route , navigation}) {
     }
 
     function adicionarAluno(){
-        const corpo = JSON.stringify({"idSala": salaId, "idAluno":userID })
+        const corpo = JSON.stringify({"idSala": salaId, "idAluno":userID });
         fetch( settings.backend.url + `/sala/adicionarAluno`,{
             method: 'PUT',
             headers: {
@@ -55,7 +56,7 @@ export default function InserirPin({route , navigation}) {
             console.log(responsejson);
             if(responsejson){
                 Alert.alert('Seja Bem-Vindo');
-                navigation.navigate('Sala de Espera');
+                navigation.navigate('Sala de Espera',{userID: userID,token: token});
             }else{
                 Alert.alert('Código incorreto');
             }
