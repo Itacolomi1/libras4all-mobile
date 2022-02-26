@@ -1,61 +1,65 @@
-import React from 'react';
-import {Text} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList } from 'react-native';
 import * as settings from '../../assets/config/appSettings.json'
 
-export default function SalaEspera({route, navigation}) {
-    const {userID,token, salaID} = route.params
+
+const Item = ({ title }) => (
+    <View >
+        <Text>{title}</Text>
+    </View>
+);
+
+
+export default function SalaEspera({ route, navigation }) {
+    const { userID, token, salaID } = route.params
     let Alunos = [];
     let AlunosTrue = [];
+    const [listaAlunos, setListaAlunos] = useState(null);
+    const [loading, setLoading] = useState(true);
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-          // Screen was focused
-          // Do something
-         getIdsUser();
+            // Screen was focused
+            // Do something
+            getIdsUser();
         });
-    
+
         return unsubscribe;
     }, [navigation]);
 
     function getIdsUser() {
-     
-        fetch(settings.backend.url + `/sala/listarAlunos/${salaID}`,{
+
+        fetch(settings.backend.url + `/sala/listarAlunos/${salaID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-        
+
         })
-        .then(response => response.json())
-        .then(responseJson => {
-           
-            Alunos = responseJson;
-            getAlunos();
-            
-        })
-        .catch(error => {
-          console.log('deu errado');
-          console.error(error);
-        });
+            .then(response => response.json())
+            .then(responseJson => {
+
+                Alunos = responseJson;
+                getAlunos();
+
+            })
+            .catch(error => {
+                console.log('deu errado');
+                console.error(error);
+            });
     }
 
-    async function getAlunos(){
+    async function getAlunos() {
 
-        // console.log('Lista de Alunos antes');
-        // console.log(AlunosTrue);
-
-        // AlunosTrue = Alunos.map( async (elemento)=>{
-        //     let primeiro_aluno = await getAluno(elemento);
-        //     return primeiro_aluno;
-        // });
-        
-        //testando
-        // console.log('Lista de Alunos depois');
-        // console.log(AlunosTrue);
-        let primeiro_aluno = await getAluno(Alunos[0]);
-        console.log('Olha o primeiro Alunooo');
-        console.log(primeiro_aluno);
-
+        for (let index = 0; index < Alunos.length; index++) {
+            const element = Alunos[index];
+            let primeiro_aluno = await getAluno(element);
+            AlunosTrue.push(primeiro_aluno);       
+        }
+        setListaAlunos(AlunosTrue);
+        console.log('Alunos True')  
+        console.log(AlunosTrue);
+        setLoading(false);
     }
 
     async function getAluno(elemento) {
@@ -66,37 +70,53 @@ export default function SalaEspera({route, navigation}) {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-    
-        })
-            .then((response) =>{
 
-                if(response.ok){
-                    console.log('retornando resposta');
-                    console.log(response.json());
-                    return response.json();
-                }
+        })
+            .then(response => response.json())
+            .then(responseJson => {
+
+                retorno = responseJson;
+
+
             })
-            // .then(responseJson => {
-            //     console.log('peguei o aluno');      
-            //     retorno = responseJson;
-            //   console.log(retorno);
-            //   console.log('retornando o aluno');
-            //   return retorno;
-            // })
             .catch(error => {
                 console.log('deu errado');
                 console.error(error);
             });
-        
-    
+
+        return retorno;
+
     }
-    
+
+    const renderItem = ({ item }) => (
+        <Item title={item.nome} />
+    );
 
 
-    
 
+    if(loading){
+        return<>
+            <Text>Carregando</Text>
+        </>
 
-    return <>
-        <Text>Tela Sala Espera</Text>
+    }else{
+        return <>
+        <View>
+            <Text>Tela Sala Espera</Text>
+        </View>
+        <View>
+            <FlatList
+                data={listaAlunos}
+                renderItem={renderItem}
+                keyExtractor={item => item._id}
+            />
+
+        </View>
     </>
+
+    }
+   
+
+
+
 }
