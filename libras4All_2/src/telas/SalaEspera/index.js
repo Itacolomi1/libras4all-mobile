@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, Dimensions, ImageBackground, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
 import * as settings from '../../assets/config/appSettings.json'
-
+import estilos from './estilos';
 
 const Item = ({ title }) => (
-    <View >
-        <Text>{title}</Text>
+    <View style={estilos.itens}>
+        <Text style={estilos.item}>{title}</Text>
     </View>
 );
 
@@ -101,17 +101,25 @@ export default function SalaEspera({ route, navigation }) {
 
     }else{
         return <>
-        <View>
-            <Text>Tela Sala Espera</Text>
+        <SafeAreaView style={estilos.fundo}>
+        <View >
+            <Text style={estilos.titulo}>Nome da Sala</Text>
         </View>
-        <View>
+        <View style={estilos.lista}>
             <FlatList
                 data={listaAlunos}
                 renderItem={renderItem}
                 keyExtractor={item => item._id}
+                
             />
 
         </View>
+        <View >
+            <TouchableOpacity style={estilos.button}>
+                <Text style={estilos.texto_button}>Jogar</Text>
+            </TouchableOpacity>
+        </View >
+        </SafeAreaView>
     </>
 
     }

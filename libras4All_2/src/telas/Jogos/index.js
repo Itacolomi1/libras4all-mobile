@@ -26,7 +26,9 @@ export default function Jogos() {
             </TouchableOpacity> 
             <View style={estilos.icon_area}>
             <Image source={require('../Images/home.png')} style={estilos.icon_home} />
+            <TouchableOpacity onPress={()=>{gotoPin()}}>
             <Image source={require('../Images/pin.png')} style={estilos.icon_pin} />
+            </TouchableOpacity>
             <Image source={require('../Images/game.png')} style={estilos.icon_game} />
             </View>
         </SafeAreaView>
