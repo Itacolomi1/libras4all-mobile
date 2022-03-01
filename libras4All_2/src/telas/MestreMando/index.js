@@ -8,16 +8,20 @@ import { StyleSheet,
   View,
   TouchableOpacity,
   Dimensions,
-  Platform   
+  Platform,   
+  Alert
 } from 'react-native';
+import * as settings from '../../assets/config/appSettings.json'
 
 import {drawRect} from './utilities';
 import Canvas from 'react-native-canvas';
+import {adicionaHistorico} from '../../services/historic.service';
 
 
 const TensorCamera = cameraWithTensors(Camera);
 let modeloTensorFlow = null;
 const {width, height} = Dimensions.get('window');
+
 
 const labelMap = {
   1:{name:'A', color:'red'},
@@ -26,11 +30,105 @@ const labelMap = {
   4:{name:'D', color:'blue'},
 }
 
-export default function MestreMando() {
+export default function MestreMando({navigation}) {
   let context = useRef();
   let canvas = useRef();
   let requestAnimationFrameId = 0;
+  const salaID = '621bf0572d53a30016a0b575';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWJmMTkzMmQ1M2EzMDAxNmEwYjU3ZSIsImlhdCI6MTY0NjA4MDc4NH0.2Vhsn6B1o6lJPlIS4MCdJrwwQo3hS67Rhuw9BOJBfns';
+  const userId = '621bf1932d53a30016a0b57e';
+  let sinaisId =[];
+  let sinaisMestreMando = [];
+  const [loading, setLoading] = useState(true);
+  const[sinal,setSinal] = useState(null);
 
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {      
+      getMestreMando();
+    });
+
+    return unsubscribe;
+}, [navigation]);
+
+//#region Get Mestre Mando 
+    //Pegar os sinais cadastrados para esse jogo
+    function getMestreMando(){
+      try{
+        fetch( settings.backend.url + `/historico/obterItens/${salaID}`,{
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+          },
+         
+        })
+          .then(response => response.json())
+          .then(responseJson => {            
+            sinaisId = responseJson;
+            getSinais();
+          })
+          .catch(error => {
+            console.log('deu errado');
+            console.error(error);
+          });
+
+      }catch(e){
+        console.log('deu ruim na requisição')
+        console.log(e);
+      }     
+    }
+
+    // Itera entre todos os sinais e salva em uma lista
+    async function getSinais() {
+      for (let index = 0; index < sinaisId.length; index++) {
+        const element = sinaisId[index];
+        let sinal = await getSinal(element);
+        sinaisMestreMando.push(sinal);        
+      }
+      proximoSinal();
+      setLoading(false);
+    }
+    //Pega os dados de um sinal singular
+    async function getSinal(elemento){
+      let retorno = '';
+      await fetch(settings.backend.url + `/mestreMandou/obterSinal/${elemento}`, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+          },
+
+      })
+          .then(response => response.json())
+          .then(responseJson => {
+              retorno = responseJson;
+          })
+          .catch(error => {
+              console.log('deu errado');
+              console.error(error);
+          });
+
+      return retorno;
+    }
+//#endregion
+
+//#region Exibindo sinais
+  function proximoSinal(){
+    console.log(sinaisMestreMando);
+    console.log(sinaisMestreMando.length);
+    if(sinaisMestreMando.length === 0){
+      Alert.alert('O jogo acabou');
+      console.log('Fui para a Home');
+      return;
+    }
+
+    let sinalTemp = sinaisMestreMando.shift();    
+    setSinal(sinalTemp);
+    console.log('lista depois do shift');
+    console.log(sinaisMestreMando);
+  }
+
+//#endregion
     const getModel = async () => {
       console.log('Começa a carregar o tensorflow');
   
@@ -105,10 +203,8 @@ export default function MestreMando() {
             canvas.current.width - x * scaleWidth - width * scaleWidth 
             : x * scaleWidth;
           
-          const boundingBoxY = y * scaleHeight;
+          const boundingBoxY = y * scaleHeight;       
 
-          console.log(boundingBoxX);
-          console.log(boundingBoxY);
           //desenha o retangulo
           context.current.strokeRect(100,boundingBoxY, width * scaleWidth, height * scaleHeight);
 
@@ -118,6 +214,13 @@ export default function MestreMando() {
             boundingBoxX -5,
             boundingBoxY - 5
           );
+
+          //Adiciona ao historico
+          if(labelMap[text]['name'] == sinal.descricao.toUpperCase()){
+            adicionaHistorico(token,salaID,userId,'Mestre Mando',sinal._id,'true');
+            proximoSinal();
+          }
+         
 
         }
       
@@ -243,6 +346,11 @@ export default function MestreMando() {
         ? {height: 1920, width: 1080}
         : {height: 1200, width: 1600}
   
+    if(loading){
+      return  <View>               
+                <Text>To carregando meu filhooo</Text>
+              </View>
+    }
  
     return ( 
 
@@ -276,6 +384,9 @@ export default function MestreMando() {
       </TensorCamera>
       <Canvas ref={handleCanvas}
         style={styles.canvas}/>
+    </View>
+    <View styles={styles.barraSinais}>
+      <Text>Faça a letra {sinal.descricao}</Text> 
     </View> 
     </>
     );
@@ -289,17 +400,6 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     camera: {
-      // flex: 1,
-      // position: 'absolute',
-      // marginLeft: 'auto',
-      // marginRight: 'auto',
-      // left: 0,
-      // right: 0,
-      // textAlign: 'center',
-      // //elevation: 9,
-      // zIndex: 9,
-      // width: 392.72,
-      // height: 823.63,
       width: '100%',
       height: '100%'
     },
@@ -319,14 +419,13 @@ const styles = StyleSheet.create({
       color: 'white',
     },
     canvas: {
-      position: "absolute",
-      //marginLeft: "auto",
-      //marginRight: "auto",
-      //left: 0,
-      //right: 0,
-      //textAlign: "center",    
+      position: "absolute", 
       zIndex: 10000000,
       width: '100%',
       height: '100%',
-    }
+    },
+    barraSinais: {
+      width: '100%',
+      backgroundColor: '#3682F5'
+    },
   });
