@@ -9,13 +9,18 @@ export default function Home({ route ,navigation}) {
     function gotoPin(){
         navigation.navigate('Inserir Pin', {userID: userID,token: token});
     }
+    function gotoPerfil(){
+        navigation.navigate('Perfil');
+    }
 
     return <>
         
         <SafeAreaView style={estilos.fundo}>
             <StatusBar backgroundColor="rgb(35, 36, 95)"/>
             <View style={estilos.topo}>
+            <TouchableOpacity onPress={()=>{gotoPerfil()}}>
             <Image source={require('../Images/perfil.png')} style={estilos.icon_perfil}/>
+            </TouchableOpacity>
             <Image source={require('../Images/logo.png')} style={estilos.logo}/>
             <Image source={require('../Images/trofeu.png')} style={estilos.icon_ranking}/>
             </View>

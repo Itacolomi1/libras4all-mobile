@@ -251,6 +251,7 @@ import TelaPadrao from './src/componentes/TelaPadrao';
 import Login from './src/telas/Login';
 import InserirPin from './src/telas/InserirPin';
 import Home from './src/telas/Home'
+import Perfil from './src/telas/Perfil'
 import SalaEspera from './src/telas/SalaEspera';
 import Quiz from './src/telas/Quiz';
 import { NavigationContainer } from '@react-navigation/native';
@@ -265,6 +266,7 @@ export default function App () {
               <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
                 <Stack.Screen name='Cadastro' component={Cadastro}/>
                 <Stack.Screen name='Inserir Pin' component={InserirPin}/>
+                <Stack.Screen name='Perfil' component={Perfil} options={{headerShown:false}}/>
                 <Stack.Screen name='Home' component={Home} options={{headerShown:false}}/>
                 <Stack.Screen name='Quiz' component={Quiz} options={{headerShown:false}} />    
                 <Stack.Screen name='Sala de Espera' component={SalaEspera} options={{headerShown:false}}/>                           
