@@ -254,6 +254,9 @@ import Home from './src/telas/Home'
 import Perfil from './src/telas/Perfil'
 import SalaEspera from './src/telas/SalaEspera';
 import Quiz from './src/telas/Quiz';
+import TutorialQuiz from './src/telas/TutorialQuiz';
+import TutorialMeteoro from './src/telas/TutorialMeteoro';
+import TutorialMestreMando from './src/telas/TutorialMestreMando';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cadastro from './src/telas/Cadastro';
@@ -263,13 +266,8 @@ export default function App () {
   return <NavigationContainer>
             <TelaPadrao>
               <Stack.Navigator>
-              <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
-                <Stack.Screen name='Cadastro' component={Cadastro}/>
-                <Stack.Screen name='Inserir Pin' component={InserirPin}/>
-                <Stack.Screen name='Perfil' component={Perfil} options={{headerShown:false}}/>
-                <Stack.Screen name='Home' component={Home} options={{headerShown:false}}/>
-                <Stack.Screen name='Quiz' component={Quiz} options={{headerShown:false}} />    
-                <Stack.Screen name='Sala de Espera' component={SalaEspera} options={{headerShown:false}}/>                           
+              <Stack.Screen name='TutorialMestreMando' component={TutorialMestreMando} options={{headerShown:false}}/>
+                                         
               </Stack.Navigator>
             </TelaPadrao> 
           </NavigationContainer>
