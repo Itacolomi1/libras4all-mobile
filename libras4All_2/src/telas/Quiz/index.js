@@ -7,10 +7,9 @@ import {adicionaHistorico} from '../../services/historic.service';
 
 
 
-export default function Quiz({ navigation }) {
-    const salaID = '621bf0052d53a30016a0b571';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWJmMTkzMmQ1M2EzMDAxNmEwYjU3ZSIsImlhdCI6MTY0NjA4MDc4NH0.2Vhsn6B1o6lJPlIS4MCdJrwwQo3hS67Rhuw9BOJBfns';
-    const userId = '621bf1932d53a30016a0b57e';
+export default function Quiz({ route,navigation }) {
+    const { userID, token, salaID} = route.params;
+
     let perguntasID = [];
     let perguntasQuiz = [];
     const [loading, setLoading] = useState(true);    
@@ -117,11 +116,11 @@ export default function Quiz({ navigation }) {
     function validaResposta(alternativa){
        
         if(alternativa.perguntaCorreta === 'true'){
-            adicionaHistorico(token,salaID,userId,'Quiz',listaPergunta[perguntaDaVez]._id,'true');
-            console.log('Acertou');
+            adicionaHistorico(token,salaID,userID,'Quiz',listaPergunta[perguntaDaVez]._id,'true');
+            Alert.alert('Acertouuuuu');
         }else{
-            adicionaHistorico(token,salaID,userId,'Quiz',listaPergunta[perguntaDaVez]._id,'false');
-            console.log('Errou');
+            adicionaHistorico(token,salaID,userID,'Quiz',listaPergunta[perguntaDaVez]._id,'false');
+            Alert.alert('Errouuuuuuuu');
         }
         proximaPergunta();
     }

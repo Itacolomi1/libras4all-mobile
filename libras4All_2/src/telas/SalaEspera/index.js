@@ -13,7 +13,7 @@ const Item = ({ title }) => (
 
 
 export default function SalaEspera({ route, navigation }) {
-    const { userID, token, salaID } = route.params
+    const { userID, token, salaID, SalaName,tipoJogo } = route.params;
     let Alunos = [];
     let AlunosTrue = [];
     const [listaAlunos, setListaAlunos] = useState(null);
@@ -90,6 +90,24 @@ export default function SalaEspera({ route, navigation }) {
 
     }
 
+    function goToQuiz(){
+        navigation.navigate('Quiz',{userID: userID,token: token, salaID: salaID})
+    }
+    function goToJogo(){
+
+        switch(tipoJogo){
+            case 'Quiz':
+                goToQuiz();
+                break;
+            case 'Meteoro':
+                Alert.alert('Meteoro ainda não esta pronto');
+                break;
+            case 'Mestre Mandou':
+                Alert.alert('Mestre Mandou ainda não esta pronto');
+                break;
+        }
+    }
+
     const renderItem = ({ item }) => (
         <Item title={item.nome} />
     );
@@ -107,7 +125,7 @@ export default function SalaEspera({ route, navigation }) {
         return <>
         <SafeAreaView style={estilos.fundo}>
         <View >
-            <Text style={estilos.titulo}>Nome da Sala</Text>
+            <Text style={estilos.titulo}>{SalaName}</Text>
         </View>
         <View >
             <FlatList
@@ -120,7 +138,7 @@ export default function SalaEspera({ route, navigation }) {
 
         </View>
         <View >
-            <TouchableOpacity style={estilos.button}>
+            <TouchableOpacity style={estilos.button} onPress={()=>{goToJogo()}}>
                 <Text style={estilos.texto_button}>Jogar</Text>
             </TouchableOpacity>
         </View >

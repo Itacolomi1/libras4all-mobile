@@ -10,7 +10,9 @@ const imageWidth = dimensions.width;
 export default function InserirPin({route , navigation}) {
 
     const [pin,setPin] = useState('0');
-    let salaId = '0';      
+    let salaId = '0';
+    let nomeSala = '';
+    let tipoJogoSala = '';     
     const{userID,token} = route.params;
   
     
@@ -27,7 +29,9 @@ export default function InserirPin({route , navigation}) {
         .then(response => response.json())
         .then(responsejson =>{                        
             if(responsejson != undefined){                
-                salaId =  responsejson._id;    
+                salaId =  responsejson._id;
+                nomeSala = responsejson.descricao;
+                tipoJogoSala = responsejson.tipoJogo;   
                 adicionarAluno();
             }else{
                 Alert.alert('Código incorreto');
@@ -54,7 +58,7 @@ export default function InserirPin({route , navigation}) {
         .then(responsejson =>{                        
             if(responsejson){
                 Alert.alert('Seja Bem-Vindo');
-                navigation.navigate('Sala de Espera',{userID: userID,token: token, salaID: salaId});
+                navigation.navigate('Sala de Espera',{userID: userID,token: token, salaID: salaId, SalaName: nomeSala,tipoJogo: tipoJogoSala});
             }else{
                 Alert.alert('Código incorreto');
             }
