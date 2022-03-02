@@ -257,6 +257,7 @@ import Quiz from './src/telas/Quiz';
 import TutorialQuiz from './src/telas/TutorialQuiz';
 import TutorialMeteoro from './src/telas/TutorialMeteoro';
 import TutorialMestreMando from './src/telas/TutorialMestreMando';
+import MestreMando from './src/telas/MestreMando';
 import RankingGeral from './src/telas/RankingGeral';
 import Jogos from './src/telas/Jogos';
 import { NavigationContainer } from '@react-navigation/native';
@@ -280,6 +281,7 @@ export default function App () {
               <Stack.Screen name='Tutorial Mestre Mando' component={TutorialMestreMando}/>
               <Stack.Screen name='Jogos' component={Jogos}/>
               <Stack.Screen name='Ranking Geral' component={RankingGeral} options={{headerShown:false}}/>
+              <Stack.Screen name='Mestre Mando' component={MestreMando} options={{headerShown:false}}/>
               </Stack.Navigator>
             </TelaPadrao> 
           </NavigationContainer>

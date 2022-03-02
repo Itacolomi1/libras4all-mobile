@@ -23,6 +23,7 @@
     "expo-gl": "^10.3.0",
     "expo-gl-cpp": "^10.3.0",
     "jpeg-js": "^0.4.3",
+    "lottie-react-native": "^5.0.1",
     "no": "^0.0.1",
     "react": "17.0.1",
     "react-native": "0.64.2",

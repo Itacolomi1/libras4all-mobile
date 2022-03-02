@@ -27,6 +27,16 @@ export default StyleSheet.create({
     bloco:{
         height: "50%"
     },
+    carregar_animate:{
+        alignSelf: "center",
+        width: "100%"
+    },
+    carregando:{
+        backgroundColor:"#e3f2ff",
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
     titulo:{
         color: "black",
         fontSize: 30,

@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { View, Text, FlatList, Dimensions, ImageBackground, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
 import * as settings from '../../assets/config/appSettings.json'
 import estilos from './estilos';
+import Lottie from 'lottie-react-native';
+import carregar from '../Images/carregar.json';
 
 
 const Item = ({ nome,libracoins }) => (
@@ -57,7 +59,9 @@ export default function RankingGeral({navigation}) {
 
     if(loading){
         return <>
-            <Text>Carregando</Text>
+            <SafeAreaView style={estilos.carregando}>
+           <Lottie  style={estilos.carregar_animate} source={carregar} autoPlay loop renderMode='contain' autoSize />
+            </SafeAreaView>
         </>
 
     }else{

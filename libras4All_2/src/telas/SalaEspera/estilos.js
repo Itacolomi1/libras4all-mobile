@@ -12,6 +12,16 @@ export default StyleSheet.create({
     lista:{
         height: "50%",        
     },
+    carregar_animate:{
+        alignSelf: "center",
+        width: "100%"
+    },
+    carregando:{
+        backgroundColor:"#e3f2ff",
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
     itens:{
         width: "80%",
         alignItems: "center",

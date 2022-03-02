@@ -9,6 +9,7 @@ export default function Home({ route, navigation }) {
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });
     }
+    
     function gotoPerfil() {
         navigation.navigate('Perfil', { userID: userID, token: token });
     }
@@ -25,7 +26,9 @@ export default function Home({ route, navigation }) {
                     <Image source={require('../Images/perfil.png')} style={estilos.icon_perfil} />
                 </TouchableOpacity>
                 <Image source={require('../Images/logo.png')} style={estilos.logo} />
+                <TouchableOpacity >
                 <Image source={require('../Images/trofeu.png')} style={estilos.icon_ranking} />
+                </TouchableOpacity>
             </View>
             <View style={[estilos.nivel, estilos.elevation]}>
                 <Image source={require('../Images/bronze.png')} style={estilos.icon_nivel} />
