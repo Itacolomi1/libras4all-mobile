@@ -1,9 +1,9 @@
 import React, {useState,useEffect} from 'react';
-import {Text,View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image} from 'react-native';
+import {Text,View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert} from 'react-native';
 import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
 
-export default function Cadastro() {
+export default function Cadastro({navigation}) {
     const [userNome, setUserNome] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,7 +21,8 @@ export default function Cadastro() {
         })
         .then(response => {
             if(response.ok){
-                console.log('Cadastrado com sucesso');
+                Alert.alert('Cadastro Realizado com sucesso');
+                navigation.navigate('Login');
             }
         })  
         .catch(error => {
