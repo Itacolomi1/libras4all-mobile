@@ -4,7 +4,7 @@ import * as settings from '../../assets/config/appSettings.json'
 import estilos from './estilos';
 
 const Item = ({ title }) => (
-    <View style={estilos.itens}>
+    <View style={[estilos.itens , estilos.elevation]}>
         <Text style={estilos.item}>{title}</Text>
     </View>
 );
@@ -105,8 +105,9 @@ export default function SalaEspera({ route, navigation }) {
         <View >
             <Text style={estilos.titulo}>Nome da Sala</Text>
         </View>
-        <View style={estilos.lista}>
+        <View >
             <FlatList
+            style={estilos.lista}
                 data={listaAlunos}
                 renderItem={renderItem}
                 keyExtractor={item => item._id}

@@ -261,6 +261,7 @@ import TransicaoCerto from './src/telas/TransicaoCerto';
 import TransicaoErrado from './src/telas/TransicaoErrado';
 import TransicaoCertoMestre from './src/telas/TransicaoCertoMestre';
 import TransicaoErradoMestre from './src/telas/TransicaoErradoMestre';
+import RankingGeral from './src/telas/RankingGeral';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cadastro from './src/telas/Cadastro';
@@ -269,7 +270,10 @@ const Stack = createNativeStackNavigator();
 export default function App () {
   return <NavigationContainer>
             <TelaPadrao>
-              <Stack.Navigator>
+              <Stack.Navigator>  
+                
+              <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>              
+              <Stack.Screen name='RankingGeral' component={RankingGeral} options={{headerShown:false}}/>
               <Stack.Screen name='TransicaoCertoMestre' component={TransicaoCertoMestre} options={{headerShown:false}}/>
               <Stack.Screen name='TransicaoErradoMestre' component={TransicaoErradoMestre} options={{headerShown:false}}/>
               <Stack.Screen name='TransicaoErrado' component={TransicaoErrado} options={{headerShown:false}}/>
@@ -277,7 +281,6 @@ export default function App () {
               <Stack.Screen name='TutorialMestreMando' component={TutorialMestreMando} options={{headerShown:false}}/>
               <Stack.Screen name='TutorialMeteoro' component={TutorialMeteoro} options={{headerShown:false}}/>
               <Stack.Screen name='TutorialQuiz' component={TutorialQuiz} options={{headerShown:false}}/>
-              <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
                 <Stack.Screen name='Cadastro' component={Cadastro}/>
                 <Stack.Screen name='Inserir Pin' component={InserirPin}/>
                 <Stack.Screen name='Perfil' component={Perfil} options={{headerShown:false}}/>

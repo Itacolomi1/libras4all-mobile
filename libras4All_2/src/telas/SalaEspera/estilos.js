@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     fundo:{
-        backgroundColor:"white",
+        backgroundColor:"#e3f2ff",
         height: "100%",
         justifyContent: "space-around",
         color: "black",      
@@ -16,12 +16,14 @@ export default StyleSheet.create({
         width: "80%",
         alignItems: "center",
         textAlign: "center",
-        backgroundColor: "#C1E2FF",
-        borderRadius: 5,
-        marginBottom: 5,
+        backgroundColor: "white",
+        borderRadius: 10,
+        marginBottom: 10,        
+        paddingVertical: 5,
         height: 40,
         justifyContent: "center",
         alignSelf: "center",
+        
     },
     titulo:{
         color: "black",
@@ -36,6 +38,10 @@ export default StyleSheet.create({
     texto_button:{
         color: "white",
         alignSelf: "center",
+    },
+    elevation:{
+        elevation: 2,
+        shadowColor: '#171717',
     },
     button:{
         width: "80%",
