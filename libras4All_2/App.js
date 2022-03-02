@@ -270,8 +270,8 @@ export default function App () {
   return <NavigationContainer>
             <TelaPadrao>
               <Stack.Navigator>
-              <Stack.Screen name='TransicaoErradoMestre' component={TransicaoErradoMestre} options={{headerShown:false}}/>
               <Stack.Screen name='TransicaoCertoMestre' component={TransicaoCertoMestre} options={{headerShown:false}}/>
+              <Stack.Screen name='TransicaoErradoMestre' component={TransicaoErradoMestre} options={{headerShown:false}}/>
               <Stack.Screen name='TransicaoErrado' component={TransicaoErrado} options={{headerShown:false}}/>
               <Stack.Screen name='TransicaoCerto' component={TransicaoCerto} options={{headerShown:false}}/>
               <Stack.Screen name='TutorialMestreMando' component={TutorialMestreMando} options={{headerShown:false}}/>

@@ -10,7 +10,7 @@ export default function TransicaoErradoMestre() {
                      
             <View style={[estilos.tipo , estilos.elevation]}>  
             <Text style={estilos.titulo}>Você não atingiu o minimo de 75%</Text>       
-            <Image source={require('../Images/triste.png')} style={estilos.icon} />  
+            <Image source={require('../Images/perdeu.png')} style={estilos.icon} />  
               
             </View> 
             <TouchableOpacity  style={estilos.jogar_button}>

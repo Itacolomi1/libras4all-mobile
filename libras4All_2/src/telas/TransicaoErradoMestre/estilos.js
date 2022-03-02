@@ -36,8 +36,8 @@ export default StyleSheet.create({
         marginBottom: 30
     },
     icon:{
-        height: 70,
-        width: 70,
+        height: 100,
+        width: 100,
         alignSelf: "center",
         alignItems: "center"
     },
