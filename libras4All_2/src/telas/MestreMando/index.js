@@ -39,12 +39,12 @@ export default function MestreMando({navigation}) {
   const userId = '621bf1932d53a30016a0b57e';
   let sinaisId =[];
   let sinaisMestreMando = [];
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const[sinal,setSinal] = useState(null);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {      
-      getMestreMando();
+      //getMestreMando();
     });
 
     return unsubscribe;
@@ -175,17 +175,17 @@ export default function MestreMando({navigation}) {
   
     };
 
-    function drawRectangle(boxes, classes, scores, threshold, scaleWidth, scaleHeight){
+    function drawRectangle(boxes, classes, scores, threshold, scaleWidth, scaleHeight, ctx){
 
-      if(!context.current || !canvas.current) {
-        console.log('Canvas não iniciado');
-        return;
-      }
+      // if(!context.current || !canvas.current) {
+      //   console.log('Canvas não iniciado');
+      //   return;
+      // }
 
       const flipHorizontal = Platform.OS == 'ios'? false: true;
 
       // limpar previsões antigas;
-      context.current.clearRect(0,0,width,height);
+      //context.current.clearRect(0,0,width,height);
 
       // Desenha o retangulo pra cada previsão
 
@@ -205,21 +205,33 @@ export default function MestreMando({navigation}) {
           
           const boundingBoxY = y * scaleHeight;       
 
-          //desenha o retangulo
-          context.current.strokeRect(100,boundingBoxY, width * scaleWidth, height * scaleHeight);
+          // //desenha o retangulo
+          // context.current.strokeRect(100,boundingBoxY, width * scaleWidth, height * scaleHeight);
 
-          //desenhar a Label
-          context.current.strokeText(
-            text,
-            boundingBoxX -5,
-            boundingBoxY - 5
-          );
+          // //desenhar a Label
+          // context.current.strokeText(
+          //   text,
+          //   boundingBoxX -5,
+          //   boundingBoxY - 5
+          // );
 
-          //Adiciona ao historico
-          if(labelMap[text]['name'] == sinal.descricao.toUpperCase()){
-            adicionaHistorico(token,salaID,userId,'Mestre Mando',sinal._id,'true');
-            proximoSinal();
-          }
+           // Set styling
+           ctx.strokeStyle = labelMap[text]['color']
+           ctx.lineWidth = 10
+           ctx.fillStyle = 'black'
+           ctx.font = '30px Arial'
+
+                  // DRAW!!
+            ctx.beginPath()
+            ctx.fillText(labelMap[text]['name'] + ' - ' + Math.round(scores[i]*100)/100, x*scaleWidth, y*scaleHeight-10)
+            ctx.rect(boundingBoxX, boundingBoxY, width*scaleWidth/2, height*scaleHeight/2);
+            ctx.stroke()
+
+          // //Adiciona ao historico
+          // if(labelMap[text]['name'] == sinal.descricao.toUpperCase()){
+          //   adicionaHistorico(token,salaID,userId,'Mestre Mando',sinal._id,'true');
+          //   proximoSinal();
+          // }
          
 
         }
@@ -283,7 +295,10 @@ export default function MestreMando({navigation}) {
         const scores = await obj[1].array();
   
         // Draw mesh
-        //const ctx = canvasRef.current.getContext("2d");
+        canvasRef.current.width =videoWidth;
+        canvasRef.current.height =videoHeight;
+
+        const ctx = canvasRef.current.getContext("2d");
   
         // 5. TODO - Update drawing utility
         // drawSomething(obj, ctx)
@@ -291,8 +306,8 @@ export default function MestreMando({navigation}) {
         const scaleWidth = width/ images.shape[1];
         const scaleHeight = height/ images.shape[0];
 
-        //requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.7, videoWidth, videoHeight, ctx)});
-        requestAnimationFrame(()=>{drawRectangle(boxes[0], classes[0], scores[0], 0.7, scaleWidth, scaleHeight)});
+        requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.7, videoWidth, videoHeight, ctx)});
+        //requestAnimationFrame(()=>{drawRectangle(boxes[0], classes[0], scores[0], 0.7, videoWidth, videoHeight, ctx)});
   
         tf.dispose(video);
         tf.dispose(resized);
@@ -382,12 +397,12 @@ export default function MestreMando({navigation}) {
           </TouchableOpacity>
         </View>
       </TensorCamera>
-      <Canvas ref={handleCanvas}
+      <Canvas ref={canvasRef}
         style={styles.canvas}/>
     </View>
-    <View styles={styles.barraSinais}>
+    {/* <View styles={styles.barraSinais}>
       <Text>Faça a letra {sinal.descricao}</Text> 
-    </View> 
+    </View>  */}
     </>
     );
   
@@ -400,6 +415,9 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     camera: {
+      flex: 1,
+      position:'absolute',
+      elevation:0,
       width: '100%',
       height: '100%'
     },
@@ -420,7 +438,7 @@ const styles = StyleSheet.create({
     },
     canvas: {
       position: "absolute", 
-      zIndex: 10000000,
+      elevation:8,
       width: '100%',
       height: '100%',
     },
