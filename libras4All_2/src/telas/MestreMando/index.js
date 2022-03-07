@@ -13,7 +13,7 @@ import { StyleSheet,
 } from 'react-native';
 import * as settings from '../../assets/config/appSettings.json'
 
-import {drawRect} from './utilities';
+//import {drawRect} from './utilities';
 import Canvas from 'react-native-canvas';
 import {adicionaHistorico} from '../../services/historic.service';
 
@@ -30,21 +30,22 @@ const labelMap = {
   4:{name:'D', color:'blue'},
 }
 
-export default function MestreMando({navigation}) {
-  let context = useRef();
-  let canvas = useRef();
-  let requestAnimationFrameId = 0;
-  const salaID = '621bf0572d53a30016a0b575';
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWJmMTkzMmQ1M2EzMDAxNmEwYjU3ZSIsImlhdCI6MTY0NjA4MDc4NH0.2Vhsn6B1o6lJPlIS4MCdJrwwQo3hS67Rhuw9BOJBfns';
-  const userId = '621bf1932d53a30016a0b57e';
+export default function MestreMando({route,navigation}) {
+
+  const { userID, token, salaID} = route.params;
+  console.log('userID ' + userID);
+  console.log('token ' + token);
+  console.log('SalaID ' + salaID);
+  const [loading, setLoading] = useState(true);
+  const [listaSinais,setListaSinais] = useState([]);
+  const [sinalDaVez,setSinal] = useState(0);
   let sinaisId =[];
   let sinaisMestreMando = [];
-  const [loading, setLoading] = useState(false);
-  const[sinal,setSinal] = useState(null);
+  let requestAnimationFrameId = 0;
 
-  React.useEffect(() => {
+React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {      
-      //getMestreMando();
+      getMestreMando();
     });
 
     return unsubscribe;
@@ -82,10 +83,11 @@ export default function MestreMando({navigation}) {
     async function getSinais() {
       for (let index = 0; index < sinaisId.length; index++) {
         const element = sinaisId[index];
+        console.log('id do sinal: ' + element);
         let sinal = await getSinal(element);
         sinaisMestreMando.push(sinal);        
       }
-      proximoSinal();
+      setListaSinais(sinaisMestreMando);
       setLoading(false);
     }
     //Pega os dados de um sinal singular
@@ -113,20 +115,29 @@ export default function MestreMando({navigation}) {
 //#endregion
 
 //#region Exibindo sinais
-  function proximoSinal(){
-    console.log(sinaisMestreMando);
-    console.log(sinaisMestreMando.length);
-    if(sinaisMestreMando.length === 0){
-      Alert.alert('O jogo acabou');
-      console.log('Fui para a Home');
-      return;
+  function proximoSinal() {
+    let tempNumb = sinalDaVez;
+    if((tempNumb + 1) >= sinalDaVez.length){
+        Alert.alert('O Jogo Acabou');
+        return;
     }
-
-    let sinalTemp = sinaisMestreMando.shift();    
-    setSinal(sinalTemp);
-    console.log('lista depois do shift');
-    console.log(sinaisMestreMando);
+    setSinal(sinalDaVez + 1); 
   }
+
+  
+  function registra_resultado(resultado){
+       
+    if(resultado){
+        adicionaHistorico(token,salaID,userID,'Mestre Mandou',listaSinais[sinalDaVez]._id,'true');
+        Alert.alert('Acertouuuuu');
+    }else{
+        adicionaHistorico(token,salaID,userID,'Mestre Mandou',listaSinais[sinalDaVez]._id,'false');
+        Alert.alert('Errouuuuuuuu');
+    }
+    proximoSinal();
+  }
+
+// método para verificar o tempo do jogo;
 
 //#endregion
     const getModel = async () => {
@@ -175,90 +186,42 @@ export default function MestreMando({navigation}) {
   
     };
 
-    function drawRectangle(boxes, classes, scores, threshold, scaleWidth, scaleHeight, ctx){
+  // Define a drawing function
+ const drawRect = (boxes, classes, scores, threshold, imgWidth, imgHeight, ctx)=>{
+    
+  for(let i=0; i<=boxes.length; i++){
+      if(boxes[i] && classes[i] && scores[i]>threshold){
+          ctx.width = imgWidth;
+          ctx.height = imgHeight;         
 
-      // if(!context.current || !canvas.current) {
-      //   console.log('Canvas não iniciado');
-      //   return;
-      // }
-
-      const flipHorizontal = Platform.OS == 'ios'? false: true;
-
-      // limpar previsões antigas;
-      //context.current.clearRect(0,0,width,height);
-
-      // Desenha o retangulo pra cada previsão
-
-      for(let i=0; i<=boxes.length; i++){
-        if(boxes[i] && classes[i] && scores[i]>threshold){
-
-          // extrair as variáveis
+          // Extract variables
           const [y,x,height,width] = boxes[i];
-          const text = classes[i];
+          const text = classes[i];  
 
-          console.log('previsão');
-          console.log(labelMap[text]['name'] + ' ' + scores[i]);
-          // escalar as coordenadas baseadas no 'ratio' calculado
-          const boundingBoxX = flipHorizontal? 
-            canvas.current.width - x * scaleWidth - width * scaleWidth 
-            : x * scaleWidth;
+          console.log('Previsão');
+          console.log(labelMap[text]['name'] + ' ' + Math.round(scores[i]*100)/100);
+
           
-          const boundingBoxY = y * scaleHeight;       
+ 
+          // Set styling
+          ctx.strokeStyle = labelMap[text]['color']
+          ctx.lineWidth = 10
+          ctx.fillStyle = 'black'
+          ctx.font = '30px Arial'         
+          
+          // DRAW!!
+          ctx.beginPath()
+          ctx.fillText(labelMap[text]['name'] + ' - ' + Math.round(scores[i]*100)/100, x*imgWidth, y*imgHeight-10)
+          ctx.rect(x*imgWidth, y*imgHeight, width*imgWidth/2, height*imgHeight/2);
+          ctx.stroke()
 
-          // //desenha o retangulo
-          // context.current.strokeRect(100,boundingBoxY, width * scaleWidth, height * scaleHeight);
-
-          // //desenhar a Label
-          // context.current.strokeText(
-          //   text,
-          //   boundingBoxX -5,
-          //   boundingBoxY - 5
-          // );
-
-           // Set styling
-           ctx.strokeStyle = labelMap[text]['color']
-           ctx.lineWidth = 10
-           ctx.fillStyle = 'black'
-           ctx.font = '30px Arial'
-
-                  // DRAW!!
-            ctx.beginPath()
-            ctx.fillText(labelMap[text]['name'] + ' - ' + Math.round(scores[i]*100)/100, x*scaleWidth, y*scaleHeight-10)
-            ctx.rect(boundingBoxX, boundingBoxY, width*scaleWidth/2, height*scaleHeight/2);
-            ctx.stroke()
-
-          // //Adiciona ao historico
-          // if(labelMap[text]['name'] == sinal.descricao.toUpperCase()){
-          //   adicionaHistorico(token,salaID,userId,'Mestre Mando',sinal._id,'true');
-          //   proximoSinal();
-          // }
-         
-
-        }
-      
-      
+          //Salva o resultado do Mestre Mando;
+          registra_resultado(true);
       }
+  }
+}
 
 
-    }
-
-    async function handleCanvas(can) {
-      
-      if(can){
-        
-        can.width = width;
-        can.height = height;
-        const ctx = can.getContext('2d');
-        ctx.strokeStyle = 'red';
-        ctx.lineWidth = 3;
-   
-        context.current = ctx;
-        canvas.current = can;
-     
-      }
-
-    }
-  
   
     const detect = async (net, images) => {
   
@@ -400,9 +363,9 @@ export default function MestreMando({navigation}) {
       <Canvas ref={canvasRef}
         style={styles.canvas}/>
     </View>
-    {/* <View styles={styles.barraSinais}>
-      <Text>Faça a letra {sinal.descricao}</Text> 
-    </View>  */}
+    <View styles={styles.barraSinais}>
+      <Text>Faça a letra {listaSinais[sinalDaVez].descricao}</Text>  
+    </View> 
     </>
     );
   

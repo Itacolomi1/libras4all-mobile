@@ -91,7 +91,13 @@ export default function SalaEspera({ route, navigation }) {
     }
 
     function goToQuiz(){
-        navigation.navigate('Quiz',{userID: userID,token: token, salaID: salaID})
+        navigation.navigate('Quiz',{userID: userID,token: token, salaID: salaID});
+    }
+    function goToMestreMando(){
+        navigation.navigate('Mestre Mando',{userID: userID,token: token, salaID: salaID});
+    }
+    function goToMeteoro(){
+        navigation.navigate('Quiz',{userID: userID,token: token, salaID: salaID});
     }
     function goToJogo(){
 
@@ -100,10 +106,10 @@ export default function SalaEspera({ route, navigation }) {
                 goToQuiz();
                 break;
             case 'Meteoro':
-                Alert.alert('Meteoro ainda não esta pronto');
-                break;
-            case 'Mestre Mandou':
                 Alert.alert('Mestre Mandou ainda não esta pronto');
+                break;
+            case'Mestre Mandou':                
+                goToMestreMando();
                 break;
         }
     }

@@ -3,14 +3,15 @@ import {Text} from 'react-native';
 import * as settings from '../../assets/config/appSettings.json'
 import {adicionaHistorico} from '../../services/historic.service';
 
-export default function Meteoro({navigation}) {
-    const salaID = '621bf02f2d53a30016a0b573';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWJmMTkzMmQ1M2EzMDAxNmEwYjU3ZSIsImlhdCI6MTY0NjA4MDc4NH0.2Vhsn6B1o6lJPlIS4MCdJrwwQo3hS67Rhuw9BOJBfns';
-    const userId = '621bf1932d53a30016a0b57e';
+export default function Meteoro({route,navigation}) {
+    const { userID, token, salaID} = route.params;
+
     let sinaisID = [];
     let sinaisMeteoro = [];
+    const [listaSinais,setListaSinais] = useState([]);
+    const [sinalDaVez,setSinal] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [sinal, setSinal] = useState(null);
+
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -55,9 +56,8 @@ export default function Meteoro({navigation}) {
             const element = sinaisID[index];
             let pergunta = await getSinal(element);
             sinaisMeteoro.push(pergunta);
-        }     
-        console.log(sinaisMeteoro);
-        proximoSinal();
+        }        
+        setListaSinais(sinaisMeteoro);  
         setLoading(false);
     }
 
@@ -84,19 +84,25 @@ export default function Meteoro({navigation}) {
     }
 
     function proximoSinal(){
-   
-        if(sinaisMeteoro.length === 0){
+        let tempNumb = sinalDaVez;
+        if((tempNumb + 1) >= sinalDaVez.length){
             Alert.alert('O Jogo Acabou');
             return;
-        }        
-        
-        let sinalTemp = sinaisMeteoro.shift();
-        console.log('O sinal');
-        console.log(sinalTemp);
-   
-        console.log('depois');
-        console.log(sinaisMeteoro);
+        }
+        setSinal(sinalDaVez + 1); 
     }
+
+    function registra_resultado(resultado){
+       
+        if(resultado){
+            adicionaHistorico(token,salaID,userID,'Meteoro',listaSinais[sinalDaVez]._id,'true');
+            Alert.alert('Acertouuuuu');
+        }else{
+            adicionaHistorico(token,salaID,userID,'Meteoro',listaSinais[sinalDaVez]._id,'false');
+            Alert.alert('Errouuuuuuuu');
+        }
+        proximoSinal();
+      }
 
 
     return <>
