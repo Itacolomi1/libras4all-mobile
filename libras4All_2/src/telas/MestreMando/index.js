@@ -215,8 +215,11 @@ React.useEffect(() => {
           ctx.rect(x*imgWidth, y*imgHeight, width*imgWidth/2, height*imgHeight/2);
           ctx.stroke()
 
-          //Salva o resultado do Mestre Mando;
-          registra_resultado(true);
+          if(labelMap[text]['name'] === listaSinais[sinalDaVez].descricao){
+             //Salva o resultado do Mestre Mando;
+            registra_resultado(true);
+          }
+         
       }
   }
 }

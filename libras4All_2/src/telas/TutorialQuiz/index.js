@@ -5,6 +5,9 @@ import estilos from './estilos';
 export default function TutorialQuiz({ route, navigation }) {
     const { userID, token } = route.params;
 
+    // chumbado no código pois entrará sempre na mesma Sala.
+    const salaID = '621bf0052d53a30016a0b571';
+
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });
     }
@@ -13,6 +16,9 @@ export default function TutorialQuiz({ route, navigation }) {
     }
     function gotoJogos() {
         navigation.navigate('Jogos', { userID: userID, token: token });
+    }
+    function gotoQuiz() {
+        navigation.navigate('Quiz', {userID: userID,token: token, salaID: salaID});
     }
     
 
@@ -29,7 +35,7 @@ export default function TutorialQuiz({ route, navigation }) {
                     <Text style={estilos.texto}>Para cada resposta correta você ganha 10 Libracoins <Image source={require('../Images/coins.png')} style={estilos.icon} />
                     </Text>
                 </View>
-                <TouchableOpacity style={estilos.jogar_button}>
+                <TouchableOpacity style={estilos.jogar_button} onPress={()=>{gotoQuiz()}}>
                     <Text style={estilos.texto_button}>Jogar</Text>
                 </TouchableOpacity>
             </View>
