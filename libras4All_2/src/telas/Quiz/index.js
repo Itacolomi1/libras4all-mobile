@@ -3,9 +3,7 @@ import { Text, View, Dimensions, ImageBackground, TextInput, TouchableOpacity, S
 import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
 import {adicionaHistorico} from '../../services/historic.service';
-
-
-
+import {listaImagens} from './lista-imagens';
 
 export default function Quiz({ route,navigation }) {
     const { userID, token, salaID} = route.params;
@@ -19,8 +17,8 @@ export default function Quiz({ route,navigation }) {
 
 
     React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            getQuiz();
+        const unsubscribe = navigation.addListener('focus', () => {       
+            getQuiz();            
         });
 
         return unsubscribe;
@@ -89,22 +87,7 @@ export default function Quiz({ route,navigation }) {
     }
 
     function proximaPergunta(){   
-        
-
-        // console.log('lista de perguntas antes');
-        // console.log(perguntasQuiz);
-
-        // if(perguntasQuiz.length === 0){
-        //     Alert.alert('O Jogo Acabou');
-        //     return;
-        // }      
-        
-        // let perguntaTemp = perguntasQuiz.shift();
-        // console.log('A pergunta');
-        // console.log(perguntaTemp);
-        // setPergunta(perguntaTemp);
-        // console.log('lista de perguntas depois');
-        // console.log(perguntasQuiz);
+     
         let tempNumb = perguntaDaVez;
         if((tempNumb + 1) >= listaPergunta.length){
             Alert.alert('O Jogo Acabou');
@@ -124,6 +107,23 @@ export default function Quiz({ route,navigation }) {
         }
         proximaPergunta();
     }
+    
+    function idImage(){  
+        console.log(listaPergunta[perguntaDaVez]._id);
+        return listaPergunta[perguntaDaVez]._id;        
+    }
+
+    function pathImage(){
+        
+        let lista = listaImagens();
+        let imageTemp = lista.filter(x=> x.id ===listaPergunta[perguntaDaVez]._id);  
+
+        if(imageTemp[0] != undefined){
+            return imageTemp[0].image;
+        }else{
+            return null;
+        }
+    }
 
     if (loading) {
         return <Text>Loading</Text>
@@ -142,7 +142,7 @@ export default function Quiz({ route,navigation }) {
                 </View>
                 <View style={[estilos.pergunta, estilos.elevation]}>
                     <Text style={estilos.texto_pergunta}>{listaPergunta[perguntaDaVez].descricao}</Text>
-                    <Image source={require('../Images/A.gif')} style={estilos.img_pergunta} />
+                    <Image key={idImage()} source={pathImage()} style={estilos.img_pergunta} />
 
                 </View>
                 <View style={estilos.alternativas}>
