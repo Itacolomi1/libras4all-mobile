@@ -9,13 +9,16 @@ import { StyleSheet,
   TouchableOpacity,
   Dimensions,
   Platform,   
-  Alert
+  Alert,
+  SafeAreaView
 } from 'react-native';
 import * as settings from '../../assets/config/appSettings.json'
 
 //import {drawRect} from './utilities';
 import Canvas from 'react-native-canvas';
 import {adicionaHistorico} from '../../services/historic.service';
+import Lottie from 'lottie-react-native';
+import carregar from '../Images/carregar.json';
 
 
 const TensorCamera = cameraWithTensors(Camera);
@@ -328,9 +331,11 @@ React.useEffect(() => {
         : {height: 1200, width: 1600}
   
     if(loading){
-      return  <View>               
-                <Text>To carregando meu filhooo</Text>
-              </View>
+      return<>
+      <SafeAreaView style={styles.carregando}>
+          <Lottie  style={styles.carregar_animate} source={carregar} autoPlay loop renderMode='contain' autoSize />
+      </SafeAreaView>
+  </>
     }
  
     return ( 
@@ -411,5 +416,15 @@ const styles = StyleSheet.create({
     barraSinais: {
       width: '100%',
       backgroundColor: '#3682F5'
+    },
+    carregar_animate:{
+      alignSelf: "center",
+      width: "100%"
+    },
+    carregando:{
+      backgroundColor:"#e3f2ff",
+      flex: 1, 
+      justifyContent: 'center', 
+      alignItems: 'center'
     },
   });
