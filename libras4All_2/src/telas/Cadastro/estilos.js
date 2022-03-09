@@ -78,5 +78,15 @@ export default StyleSheet.create({
         width: "100%",
         alignItems: "center",
         alignSelf: "center"
-    }
+    },
+    carregar_animate:{
+        alignSelf: "center",
+        width: "100%"
+    },
+    carregando:{
+        backgroundColor:"#e3f2ff",
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
 });

@@ -2,14 +2,18 @@ import React, {useState,useEffect} from 'react';
 import {Text,View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert} from 'react-native';
 import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
+import Lottie from 'lottie-react-native';
+import carregar from '../Images/carregar.json';
 
 export default function Cadastro({navigation}) {
     const [userNome, setUserNome] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
 
-    const Cadastrar = () => {   
+    const Cadastrar = () => {  
+        setLoading(true); 
         fetch( settings.backend.url + '/usuario',{
             method: 'POST',
             headers: {
@@ -18,6 +22,7 @@ export default function Cadastro({navigation}) {
             body: JSON.stringify({"nome":userNome.trim(),"email":userEmail.trim(),"senha":password})
         })
         .then(response => {
+            setLoading(false); 
             if(response.ok){
                 Alert.alert('Parabens !!','Cadastro realizado com sucesso !',[
                     {
@@ -31,6 +36,7 @@ export default function Cadastro({navigation}) {
             }else{
                 Alert.alert('Erro ao realizar cadastro');
             }
+            
         })  
         .catch(error => {
           Alert.alert('Erro ao realizar cadastro');
@@ -78,7 +84,15 @@ export default function Cadastro({navigation}) {
           );
       }
 
-    return <>
+    if(loading){
+        return<>
+        <SafeAreaView style={estilos.carregando}>
+            <Lottie  style={estilos.carregar_animate} source={carregar} autoPlay loop renderMode='contain' autoSize />
+        </SafeAreaView>
+    </>
+
+    }else{
+        return <>
         <SafeAreaView style={estilos.fundo}>
             <StatusBar backgroundColor="rgb(35, 36, 95)"/>
         
@@ -127,4 +141,8 @@ export default function Cadastro({navigation}) {
    
         </SafeAreaView>
     </>
+
+    }
+
+    
 }
