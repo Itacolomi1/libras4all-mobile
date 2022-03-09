@@ -19,11 +19,19 @@ export default function Login({navigation}) {
             },
             body: JSON.stringify({"email":userEmail,"senha":password})
         })
-        .then(response => response.json())
+        .then(response => {
+            if(response.ok){
+                console.log('passou por aqui');
+                return response.json();
+            }                      
+        })
         .then(responseJson => {
-            console.log('deu certo');
-            console.log(responseJson);
-            navigation.navigate('Home', {userID: responseJson._id, token: responseJson.token});
+            if(responseJson){
+                navigation.navigate('Home', {userID: responseJson._id, token: responseJson.token});
+            }else{
+                Alert.alert('Usuário ou senha incorretos!');
+            }
+      
         })
         .catch(error => {
           console.log('deu errado');
