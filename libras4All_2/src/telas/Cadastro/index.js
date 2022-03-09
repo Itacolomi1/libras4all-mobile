@@ -19,15 +19,64 @@ export default function Cadastro({navigation}) {
         })
         .then(response => {
             if(response.ok){
-                Alert.alert('Cadastro Realizado com sucesso');
-                navigation.navigate('Login');
+                Alert.alert('Parabens !!','Cadastro realizado com sucesso !',[
+                    {
+                        text: 'Ok!',
+                        onPress: () => {
+                            navigation.navigate('Login');
+                        }
+                    }
+                ]);
+               
+            }else{
+                Alert.alert('Erro ao realizar cadastro');
             }
         })  
         .catch(error => {
-          console.log('deu errado');
+          Alert.alert('Erro ao realizar cadastro');
           console.error(error);
         });
     }
+
+    function validaCampos(){
+        if(userNome.length == 0){
+            Alert.alert('Informe o nome');
+            return false;
+        }
+
+        if(password.length == 0){
+            Alert.alert('Informe a senha');
+            return false;
+        }
+
+        if(!validateEmail(userEmail.trim())){
+            Alert.alert('Informe um e-mail válido!')
+            return false;
+        }
+
+        return true;
+    }
+
+    function salvarDados(){
+        if(!validaCampos())
+            return;
+        
+        try{
+            Cadastrar();
+
+        }catch(e){
+            Alert.alert(e.toString());
+        }
+
+    }
+
+    function validateEmail(email) {
+        return String(email)
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          );
+      }
 
     return <>
         <SafeAreaView style={estilos.fundo}>
@@ -70,7 +119,7 @@ export default function Cadastro({navigation}) {
             <View style={estilos.botao}>               
                 <TouchableOpacity 
                 style={estilos.salvar_button}
-                onPress={Cadastrar}
+                onPress={() =>{salvarDados()}}
                 >
                     <Text style={estilos.texto_button}>Salvar</Text>
                 </TouchableOpacity>           

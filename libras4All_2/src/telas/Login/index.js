@@ -8,16 +8,14 @@ export default function Login({navigation}) {
     const [password, setPassword] = useState('');
 
 
-    const Logar = () => {
- 
-        const corpo = JSON.stringify({"email":userEmail,"senha":password});
-        console.log(corpo);
+    const Logar = () => { 
+  
         fetch( settings.backend.url + '/usuario/login',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({"email":userEmail,"senha":password})
+            body: JSON.stringify({"email":userEmail.trim(),"senha":password})
         })
         .then(response => {
             if(response.ok){
@@ -37,6 +35,32 @@ export default function Login({navigation}) {
           console.log('deu errado');
           console.error(error);
         });
+    }
+
+    function validaCampos(){
+        if(userEmail.length == 0){
+            Alert.alert('Informe o email!');
+            return false;
+        }
+
+        if(password.length == 0){
+            Alert.alert('Informe a senha!');
+            return false;
+        }    
+
+        return true;
+    }
+
+    function sendLogin(){
+        if(!validaCampos())
+            return;
+        
+        try{
+            Logar();
+        }catch(e){
+            Alert.alert(e.toString());
+        }
+        
     }
 
     function goToCadastro(){
@@ -75,7 +99,7 @@ export default function Login({navigation}) {
             <View style={estilos.botao}>
                 <TouchableOpacity  
                 style={estilos.login_button}
-                onPress={Logar}
+                onPress={() => {sendLogin()}}
                 >
                     <Text style={estilos.texto_button}>Logar</Text>
                 </TouchableOpacity> 
