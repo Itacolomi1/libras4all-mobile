@@ -4,6 +4,8 @@ import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
 import {adicionaHistorico} from '../../services/historic.service';
 import {listaImagens} from './lista-imagens';
+import Lottie from 'lottie-react-native';
+import carregar from '../Images/carregar.json';
 
 export default function Quiz({ route,navigation }) {
     const { userID, token, salaID} = route.params;
@@ -126,7 +128,11 @@ export default function Quiz({ route,navigation }) {
     }
 
     if (loading) {
-        return <Text>Loading</Text>
+        return <>
+            <SafeAreaView style={estilos.carregando}>
+                <Lottie  style={estilos.carregar_animate} source={carregar} autoPlay loop renderMode='contain' autoSize />
+            </SafeAreaView>
+        </>
     } else {
         return <>
             <SafeAreaView style={estilos.fundo}>
