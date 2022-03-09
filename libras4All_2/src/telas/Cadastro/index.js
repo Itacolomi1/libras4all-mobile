@@ -9,15 +9,13 @@ export default function Cadastro({navigation}) {
     const [password, setPassword] = useState('');
 
 
-    const Cadastrar = () => {
-        const corpo = JSON.stringify({"nome":userNome,"email":userEmail,"senha":password});
-        console.log(corpo);
+    const Cadastrar = () => {   
         fetch( settings.backend.url + '/usuario',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({"nome":userNome,"email":userEmail,"senha":password})
+            body: JSON.stringify({"nome":userNome.trim(),"email":userEmail.trim(),"senha":password})
         })
         .then(response => {
             if(response.ok){
