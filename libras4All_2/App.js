@@ -263,12 +263,14 @@ import Jogos from './src/telas/Jogos';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cadastro from './src/telas/Cadastro';
+import Resultado from './src/telas/Resultado';
 const Stack = createNativeStackNavigator();
 
 export default function App () {
   return <NavigationContainer>
             <TelaPadrao>
               <Stack.Navigator>
+              <Stack.Screen name='Resultado' component={Resultado} options={{headerShown:false}}/>
               <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
               <Stack.Screen name='Cadastro' component={Cadastro}/>
               <Stack.Screen name='Inserir Pin' component={InserirPin}/>
