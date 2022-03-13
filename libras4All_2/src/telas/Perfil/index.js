@@ -1,9 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Dimensions, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
 import estilos from './estilos';
+import Lottie from 'lottie-react-native';
+import carregar from '../Images/carregar.json';
+import * as settings from '../../assets/config/appSettings.json'
 
 export default function Perfil({ route, navigation }) {
     const { userID, token } = route.params;
+    const [loading, setLoading] = useState(true);
+    const [usuario, setUsuario] = useState(null);
+
+    useEffect(()=>{
+        const unsubscribe = navigation.addListener('focus', () => {
+            getUser();
+        });
+
+        return unsubscribe;
+    },[navigation]);
+
+
+    function getUser() {
+
+        fetch(settings.backend.url + `/usuario/${userID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+
+        })
+            .then(response => response.json())
+            .then(responseJson => {
+                setUsuario(responseJson);
+                setLoading(false);            
+            })
+            .catch(error => {
+                console.log('deu errado');
+                console.error(error);
+            });
+    }
+    
 
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });
@@ -14,8 +50,20 @@ export default function Perfil({ route, navigation }) {
     function gotoJogos() {
         navigation.navigate('Jogos', { userID: userID, token: token });
     }
+    function logOut(){
+        navigation.navigate('Login');
+    }
 
-    return <>
+
+    if(loading){
+        return<>
+            <SafeAreaView style={estilos.carregando}>
+           <Lottie  style={estilos.carregar_animate} source={carregar} autoPlay loop renderMode='contain' autoSize />
+            </SafeAreaView>
+        </>
+    }else{
+
+        return <>
         <SafeAreaView style={estilos.fundo}>
             <StatusBar backgroundColor="rgb(35, 36, 95)" />
             <View style={estilos.topo}>
@@ -26,18 +74,18 @@ export default function Perfil({ route, navigation }) {
             <View style={[estilos.dados, estilos.elevation]}>
                 <View style={estilos.bloco}>
                     <Text style={estilos.texto_bold}>Nome:</Text>
-                    <Text style={estilos.nome}>Gabi</Text>
+                    <Text style={estilos.nome}>{usuario.nome}</Text>
                 </View>
                 <View style={estilos.bloco}>
                     <Text style={estilos.texto_bold}>Email:</Text>
-                    <Text style={estilos.email}>teste@gmail.com</Text>
+                    <Text style={estilos.email}>{usuario.email}</Text>
                 </View>
 
             </View>
 
             <View style={[estilos.nivel, estilos.elevation]}>
                 <Image source={require('../Images/bronze.png')} style={estilos.icon_nivel} />
-                <Text style={estilos.qtd_pontos}>0 Libracoins</Text>
+                <Text style={estilos.qtd_pontos}>{usuario.libracoins} Libracoins</Text>
                 <Text style={estilos.txt}>Jogue mais e ganhe Libracoins para subir de nivel</Text>
             </View>
             <View style={[estilos.salas, estilos.elevation]}>
@@ -61,7 +109,7 @@ export default function Perfil({ route, navigation }) {
                 <Text style={estilos.qtd_meteoro}>0</Text>
 
             </View>
-            <TouchableOpacity style={estilos.sessao_button}>
+            <TouchableOpacity style={estilos.sessao_button} onPress={() => {logOut()}}>
                 <Text style={estilos.texto_button}>Encerrar sessão</Text>
             </TouchableOpacity>
 
@@ -79,4 +127,7 @@ export default function Perfil({ route, navigation }) {
 
         </SafeAreaView>
     </>
+    }
+
+    
 }

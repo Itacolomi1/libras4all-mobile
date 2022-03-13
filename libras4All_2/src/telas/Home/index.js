@@ -16,6 +16,10 @@ export default function Home({ route, navigation }) {
     function gotoJogos() {
         navigation.navigate('Jogos', { userID: userID, token: token });
     }
+
+    function gotoRankingGeral() {
+        navigation.navigate('Ranking Geral', { userID: userID, token: token });
+    }
    
     return <>
 
@@ -26,7 +30,7 @@ export default function Home({ route, navigation }) {
                     <Image source={require('../Images/perfil.png')} style={estilos.icon_perfil} />
                 </TouchableOpacity>
                 <Image source={require('../Images/logo.png')} style={estilos.logo} />
-                <TouchableOpacity >
+                <TouchableOpacity onPress={() => {gotoRankingGeral()}} >
                 <Image source={require('../Images/trofeu.png')} style={estilos.icon_ranking} />
                 </TouchableOpacity>
             </View>

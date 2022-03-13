@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert } from 'react-native';
 import * as settings from '../../assets/config/appSettings.json'
 import estilos from './estilos';
@@ -9,6 +9,15 @@ export default function Login({ navigation }) {
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    
+    useEffect(()=>{
+        const unsubscribe = navigation.addListener('focus', () => {      
+            setLoading(false);
+            limpaCampos();
+          });
+      
+          return unsubscribe;
+    },[navigation])
 
     const Logar = () => {
         setLoading(true);
@@ -63,6 +72,11 @@ export default function Login({ navigation }) {
             Alert.alert(e.toString());
         }
 
+    }
+
+    function limpaCampos(){
+        setUserEmail('');
+        setPassword('');
     }
 
     function goToCadastro() {
