@@ -14,6 +14,9 @@ export default function Perfil({ route, navigation }) {
     function gotoJogos() {
         navigation.navigate('Jogos', { userID: userID, token: token });
     }
+    function logOut(){
+        navigation.navigate('Login');
+    }
 
     return <>
         <SafeAreaView style={estilos.fundo}>
@@ -61,7 +64,7 @@ export default function Perfil({ route, navigation }) {
                 <Text style={estilos.qtd_meteoro}>0</Text>
 
             </View>
-            <TouchableOpacity style={estilos.sessao_button}>
+            <TouchableOpacity style={estilos.sessao_button} onPress={() => {logOut()}}>
                 <Text style={estilos.texto_button}>Encerrar sessão</Text>
             </TouchableOpacity>
 
