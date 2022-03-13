@@ -341,6 +341,9 @@ React.useEffect(() => {
     return ( 
 
       <>
+      <View style={styles.barraSinais}>
+      <Text style={styles.texto}>Faça a letra {listaSinais[sinalDaVez].descricao}</Text>  
+    </View> 
       <View style={styles.container}>
       <TensorCamera
         ref={camRef}
@@ -371,9 +374,7 @@ React.useEffect(() => {
       <Canvas ref={canvasRef}
         style={styles.canvas}/>
     </View>
-    <View styles={styles.barraSinais}>
-      <Text>Faça a letra {listaSinais[sinalDaVez].descricao}</Text>  
-    </View> 
+    
     </>
     );
   
@@ -403,9 +404,11 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-end',
       alignItems: 'center',
     },
-    text: {
-      fontSize: 18,
-      color: 'white',
+    texto: {
+      fontSize: 20,
+      color: 'black',
+      textAlign: "center",
+      fontWeight: "bold"
     },
     canvas: {
       position: "absolute", 
@@ -415,7 +418,10 @@ const styles = StyleSheet.create({
     },
     barraSinais: {
       width: '100%',
-      backgroundColor: '#3682F5'
+      backgroundColor: 'white',
+      height: 50,
+      justifyContent: "center"
+      
     },
     carregar_animate:{
       alignSelf: "center",

@@ -6,8 +6,9 @@ import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
 
 
-const Item = ({ nome, libracoins }) => (
+const Item = ({ nome, libracoins, posicao }) => (
     <View style={[estilos.itens, estilos.elevation]}>
+         <Text style={estilos.item}>{posicao}º</Text>
         <Text style={estilos.item}>{nome}</Text>
         <Text style={estilos.pontos}>{libracoins}</Text>
     </View>
@@ -73,7 +74,7 @@ export default function RankingGeral({ route, navigation }) {
     }
 
     const renderItem = ({ item }) => (
-        <Item nome={item.nome} libracoins={item.libracoins} />
+        <Item nome={item.nome} libracoins={item.libracoins} posicao={item.posicao} />
     );
 
     if (loading) {

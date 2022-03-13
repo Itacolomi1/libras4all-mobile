@@ -270,7 +270,6 @@ export default function App () {
   return <NavigationContainer>
             <TelaPadrao>
               <Stack.Navigator>
-              <Stack.Screen name='Resultado' component={Resultado} options={{headerShown:false}}/>
               <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
               <Stack.Screen name='Cadastro' component={Cadastro}/>
               <Stack.Screen name='Inserir Pin' component={InserirPin}/>
@@ -284,6 +283,7 @@ export default function App () {
               <Stack.Screen name='Jogos' component={Jogos}/>
               <Stack.Screen name='Ranking Geral' component={RankingGeral} options={{headerShown:false}}/>
               <Stack.Screen name='Mestre Mando' component={MestreMando} options={{headerShown:false}}/>
+              <Stack.Screen name='Resultado' component={Resultado} options={{headerShown:false}}/>
               </Stack.Navigator>
             </TelaPadrao> 
           </NavigationContainer>
