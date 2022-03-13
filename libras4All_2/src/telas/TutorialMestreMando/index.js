@@ -6,6 +6,9 @@ import estilos from './estilos';
 export default function TutorialMestreMando({ route, navigation }) {
     const { userID, token } = route.params;
 
+    // Sala chumbada para jogos Geral
+    const salaID = '622e41b568627700164e1b9c';
+
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });
     }
@@ -14,6 +17,9 @@ export default function TutorialMestreMando({ route, navigation }) {
     }
     function gotoJogos() {
         navigation.navigate('Jogos', { userID: userID, token: token });
+    }
+    function gotoMestreMando() {
+        navigation.navigate('Mestre Mando', {userID: userID,token: token, salaID: salaID});
     }
 
     return <>
@@ -29,7 +35,7 @@ export default function TutorialMestreMando({ route, navigation }) {
 
                     </Text>
                 </View>
-                <TouchableOpacity style={estilos.jogar_button}>
+                <TouchableOpacity style={estilos.jogar_button} onPress={() => {gotoMestreMando()}}>
                     <Text style={estilos.texto_button}>Jogar</Text>
                 </TouchableOpacity>
             </View>
