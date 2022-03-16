@@ -4,10 +4,11 @@ import {cores} from '../../estilos-global';
 export default StyleSheet.create({
     ajusteTela: {
         flex: 1,
-        backgroundColor: cores.roxo,
+        backgroundColor:"rgb(35, 36, 95)" 
+       
     },
     ajusteTelaBaixo: {
         flex:0,
-        backgroundColor: cores.laranja,
+        backgroundColor:"rgb(35, 36, 95)" 
     }
 });
