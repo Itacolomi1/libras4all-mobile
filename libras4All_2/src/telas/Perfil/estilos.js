@@ -13,23 +13,25 @@ export default StyleSheet.create({
         color: "white",
     },
     logo:{
-        height: 65,
+        height: 120,
         width: "50%",
-        alignSelf: "center"
+        alignSelf: "center",
+        resizeMode: "contain" 
         
     },
     
-    nivel:{
-        height: "15%",
+    nivel:{        
+        paddingTop: 15,
+        paddingBottom: 15,
         alignSelf:"center",
-            width: "89%",
-            backgroundColor: "white",
-            borderRadius: 15,
-            flexDirection: 'row',
-            flexWrap: "wrap",
-            justifyContent: "center",
-            alignItems: "center",
-            paddingTop: 15
+        width: "89%",
+        backgroundColor: "white",
+        borderRadius: 15,
+        flexDirection: 'row',
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingTop: 15
     },
     salas:{        
         alignSelf:"center",
@@ -52,18 +54,19 @@ export default StyleSheet.create({
         fontSize: 18,
         color: "black",
         fontWeight: "bold",
-        marginLeft: 25
+        width: "19%"
     },
     bloco:{
         flexDirection: 'row',
-        width: "100%",
+        width: "95%",
+        
     },
     sessao_button:{
         justifyContent: 'center',
         backgroundColor: "rgb(35, 36, 95)",
         alignSelf:"center",
         borderRadius: 5,
-        width: "80%",
+        width: "89%",
         alignSelf: "center",
         marginBottom: 30,
         height: 50,
@@ -99,7 +102,7 @@ export default StyleSheet.create({
        
     },
     elevation:{
-        elevation: 20,
+        elevation: 5,
         shadowColor: '#171717',
     },
     qtd_pontos:{
@@ -111,12 +114,14 @@ export default StyleSheet.create({
 
         fontSize: 18,
         color: "black",
-        marginLeft: 5
+        marginLeft: 5,        
+        width: "80%"
     },
     email:{
         fontSize: 18,
         color: "black",
-        marginLeft: 5
+        marginLeft: 5,        
+        width: "80%",
     },
     texto:{
         fontSize: 18,
@@ -152,7 +157,9 @@ export default StyleSheet.create({
         color: "black",
         marginTop: 15,
         alignSelf: "center",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        width: "100%",
+        paddingLeft: 15
         
     },
     btn_jogo:{       

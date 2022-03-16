@@ -1,6 +1,7 @@
 import { BottomTabBar } from "@react-navigation/bottom-tabs";
 import { AutoFocus } from "expo-camera/build/Camera.types";
 import { StyleSheet } from "react-native";
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 export default StyleSheet.create({
     fundo:{
@@ -13,9 +14,10 @@ export default StyleSheet.create({
         color: "white",
     },
     logo:{
-        height: 65,
+        height: 120,
         width: "50%",
-        alignSelf: "center"
+        alignSelf: "center",
+        resizeMode: "contain"
         
     },
     relogio:{
@@ -49,8 +51,9 @@ export default StyleSheet.create({
         position: "relative",
         height: 45,
     },
-    nivel:{
-        height: "15%",
+    nivel:{        
+        paddingTop: 15,
+        paddingBottom: 15,
         alignSelf:"center",
             width: "89%",
             backgroundColor: "white",
@@ -75,24 +78,29 @@ export default StyleSheet.create({
         color: "black",
         marginTop: 15,
         alignSelf: "center",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        width: "100%",
+        paddingLeft: 15
         
+    },
+    jogos:{
+        height: "57%",
     },
     btn_jogo:{       
         flex:1,
         width: "100%",
         resizeMode : 'contain',
-        alignItems: 'center'
+        alignItems: 'center',
         },
          
         button:{
             justifyContent: 'center',
-            backgroundColor: "white",
+            backgroundColor:"#e3f2ff",
             alignSelf:"center",
             width: "89%",
             alignSelf: "center",
-            height: 110,
-            marginBottom: 35
+            height: "33%",
+            
     
         },
     icon_nivel:{

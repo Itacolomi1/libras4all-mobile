@@ -5,6 +5,8 @@ import estilos from './estilos';
 export default function TutorialMeteoro({ route, navigation }) {
 
     const { userID, token } = route.params;
+        // Sala chumbada para jogos Geral
+        const salaID = '621bf0572d53a30016a0b575';
 
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });
@@ -14,6 +16,10 @@ export default function TutorialMeteoro({ route, navigation }) {
     }
     function gotoJogos() {
         navigation.navigate('Jogos', { userID: userID, token: token });
+    }
+
+    function gotoMeteoro() {
+        navigation.navigate('Meteoro', {userID: userID,token: token, salaID: salaID});
     }
 
 
@@ -28,7 +34,7 @@ export default function TutorialMeteoro({ route, navigation }) {
                     <Text style={estilos.texto}>Se o meteoro chegar na linha limite antes de você acertar o sinal, você não ganha Libracoins mas se acertar você ganha 10 Libracoins <Image source={require('../Images/coins.png')} style={estilos.icon} />
                     </Text>
                 </View>
-                <TouchableOpacity style={estilos.jogar_button}>
+                <TouchableOpacity style={estilos.jogar_button} onPress={() => {gotoMeteoro()}}>
                     <Text style={estilos.texto_button}>Jogar</Text>
                 </TouchableOpacity>
             </View>

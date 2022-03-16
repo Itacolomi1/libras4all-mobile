@@ -32,8 +32,9 @@ export default function Jogos({ route, navigation }) {
         <SafeAreaView style={estilos.fundo}>
             <StatusBar backgroundColor="rgb(35, 36, 95)" />
             <View style={estilos.engloba}>
-                <Image source={require('../Images/logo2.png')} style={{ height: imageHeight, width: imageWidth, marginTop: 30 }} />
+                <Image source={require('../Images/logo2.png')} style={estilos.imagem} />
             </View>
+            <View style={estilos.jogos}>
             <TouchableOpacity style={estilos.button} onPress={() => { goToTutorialQuiz() }}>
                 <Image source={require('../Images/quiz.png')} style={estilos.btn_jogo} />
             </TouchableOpacity>
@@ -44,6 +45,7 @@ export default function Jogos({ route, navigation }) {
             <TouchableOpacity style={estilos.button} onPress={() => { goToTutorialMeteoro() }}>
                 <Image source={require('../Images/meteoro.png')} style={estilos.btn_jogo} />
             </TouchableOpacity>
+            </View>
             <View style={estilos.icon_area}>
                 <TouchableOpacity onPress={() => { gotToHome() }}>
                     <Image source={require('../Images/home.png')} style={estilos.icon_home} />

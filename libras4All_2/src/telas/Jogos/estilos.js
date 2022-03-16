@@ -4,28 +4,30 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     fundo:{
-        backgroundColor:"white",
+        backgroundColor:"#e3f2ff",
         height: "100%",
         justifyContent: "space-between",
         color: "black"
     },
    
     
+   
     btn_jogo:{       
-    flex:1,
-    width: "100%",
-    resizeMode : 'contain',
-    alignItems: 'center'
-    },
-     
-    button:{
-        justifyContent: 'center',
-        backgroundColor: "white",
-        alignSelf:"center",
-        width: "89%",
-        alignSelf: "center",
-        height: 110,
-        marginBottom: 35
+        flex:1,
+        width: "100%",
+        resizeMode : 'contain',
+        alignItems: 'center',
+        },
+         
+        button:{
+            justifyContent: 'space-between',
+            backgroundColor:"#e3f2ff",
+            alignSelf:"center",
+            width: "89%",
+            alignSelf: "center",
+            height: "33%",
+            
+
 
     },
     Titulo:{
@@ -41,24 +43,33 @@ export default StyleSheet.create({
     },
     engloba:{
         width: "100%",
-        
-        
+        alignItems: "center",
+        height: "25%",
+        paddingTop: 20
+    },
+    imagem:{
+        resizeMode: "contain",
+        height: "100%",
+    },
+    jogos:{
+        height: "65%",
+        paddingBottom: 20
     },
     icon_game:{        
-        height: 50,
+        height: "100%",
         width: 45,
         resizeMode : 'contain',
         alignItems: 'center'
        
     },
     icon_pin:{        
-        height: 45,
+        height: "100%",
         width: 45,
         resizeMode : 'contain',
         alignItems: 'center'       
     },
     icon_home:{        
-        height: 40,
+        height: "100%",
         width: 45,
         resizeMode : 'contain',
         alignItems: 'center'       
@@ -68,7 +79,8 @@ backgroundColor: "rgb(35, 36, 95)",
 flexDirection: 'row',
 justifyContent: "space-around",
 height: 65,
-alignItems: "center"
+maxHeight: "8%",
+alignItems: "center",
 
 
     },

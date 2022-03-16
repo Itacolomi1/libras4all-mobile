@@ -86,6 +86,7 @@ export default function Login({ navigation }) {
     if (loading) {
         return <>
             <SafeAreaView style={estilos.carregando}>
+            <StatusBar backgroundColor="rgb(35, 36, 95)" />
                 <Lottie style={estilos.carregar_animate} source={carregar} autoPlay loop renderMode='contain' autoSize />
             </SafeAreaView>
         </>
