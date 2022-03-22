@@ -259,9 +259,9 @@ React.useEffect(() => {
         // faz a previsão.
         const obj = await net.executeAsync(expanded);
   
-        const boxes = await obj[2].array();
-        const classes = await obj[4].array();
-        const scores = await obj[1].array();
+        const boxes = await obj[1].array();
+        const classes = await obj[5].array();
+        const scores = await obj[2].array();
   
         // Draw mesh
         canvasRef.current.width =videoWidth;
