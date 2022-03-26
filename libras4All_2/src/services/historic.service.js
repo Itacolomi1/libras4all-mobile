@@ -21,11 +21,21 @@ export async function adicionaHistorico(token,idSala,idUsuario,tipoJogo,idItem,a
         body: JSON.stringify(data)
 
     })
-        .then(response => response.json())
+        .then(response => {
+            console.log('retorno do histórico');            
+            if(response.ok){                
+                return response.json()
+            }
+        } )
         .then(responseJson => {
-            retorno = responseJson;
-            console.log('salvei no historico');
-            console.log(retorno);
+            if(responseJson){
+                retorno = responseJson;
+                console.log('salvei no historico');
+                console.log(retorno);
+            }else{
+                console.log('algo estranho ao salvar o histórico')
+            }
+
         })
         .catch(error => {
             console.log('deu errado');

@@ -6,6 +6,8 @@ import {adicionaHistorico} from '../../services/historic.service';
 import {listaImagens} from './lista-imagens';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
+import TransicaoCerto from '../TransicaoCerto';
+import TransicaoErrado from '../TransicaoErrado';
 
 export default function Quiz({ route,navigation }) {
     const { userID, token, salaID} = route.params;
@@ -15,8 +17,9 @@ export default function Quiz({ route,navigation }) {
     const [loading, setLoading] = useState(true);    
     const [listaPergunta,setListaPergunta] = useState([]);
     const [perguntaDaVez,setPerguntaDaVez] = useState(0);
-    
-
+    const [respostaCerta, setRespostaCerta] = useState(false);
+    const [respostaErrada, setRespostaErrada] = useState(false);
+    const [isLibracoins, setIsLibracoins] = useState(0);
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {       
@@ -25,6 +28,8 @@ export default function Quiz({ route,navigation }) {
 
         return unsubscribe;
     }, [navigation]);
+
+
 
     function getQuiz() {
 
@@ -61,8 +66,7 @@ export default function Quiz({ route,navigation }) {
             let pergunta = await getPergunta(element);
             perguntasQuiz.push(pergunta);
         }
-        setListaPergunta(perguntasQuiz);
-        //proximaPergunta();
+        setListaPergunta(perguntasQuiz);     
         setLoading(false);
     }
 
@@ -92,20 +96,27 @@ export default function Quiz({ route,navigation }) {
      
         let tempNumb = perguntaDaVez;
         if((tempNumb + 1) >= listaPergunta.length){
-            Alert.alert('O Jogo Acabou');
+            //manda pra tela Resultado
+            navigation.navigate('Resultado',
+            {   userID: userID,
+                token: token,
+                salaID: salaID,
+                isLibracoins: (isLibracoins > 0)? true: false
+            })
             return;
         }
         setPerguntaDaVez(perguntaDaVez + 1); 
     }
 
-    function validaResposta(alternativa){
+    async function validaResposta(alternativa){
        
         if(alternativa.perguntaCorreta === 'true'){
-            adicionaHistorico(token,salaID,userID,'Quiz',listaPergunta[perguntaDaVez]._id,'true');
-            Alert.alert('Acertouuuuu');
+            await adicionaHistorico(token,salaID,userID,'Quiz',listaPergunta[perguntaDaVez]._id,'true');
+            setRespostaCerta(true);
+            setIsLibracoins(isLibracoins + 1);
         }else{
-            adicionaHistorico(token,salaID,userID,'Quiz',listaPergunta[perguntaDaVez]._id,'false');
-            Alert.alert('Errouuuuuuuu');
+            await adicionaHistorico(token,salaID,userID,'Quiz',listaPergunta[perguntaDaVez]._id,'false');
+            setRespostaErrada(true);
         }
         proximaPergunta();
     }
@@ -125,6 +136,28 @@ export default function Quiz({ route,navigation }) {
         }else{
             return null;
         }
+    }
+
+
+    function childToParent (close) {
+        setRespostaCerta(close);
+    }
+
+    function erraQuestao(close){
+        setRespostaErrada(close);
+    }
+
+
+    if(respostaCerta){
+        return <>
+            <TransicaoCerto childToParent={childToParent}></TransicaoCerto>
+        </>
+    }
+
+    if(respostaErrada){
+        return <>
+            <TransicaoErrado erraQuestao={erraQuestao} ></TransicaoErrado>        
+        </>
     }
 
     if (loading) {
