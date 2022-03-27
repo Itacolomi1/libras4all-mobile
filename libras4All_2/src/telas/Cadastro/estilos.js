@@ -17,6 +17,7 @@ export default StyleSheet.create({
         height: 50
         
     },
+    
     icon_area:{
         width: "80%",        
         alignSelf: "center",
@@ -37,6 +38,18 @@ export default StyleSheet.create({
     width: 25,
     resizeMode : 'stretch',
     alignItems: 'center'
+    },
+    input_date:{
+        padding: 10,
+    margin: 5,
+    height: 25,
+    width: 25,
+    resizeMode : 'stretch',
+    alignItems: 'flex-start',
+    flexDirection:'row',
+    justifyContent: 'flex-start'
+
+    
     },
     texto_button:{
         color: "#fff",
