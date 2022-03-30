@@ -265,6 +265,7 @@ import TransicaoCerto from './src/telas/TransicaoCerto';
 import TransicaoErrado from './src/telas/TransicaoErrado';
 import TransicaoCertoMestre from './src/telas/TransicaoCertoMestre';
 import TransicaoErradoMestre from './src/telas/TransicaoErradoMestre';
+import MestreMandoWrap from './src/telas/MestreMandoWrap';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cadastro from './src/telas/Cadastro';
@@ -292,7 +293,7 @@ export default function App () {
               <Stack.Screen name='Tutorial Mestre Mando' component={TutorialMestreMando}/>
               <Stack.Screen name='Jogos' component={Jogos}/>
               <Stack.Screen name='Ranking Geral' component={RankingGeral} options={{headerShown:false}}/>
-              <Stack.Screen name='Mestre Mando' component={MestreMando} options={{headerShown:false}}/>
+              <Stack.Screen name='Mestre Mando' component={MestreMandoWrap} options={{headerShown:false}}/>
               <Stack.Screen name='Meteoro' component={Meteoro} options={{headerShown:false}}/>
               </Stack.Navigator>
             </TelaPadrao> 
