@@ -32,8 +32,11 @@ const labelMap = {
   4:{name:'D', color:'blue'},
 }
 
-export default function MestreMando({validaLetra},Letra) {
+export default function MestreMando({ValidaMestre, Letra}) {
 
+  const [loading, setLoading] = useState(true);
+  let requestAnimationFrameId = 0;
+  console.log('A Letra recebida foi ' + Letra);
 
 //#endregion
     const getModel = async () => {
@@ -58,6 +61,7 @@ export default function MestreMando({validaLetra},Letra) {
         const net = await tf.loadGraphModel(
           bundleResourceIO(modelJson, modelWeights));
         console.log('modelo is on');
+        setLoading(false);
   
         modeloTensorFlow = net;  
   
@@ -111,10 +115,14 @@ export default function MestreMando({validaLetra},Letra) {
           ctx.rect(x*imgWidth, y*imgHeight, width*imgWidth/2, height*imgHeight/2);
           ctx.stroke()
 
-          if(labelMap[text]['name'] === listaSinais[sinalDaVez].descricao){
-             //Salva o resultado do Mestre Mando;
-            registra_resultado(true);
+          // if(labelMap[text]['name'] === listaSinais[sinalDaVez].descricao){
+          //    //Salva o resultado do Mestre Mando;
+          //   registra_resultado(true);
+          // }
+          if(labelMap[text]['name'] === Letra){
+            ValidaMestre(true);
           }
+
          
       }
   }
@@ -168,7 +176,7 @@ export default function MestreMando({validaLetra},Letra) {
         const scaleWidth = width/ images.shape[1];
         const scaleHeight = height/ images.shape[0];
 
-        requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.7, videoWidth, videoHeight, ctx)});
+        requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.8, videoWidth, videoHeight, ctx)});
         //requestAnimationFrame(()=>{drawRectangle(boxes[0], classes[0], scores[0], 0.7, videoWidth, videoHeight, ctx)});
   
         tf.dispose(video);
@@ -235,7 +243,7 @@ export default function MestreMando({validaLetra},Letra) {
 
       <>
       <View style={styles.barraSinais}>
-      <Text style={styles.texto}>Faça a letra {listaSinais[sinalDaVez].descricao}</Text>  
+      <Text style={styles.texto}>Faça a letra {Letra}</Text>  
     </View> 
       <View style={styles.container}>
       <TensorCamera

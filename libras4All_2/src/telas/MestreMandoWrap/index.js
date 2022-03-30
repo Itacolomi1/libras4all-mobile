@@ -1,14 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react';
-import {    
+import {
     Text,
     View,
-    SafeAreaView
+    SafeAreaView,
+    TouchableOpacity
 } from 'react-native';
 import * as settings from '../../assets/config/appSettings.json';
 import estilos from './estilos';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
 import MestreMando from '../MestreMando';
+import TransicaoCertoMestre from '../TransicaoCertoMestre';
+import {adicionaHistorico} from '../../services/historic.service';
+
 
 
 
@@ -18,7 +22,10 @@ export default function MestreMandoWrap({ route, navigation }) {
     const [listaSinais, setListaSinais] = useState([]);
     const [sinalDaVez, setSinal] = useState(0);
     const [mestreMandou, setMestreMandou] = useState(false);
-    let sinaisId =[];
+    const [transicaoAcertou, setTransicaoAcertou] = useState(false);
+    const [isLibracoins, setIsLibracoins] = useState(0);
+
+    let sinaisId = [];
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -64,6 +71,7 @@ export default function MestreMandoWrap({ route, navigation }) {
             listaSinais.push(sinal);
         }
         setLoading(false);
+        setMestreMandou(true);
         console.log(listaSinais);
     }
     //Pega os dados de um sinal singular
@@ -90,24 +98,66 @@ export default function MestreMandoWrap({ route, navigation }) {
     }
     //#endregion
 
+   async function ValidaMestre(close) {
+
+        setMestreMandou(false);
+        // validar com o close se é um acerto ou um erro
+        if(close){
+            setIsLibracoins(isLibracoins + 1);
+            setTransicaoAcertou(true);
+            await adicionaHistorico(token,salaID,userID,'Mestre Mandou',listaSinais[sinalDaVez]._id,'true')
+
+        }
+    }
+
+    function TrocaLetra(close) {
+        setTransicaoAcertou(close);
+        //trocar a letra
+        if ((sinalDaVez + 1) >= listaSinais.length) {
+            //manda pra tela Resultado
+            navigation.navigate('Resultado',
+                {
+                    userID: userID,
+                    token: token,
+                    salaID: salaID,
+                    isLibracoins: (isLibracoins > 0) ? true : false
+                })
+            return;
+        }
+        setSinal(sinalDaVez + 1);
+        setMestreMandou(true);
+    }
+
+
+
+    if (transicaoAcertou) {
+        return <>
+            <TransicaoCertoMestre TrocaLetra={TrocaLetra} />
+        </>
+
+    }
+
+    if (mestreMandou) {
+        return <>
+            <MestreMando ValidaMestre={ValidaMestre} Letra={listaSinais[sinalDaVez].descricao} />
+        </>
+    }
+
     if (loading) {
         return <>
             <SafeAreaView style={estilos.carregando}>
                 <Lottie style={estilos.carregar_animate} source={carregar} autoPlay loop renderMode='contain' autoSize />
             </SafeAreaView>
         </>
-
     } else {
+        console.log(mestreMandou);
         return <>
-            <View><Text>Os dados carregaram hehe</Text></View>
-        </>
-
-    }
-
-    if(mestreMandou){
-        return<>
-
-        
+            <View><Text>Besteira Qualquer</Text></View>
         </>
     }
+
+
+
+
+
 }
