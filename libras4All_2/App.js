@@ -261,6 +261,11 @@ import TutorialMestreMando from './src/telas/TutorialMestreMando';
 import MestreMando from './src/telas/MestreMando';
 import RankingGeral from './src/telas/RankingGeral';
 import Jogos from './src/telas/Jogos';
+import TransicaoCerto from './src/telas/TransicaoCerto';
+import TransicaoErrado from './src/telas/TransicaoErrado';
+import TransicaoCertoMestre from './src/telas/TransicaoCertoMestre';
+import TransicaoErradoMestre from './src/telas/TransicaoErradoMestre';
+import MestreMandoWrap from './src/telas/MestreMandoWrap';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cadastro from './src/telas/Cadastro';
@@ -269,9 +274,14 @@ const Stack = createNativeStackNavigator();
 
 export default function App () {
   return <NavigationContainer>
-            <TelaPadrao>
+            <TelaPadrao>              
               <Stack.Navigator>
               <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
+              <Stack.Screen name='Resultado' component={Resultado} options={{headerShown:false}}/>
+              <Stack.Screen name='Transicao Certo' component={TransicaoCerto} options={{headerShown:false}}/>
+              <Stack.Screen name='Transicao Errado' component={TransicaoErrado} options={{headerShown:false}}/>
+              <Stack.Screen name='Transicao Certo Mestre' component={TransicaoCertoMestre} options={{headerShown:false}}/>
+              <Stack.Screen name='Transicao Errado Mestre' component={TransicaoErradoMestre} options={{headerShown:false}}/>
               <Stack.Screen name='Cadastro' component={Cadastro}/>
               <Stack.Screen name='Inserir Pin' component={InserirPin}/>
               <Stack.Screen name='Home' component={Home} options={{headerShown:false}}/>
@@ -283,8 +293,7 @@ export default function App () {
               <Stack.Screen name='Tutorial Mestre Mando' component={TutorialMestreMando}/>
               <Stack.Screen name='Jogos' component={Jogos}/>
               <Stack.Screen name='Ranking Geral' component={RankingGeral} options={{headerShown:false}}/>
-              <Stack.Screen name='Mestre Mando' component={MestreMando} options={{headerShown:false}}/>
-              <Stack.Screen name='Resultado' component={Resultado} options={{headerShown:false}}/>
+              <Stack.Screen name='Mestre Mando' component={MestreMandoWrap} options={{headerShown:false}}/>
               <Stack.Screen name='Meteoro' component={Meteoro} options={{headerShown:false}}/>
               </Stack.Navigator>
             </TelaPadrao> 

@@ -12,11 +12,10 @@ import { StyleSheet,
   Alert,
   SafeAreaView
 } from 'react-native';
-import * as settings from '../../assets/config/appSettings.json'
+
 
 //import {drawRect} from './utilities';
 import Canvas from 'react-native-canvas';
-import {adicionaHistorico} from '../../services/historic.service';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
 
@@ -33,114 +32,8 @@ const labelMap = {
   4:{name:'D', color:'blue'},
 }
 
-export default function MestreMando({route,navigation}) {
+export default function MestreMando({validaLetra},Letra) {
 
-  const { userID, token, salaID} = route.params;
-  console.log('userID ' + userID);
-  console.log('token ' + token);
-  console.log('SalaID ' + salaID);
-  const [loading, setLoading] = useState(true);
-  const [listaSinais,setListaSinais] = useState([]);
-  const [sinalDaVez,setSinal] = useState(0);
-  let sinaisId =[];
-  let sinaisMestreMando = [];
-  let requestAnimationFrameId = 0;
-
-React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {      
-      getMestreMando();
-    });
-
-    return unsubscribe;
-}, [navigation]);
-
-//#region Get Mestre Mando 
-    //Pegar os sinais cadastrados para esse jogo
-    function getMestreMando(){
-      try{
-        fetch( settings.backend.url + `/historico/obterItens/${salaID}`,{
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + token
-          },
-         
-        })
-          .then(response => response.json())
-          .then(responseJson => {            
-            sinaisId = responseJson;
-            getSinais();
-          })
-          .catch(error => {
-            console.log('deu errado');
-            console.error(error);
-          });
-
-      }catch(e){
-        console.log('deu ruim na requisição')
-        console.log(e);
-      }     
-    }
-
-    // Itera entre todos os sinais e salva em uma lista
-    async function getSinais() {
-      for (let index = 0; index < sinaisId.length; index++) {
-        const element = sinaisId[index];
-        console.log('id do sinal: ' + element);
-        let sinal = await getSinal(element);
-        sinaisMestreMando.push(sinal);        
-      }
-      setListaSinais(sinaisMestreMando);
-      setLoading(false);
-    }
-    //Pega os dados de um sinal singular
-    async function getSinal(elemento){
-      let retorno = '';
-      await fetch(settings.backend.url + `/mestreMandou/obterSinal/${elemento}`, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + token
-          },
-
-      })
-          .then(response => response.json())
-          .then(responseJson => {
-              retorno = responseJson;
-          })
-          .catch(error => {
-              console.log('deu errado');
-              console.error(error);
-          });
-
-      return retorno;
-    }
-//#endregion
-
-//#region Exibindo sinais
-  function proximoSinal() {
-    let tempNumb = sinalDaVez;
-    if((tempNumb + 1) >= sinalDaVez.length){
-        Alert.alert('O Jogo Acabou');
-        return;
-    }
-    setSinal(sinalDaVez + 1); 
-  }
-
-  
-  function registra_resultado(resultado){
-       
-    if(resultado){
-        adicionaHistorico(token,salaID,userID,'Mestre Mandou',listaSinais[sinalDaVez]._id,'true');
-        Alert.alert('Acertouuuuu');
-    }else{
-        adicionaHistorico(token,salaID,userID,'Mestre Mandou',listaSinais[sinalDaVez]._id,'false');
-        Alert.alert('Errouuuuuuuu');
-    }
-    proximoSinal();
-  }
-
-// método para verificar o tempo do jogo;
 
 //#endregion
     const getModel = async () => {
@@ -259,9 +152,9 @@ React.useEffect(() => {
         // faz a previsão.
         const obj = await net.executeAsync(expanded);
   
-        const boxes = await obj[2].array();
-        const classes = await obj[4].array();
-        const scores = await obj[1].array();
+        const boxes = await obj[1].array();
+        const classes = await obj[5].array();
+        const scores = await obj[2].array();
   
         // Draw mesh
         canvasRef.current.width =videoWidth;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, Dimensions, ImageBackground, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
+import { View, Text, FlatList, Dimensions, ImageBackground, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert } from 'react-native';
 import * as settings from '../../assets/config/appSettings.json'
 import estilos from './estilos';
 import Lottie from 'lottie-react-native';
@@ -76,10 +76,37 @@ export default function SalaEspera({ route, navigation }) {
         })
             .then(response => response.json())
             .then(responseJson => {
-
                 retorno = responseJson;
+            })
+            .catch(error => {
+                console.log('deu errado');
+                console.error(error);
+            });
 
+        return retorno;
+    }
 
+    async function getSala(){
+        let retorno = '';
+        await fetch(settings.backend.url + `/sala/${salaID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+
+        })
+            .then(response => {
+                if(response.ok){
+                    return response.json();
+                }
+                })
+            .then(responseJson => {
+                if(responseJson){
+                    retorno = responseJson;
+                }else{
+                    console.log('deu erro no getSala');
+                }
             })
             .catch(error => {
                 console.log('deu errado');
@@ -99,18 +126,22 @@ export default function SalaEspera({ route, navigation }) {
     function goToMeteoro(){
         navigation.navigate('Quiz',{userID: userID,token: token, salaID: salaID});
     }
-    function goToJogo(){
-
-        switch(tipoJogo){
-            case 'Quiz':
-                goToQuiz();
-                break;
-            case 'Meteoro':
-                Alert.alert('Mestre Mandou ainda não esta pronto');
-                break;
-            case'Mestre Mandou':                
-                goToMestreMando();
-                break;
+    async function goToJogo(){
+        let sala = await getSala();
+        if(sala.status){
+            switch(tipoJogo){
+                case 'Quiz':
+                    goToQuiz();
+                    break;
+                case 'Meteoro':
+                    Alert.alert('Mestre Mandou ainda não esta pronto');
+                    break;
+                case'Mestre Mandou':                
+                    goToMestreMando();
+                    break;
+            }
+        }else{
+            Alert.alert('Esta sala ainda não pode ser acessada :(');
         }
     }
 

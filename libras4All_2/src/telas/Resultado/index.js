@@ -1,22 +1,82 @@
-import React from 'react';
+import React, { useState, useEffect }from 'react';
 import { Text, View, Dimensions, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
 import estilos from './estilos';
 import Lottie from 'lottie-react-native';
 import acertou from '../Images/acertou.json';
 import errou from '../Images/errou.json';
-export default function Resultado() {
+import carregar from '../Images/carregar.json';
+import * as settings from '../../assets/config/appSettings.json'
+export default function Resultado({route,navigation}) {
     //Get parameter
-   
+    const { userID, token, salaID, isLibracoins} = route.params;
 
+    const [loading, setLoading] = useState(true);
+    const [pontuacao,setPontuacao] = useState();
+
+    useEffect(()=>{
+        const unsubscribe = navigation.addListener('focus', () => {
+            //do something here
+            getPontos();
+        });
+
+        return unsubscribe;
+    },[navigation]);
+
+    function getPontos() {
+        fetch(settings.backend.url + `/historico/quantidadePorAluno/${salaID}/${userID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+
+        })
+            .then(response => {
+                console.log('retorno dos resultados');
+                
+                if(response.ok){                
+                    return response.json()
+                }
+            } )
+            .then(responseJson => {
+                if(responseJson){
+                    console.log('retorno do Resultado');
+                    setPontuacao(responseJson);
+                }else {
+                    console.log('something bad happen with resultd');
+                }
+                setLoading(false);
+            })
+            .catch(error => {
+                console.log('deu errado');
+                console.error(error);
+            });
+    }
+
+    function gotToHome() {
+        navigation.navigate('Home', { userID: userID, token: token });
+    }
+    
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });
     }
-    
-    function gotoPerfil() {
-        navigation.navigate('Perfil', { userID: userID, token: token });
-    }
     function gotoJogos() {
         navigation.navigate('Jogos', { userID: userID, token: token });
+    }
+
+    function bau(){
+        console.log('chegou aqui ' + isLibracoins);
+        return isLibracoins? acertou:errou;
+    }
+
+
+
+    if(loading){
+        return<>
+            <SafeAreaView style={estilos.carregando}>
+                <Lottie  style={estilos.carregar_animate} source={carregar} autoPlay loop renderMode='contain' autoSize />
+            </SafeAreaView>        
+        </>
     }
    
     return <>
@@ -31,18 +91,18 @@ export default function Resultado() {
             <Text style={estilos.titulo}>Resultado</Text>
             <View style={[estilos.bloco, estilos.elevation]}>
                 <Text style={estilos.txt}>Acertos:</Text>
-                <Text style={estilos.qtd_acertos}>0</Text>
+                <Text style={estilos.qtd_acertos}>{pontuacao.quantidadeAcertos}</Text>
                
             </View>
             <View style={[estilos.bloco, estilos.elevation]}>
                 <Text style={estilos.txt}>Erros:</Text>
-                <Text style={estilos.qtd_erros}>0</Text>               
+                <Text style={estilos.qtd_erros}>{pontuacao.quantidadeErros}</Text>               
             </View>
  
-            <Lottie  style={estilos.carregar_animate} source={errou} autoPlay loop renderMode='contain' autoSize />
+            <Lottie  style={estilos.carregar_animate} source={bau()} autoPlay loop renderMode='contain' autoSize />
             
             <View style={estilos.icon_area}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {gotToHome()}}>
                     <Image source={require('../Images/home.png')} style={estilos.icon_home} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { gotoPin() }}>
