@@ -79,6 +79,7 @@ width: "10%",
 
     },
     btnText:{
+        color: "white",
 textAlign: "center"
     },
    

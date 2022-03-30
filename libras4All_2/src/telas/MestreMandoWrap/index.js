@@ -8,6 +8,7 @@ import * as settings from '../../assets/config/appSettings.json';
 import estilos from './estilos';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
+import MestreMando from '../MestreMando';
 
 
 
@@ -16,6 +17,7 @@ export default function MestreMandoWrap({ route, navigation }) {
     const [loading, setLoading] = useState(true);
     const [listaSinais, setListaSinais] = useState([]);
     const [sinalDaVez, setSinal] = useState(0);
+    const [mestreMandou, setMestreMandou] = useState(false);
     let sinaisId =[];
 
     React.useEffect(() => {
@@ -100,5 +102,12 @@ export default function MestreMandoWrap({ route, navigation }) {
             <View><Text>Os dados carregaram hehe</Text></View>
         </>
 
+    }
+
+    if(mestreMandou){
+        return<>
+
+        
+        </>
     }
 }
