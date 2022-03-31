@@ -2,29 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Dimensions, ImageBackground, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert } from 'react-native';
 import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
-import {adicionaHistorico} from '../../services/historic.service';
-import {listaImagens} from './lista-imagens';
+import { adicionaHistorico } from '../../services/historic.service';
+import { listaImagens } from './lista-imagens';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
 import TransicaoCerto from '../TransicaoCerto';
 import TransicaoErrado from '../TransicaoErrado';
+import Cronometro from '../../componentes/cronometro';
 
-export default function Quiz({ route,navigation }) {
-    const { userID, token, salaID} = route.params;
+export default function Quiz({ route, navigation }) {
+    const { userID, token, salaID } = route.params;
 
     let perguntasID = [];
     let perguntasQuiz = [];
-    const [loading, setLoading] = useState(true);    
-    const [listaPergunta,setListaPergunta] = useState([]);
-    const [perguntaDaVez,setPerguntaDaVez] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [listaPergunta, setListaPergunta] = useState([]);
+    const [perguntaDaVez, setPerguntaDaVez] = useState(0);
     const [respostaCerta, setRespostaCerta] = useState(false);
     const [respostaErrada, setRespostaErrada] = useState(false);
     const [isLibracoins, setIsLibracoins] = useState(0);
     const [tempo, setTempo] = useState(20);
 
+    const hoursMinSecs = { hours: 0, minutes: 0, seconds: 20 }
+
     React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {       
-            getQuiz();            
+        const unsubscribe = navigation.addListener('focus', () => {
+            getQuiz();
         });
 
         return unsubscribe;
@@ -67,9 +70,9 @@ export default function Quiz({ route,navigation }) {
             let pergunta = await getPergunta(element);
             perguntasQuiz.push(pergunta);
         }
-        setListaPergunta(perguntasQuiz);     
+        setListaPergunta(perguntasQuiz);
         setLoading(false);
-        cronometro();
+        //cronometro();
     }
 
     async function getPergunta(elemento) {
@@ -94,103 +97,117 @@ export default function Quiz({ route,navigation }) {
         return retorno;
     }
 
-    function proximaPergunta(){   
-     
+    function proximaPergunta() {
+
         let tempNumb = perguntaDaVez;
-        if((tempNumb + 1) >= listaPergunta.length){
+        if ((tempNumb + 1) >= listaPergunta.length) {
             //manda pra tela Resultado
             navigation.navigate('Resultado',
-            {   userID: userID,
-                token: token,
-                salaID: salaID,
-                isLibracoins: (isLibracoins > 0)? true: false
-            })
+                {
+                    userID: userID,
+                    token: token,
+                    salaID: salaID,
+                    isLibracoins: (isLibracoins > 0) ? true : false
+                })
             return;
         }
-        setPerguntaDaVez(perguntaDaVez + 1); 
+        setPerguntaDaVez(perguntaDaVez + 1);
     }
 
-    async function validaResposta(alternativa){
-       
-        if(alternativa.perguntaCorreta === 'true'){
-            await adicionaHistorico(token,salaID,userID,'Quiz',listaPergunta[perguntaDaVez]._id,'true');
+    async function validaResposta(alternativa) {
+
+        if (alternativa.perguntaCorreta === 'true') {
+            await adicionaHistorico(token, salaID, userID, 'Quiz', listaPergunta[perguntaDaVez]._id, 'true');
             setRespostaCerta(true);
             setIsLibracoins(isLibracoins + 1);
-        }else{
-            await adicionaHistorico(token,salaID,userID,'Quiz',listaPergunta[perguntaDaVez]._id,'false');
+        } else {
+            await adicionaHistorico(token, salaID, userID, 'Quiz', listaPergunta[perguntaDaVez]._id, 'false');
             setRespostaErrada(true);
         }
         proximaPergunta();
     }
-    
-    function idImage(){  
+
+    function idImage() {
         console.log(listaPergunta[perguntaDaVez]._id);
-        return listaPergunta[perguntaDaVez]._id;        
+        return listaPergunta[perguntaDaVez]._id;
     }
 
-    function pathImage(){
-        
-        let lista = listaImagens();
-        let imageTemp = lista.filter(x=> x.id ===listaPergunta[perguntaDaVez]._id);  
+    function pathImage() {
 
-        if(imageTemp[0] != undefined){
+        let lista = listaImagens();
+        let imageTemp = lista.filter(x => x.id === listaPergunta[perguntaDaVez]._id);
+
+        if (imageTemp[0] != undefined) {
             return imageTemp[0].image;
-        }else{
+        } else {
             return null;
         }
     }
 
 
+
     function startTimer(duration) {
-        var timer = duration, minutes, seconds;
+        console.log('Entrou na Função');
+        var timer = duration, seconds;
         setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-           setTempo(minutes + ":" + seconds);      
+            // minutes = parseInt(timer / 60, 10);
+            //seconds = parseInt(timer % 60, 10);
+            // minutes = minutes < 10 ? "0" + minutes : minutes;
+            // seconds = seconds < 10 ? "0" + seconds : seconds;
+            if (seconds > 0) {
+                seconds = seconds - 1;
+                console.log(seconds);
+                setTempo(seconds);
+            }
 
         }, 1000);
     }
 
     function cronometro() {
-        var duration = 20 ; // Converter para segundos
-        
+        var duration = 20; // Converter para segundos
+
         startTimer(duration); // iniciando o timer
-    };	
+    };
+
+
+    async function validaTempo(close){
+
+        if(!close){
+            await adicionaHistorico(token, salaID, userID, 'Quiz', listaPergunta[perguntaDaVez]._id, 'false');
+            setRespostaErrada(true);
+            proximaPergunta();
+        }
+    }
 
 
 
 
 
-
-
-
-    function childToParent (close) {
+    function childToParent(close) {
         setRespostaCerta(close);
     }
 
-    function erraQuestao(close){
+    function erraQuestao(close) {
         setRespostaErrada(close);
     }
 
 
-    if(respostaCerta){
+    if (respostaCerta) {
         return <>
             <TransicaoCerto childToParent={childToParent}></TransicaoCerto>
         </>
     }
 
-    if(respostaErrada){
+    if (respostaErrada) {
         return <>
-            <TransicaoErrado erraQuestao={erraQuestao} ></TransicaoErrado>        
+            <TransicaoErrado erraQuestao={erraQuestao} ></TransicaoErrado>
         </>
     }
 
     if (loading) {
         return <>
             <SafeAreaView style={estilos.carregando}>
-                <Lottie  style={estilos.carregar_animate} source={carregar} autoPlay loop renderMode='contain' autoSize />
+                <Lottie style={estilos.carregar_animate} source={carregar} autoPlay loop renderMode='contain' autoSize />
             </SafeAreaView>
         </>
     } else {
@@ -201,10 +218,7 @@ export default function Quiz({ route,navigation }) {
                 <View style={estilos.topo}>
                     <Image source={require('../Images/categoria.png')} style={estilos.icon_categotia} />
                     <Text style={estilos.titulo}>{listaPergunta[perguntaDaVez].classe}</Text>
-                    <View style={estilos.tempo} >
-                        <Image source={require('../Images/fundo-tempo.png')} style={estilos.icon_categotia} />
-                        <Text style={estilos.relogio}>{tempo}</Text>
-                    </View>
+                    <Cronometro hoursMinSecs={hoursMinSecs} validaTempo={validaTempo}/>
                 </View>
                 <View style={[estilos.pergunta, estilos.elevation]}>
                     <Text style={estilos.texto_pergunta}>{listaPergunta[perguntaDaVez].descricao}</Text>
@@ -212,19 +226,19 @@ export default function Quiz({ route,navigation }) {
 
                 </View>
                 <View style={estilos.alternativas}>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={estilos.alternativa_button}
-                        onPress={()=> {validaResposta(listaPergunta[perguntaDaVez].alternativas[0])}} >
+                        onPress={() => { validaResposta(listaPergunta[perguntaDaVez].alternativas[0]) }} >
                         <Text style={estilos.texto_button}>{listaPergunta[perguntaDaVez].alternativas[0].descricao}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={estilos.alternativa_button}
-                        onPress={()=>{validaResposta(listaPergunta[perguntaDaVez].alternativas[1])}}>
+                        onPress={() => { validaResposta(listaPergunta[perguntaDaVez].alternativas[1]) }}>
                         <Text style={estilos.texto_button}>{listaPergunta[perguntaDaVez].alternativas[1].descricao}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={estilos.alternativa_button}
-                        onPress={()=>{validaResposta(listaPergunta[perguntaDaVez].alternativas[2])}}>
+                        onPress={() => { validaResposta(listaPergunta[perguntaDaVez].alternativas[2]) }}>
                         <Text style={estilos.texto_button}>{listaPergunta[perguntaDaVez].alternativas[2].descricao}</Text>
                     </TouchableOpacity>
                 </View>
