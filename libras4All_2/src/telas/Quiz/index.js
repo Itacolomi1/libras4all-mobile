@@ -20,6 +20,7 @@ export default function Quiz({ route,navigation }) {
     const [respostaCerta, setRespostaCerta] = useState(false);
     const [respostaErrada, setRespostaErrada] = useState(false);
     const [isLibracoins, setIsLibracoins] = useState(0);
+    const [tempo, setTempo] = useState(20);
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {       
@@ -68,6 +69,7 @@ export default function Quiz({ route,navigation }) {
         }
         setListaPergunta(perguntasQuiz);     
         setLoading(false);
+        cronometro();
     }
 
     async function getPergunta(elemento) {
@@ -139,6 +141,31 @@ export default function Quiz({ route,navigation }) {
     }
 
 
+    function startTimer(duration) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+           setTempo(minutes + ":" + seconds);      
+
+        }, 1000);
+    }
+
+    function cronometro() {
+        var duration = 20 ; // Converter para segundos
+        
+        startTimer(duration); // iniciando o timer
+    };	
+
+
+
+
+
+
+
+
     function childToParent (close) {
         setRespostaCerta(close);
     }
@@ -176,7 +203,7 @@ export default function Quiz({ route,navigation }) {
                     <Text style={estilos.titulo}>{listaPergunta[perguntaDaVez].classe}</Text>
                     <View style={estilos.tempo} >
                         <Image source={require('../Images/fundo-tempo.png')} style={estilos.icon_categotia} />
-                        <Text style={estilos.relogio}>20</Text>
+                        <Text style={estilos.relogio}>{tempo}</Text>
                     </View>
                 </View>
                 <View style={[estilos.pergunta, estilos.elevation]}>
