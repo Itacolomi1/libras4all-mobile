@@ -144,32 +144,6 @@ export default function Quiz({ route, navigation }) {
         }
     }
 
-
-
-    function startTimer(duration) {
-        console.log('Entrou na Função');
-        var timer = duration, seconds;
-        setInterval(function () {
-            // minutes = parseInt(timer / 60, 10);
-            //seconds = parseInt(timer % 60, 10);
-            // minutes = minutes < 10 ? "0" + minutes : minutes;
-            // seconds = seconds < 10 ? "0" + seconds : seconds;
-            if (seconds > 0) {
-                seconds = seconds - 1;
-                console.log(seconds);
-                setTempo(seconds);
-            }
-
-        }, 1000);
-    }
-
-    function cronometro() {
-        var duration = 20; // Converter para segundos
-
-        startTimer(duration); // iniciando o timer
-    };
-
-
     async function validaTempo(close){
 
         if(!close){
@@ -178,10 +152,6 @@ export default function Quiz({ route, navigation }) {
             proximaPergunta();
         }
     }
-
-
-
-
 
     function childToParent(close) {
         setRespostaCerta(close);
