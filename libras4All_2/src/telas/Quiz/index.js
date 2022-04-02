@@ -21,7 +21,6 @@ export default function Quiz({ route, navigation }) {
     const [respostaCerta, setRespostaCerta] = useState(false);
     const [respostaErrada, setRespostaErrada] = useState(false);
     const [isLibracoins, setIsLibracoins] = useState(0);
-    const [tempo, setTempo] = useState(20);
 
     const hoursMinSecs = { hours: 0, minutes: 0, seconds: 20 }
 

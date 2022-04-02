@@ -59,13 +59,16 @@ export default StyleSheet.create({
         flexDirection: "row",
         width: "100%",
         justifyContent: "space-evenly",
-        position: "absolute",
+        alignContent:"space-between",
+        position: "absolute",        
         top: 0
     }, 
     meteoro:{
         width: "30%",
         resizeMode : 'contain',
         alignItems: 'center',
+        //position:'absolute',
+        //paddingLeft: '15%'
     },
     campo:{
         height: 32,
