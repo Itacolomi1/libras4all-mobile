@@ -6,6 +6,7 @@ import { adicionaHistorico } from '../../services/historic.service';
 import Cronometro from '../../componentes/cronometro';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
+import { listaImagens } from './list-imagens';
 
 export default function Meteoro({ route, navigation }) {
     const { userID, token, salaID } = route.params;
@@ -20,12 +21,22 @@ export default function Meteoro({ route, navigation }) {
     const [positionMedio, setPostioMedio] = useState(new Animated.ValueXY(0, 0));
     const [positionRapido, setPostioRapido] = useState(new Animated.ValueXY(0, 0));
 
+    const[idMeteoroLento,setIdMeteoroLento] = useState();
+    const[imageMeteoroLento,setImageMeteoroLento] = useState();
+
+    const[idMeteoroMedio,setIdMeteoroMedio] = useState();
+    const[imageMeteorMedio,setImageMeteoroMedio] = useState();
+
+    const[idMeteoroRapido,setIdMeteoroRapido] = useState();
+    const[imageMeteoroRapido,setImageMeteoroRapido] = useState();
+
     const hoursMinSecs = { hours: 0, minutes: 0, seconds: 20 }
 
 
     React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
+        const unsubscribe = navigation.addListener('focus', () => {           
             getMeteoro();
+            
         });
 
         return unsubscribe;
@@ -56,6 +67,17 @@ export default function Meteoro({ route, navigation }) {
         startAnimationLento();
         startAnimationMedio();
         startAnimationRapido();
+    }
+
+    function setMeteoroInicial(){
+        setIdMeteoroLento(idImage(0));
+        setImageMeteoroLento(pathImage(0));
+
+        setIdMeteoroMedio(idImage(1));
+        setImageMeteoroMedio(pathImage(1));
+
+        setIdMeteoroRapido(idImage(2));
+        setImageMeteoroRapido(pathImage(2));
     }
 
     function getMeteoro() {
@@ -95,6 +117,7 @@ export default function Meteoro({ route, navigation }) {
             sinaisMeteoro.push(pergunta);
         }
         setListaSinais(sinaisMeteoro);
+        setMeteoroInicial();
         setLoading(false);
         letItFall();
     }
@@ -140,8 +163,26 @@ export default function Meteoro({ route, navigation }) {
 
         if (!close) {
             await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[sinalDaVez]._id, 'false');
+        }    
+    }
+
+    function pathImage(id) {
+
+        let lista = listaImagens();
+        let imageTemp = lista.filter(x => x.id === sinaisMeteoro[id]._id);
+
+        if (imageTemp[0] != undefined) {
+            return imageTemp[0].image;
+        } else {
+            return null;
         }
     }
+
+    function idImage(id) {        
+        return sinaisMeteoro[id]._id;
+    }
+
+
 
     function registra_resultado(resultado) {
 
@@ -172,9 +213,9 @@ export default function Meteoro({ route, navigation }) {
                     <Cronometro hoursMinSecs={hoursMinSecs} validaTempo={validaTempo} />
                 </View>
                 <View style={estilos.meteoros}>
-                    <Animated.Image source={require('../../assets/images/meteoro/A.png')} style={[positionLento.getLayout(), estilos.meteoro]} />
-                    <Animated.Image source={require('../../assets/images/meteoro/A.png')} style={[positionRapido.getLayout(), estilos.meteoro]} />
-                    <Animated.Image source={require('../../assets/images/meteoro/A.png')} style={[positionMedio.getLayout(), estilos.meteoro]} />                   
+                    <Animated.Image key={idMeteoroLento} source={imageMeteoroLento} style={[positionLento.getLayout(), estilos.meteoro]} />
+                    <Animated.Image key={idMeteoroMedio} source={imageMeteorMedio} style={[positionRapido.getLayout(), estilos.meteoro]} />
+                    <Animated.Image key={idMeteoroRapido} source={imageMeteoroRapido} style={[positionMedio.getLayout(), estilos.meteoro]} />                   
                 </View>
                 <View style={estilos.limite}>
 
