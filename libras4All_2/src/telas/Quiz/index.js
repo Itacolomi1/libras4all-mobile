@@ -21,6 +21,8 @@ export default function Quiz({ route, navigation }) {
     const [respostaCerta, setRespostaCerta] = useState(false);
     const [respostaErrada, setRespostaErrada] = useState(false);
     const [isLibracoins, setIsLibracoins] = useState(0);
+    const [acertos, setAcertos] = useState(0);
+    const [erros, setErros] = useState(0);
 
     const hoursMinSecs = { hours: 0, minutes: 0, seconds: 20 }
 
@@ -70,8 +72,7 @@ export default function Quiz({ route, navigation }) {
             perguntasQuiz.push(pergunta);
         }
         setListaPergunta(perguntasQuiz);
-        setLoading(false);
-        //cronometro();
+        setLoading(false);        
     }
 
     async function getPergunta(elemento) {
@@ -106,7 +107,8 @@ export default function Quiz({ route, navigation }) {
                     userID: userID,
                     token: token,
                     salaID: salaID,
-                    isLibracoins: (isLibracoins > 0) ? true : false
+                    acertos: acertos,
+                    erros:erros
                 })
             return;
         }
@@ -117,13 +119,14 @@ export default function Quiz({ route, navigation }) {
 
         if (alternativa.perguntaCorreta === 'true') {
             await adicionaHistorico(token, salaID, userID, 'Quiz', listaPergunta[perguntaDaVez]._id, 'true');
+            setAcertos(acertos + 1);
             setRespostaCerta(true);
-            setIsLibracoins(isLibracoins + 1);
         } else {
             await adicionaHistorico(token, salaID, userID, 'Quiz', listaPergunta[perguntaDaVez]._id, 'false');
+            setErros(erros + 1);
             setRespostaErrada(true);
         }
-        proximaPergunta();
+        //proximaPergunta();
     }
 
     function idImage() {
@@ -147,6 +150,7 @@ export default function Quiz({ route, navigation }) {
 
         if(!close){
             await adicionaHistorico(token, salaID, userID, 'Quiz', listaPergunta[perguntaDaVez]._id, 'false');
+            setErros(erros + 1);
             setRespostaErrada(true);
             proximaPergunta();
         }
@@ -154,10 +158,12 @@ export default function Quiz({ route, navigation }) {
 
     function childToParent(close) {
         setRespostaCerta(close);
+        proximaPergunta();
     }
 
     function erraQuestao(close) {
         setRespostaErrada(close);
+        proximaPergunta();
     }
 
 
