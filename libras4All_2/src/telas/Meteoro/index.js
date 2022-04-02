@@ -25,12 +25,7 @@ export default function Meteoro({ route, navigation }) {
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            //getMeteoro(); 
-            //startAnimation();
-            letItFall();
-            setLoading(false);
-
-
+            getMeteoro();
         });
 
         return unsubscribe;
@@ -81,7 +76,7 @@ export default function Meteoro({ route, navigation }) {
                     getSinais();
                 })
                 .catch(error => {
-                    console.log('deu errado');
+                    console.log('deu errado no get Meteoro');
                     console.error(error);
                 });
 
@@ -101,7 +96,7 @@ export default function Meteoro({ route, navigation }) {
         }
         setListaSinais(sinaisMeteoro);
         setLoading(false);
-        console.log(listaSinais);
+        letItFall();
     }
 
     async function getSinal(elemento) {
@@ -114,12 +109,18 @@ export default function Meteoro({ route, navigation }) {
             },
 
         })
-            .then(response => response.json())
+            .then(response => {
+                if(response.ok){
+                    return response.json();
+                }else{
+                    console.log(response);
+                }            
+            })
             .then(responseJson => {
                 retorno = responseJson;
             })
             .catch(error => {
-                console.log('deu errado');
+                console.log('deu errado no getSinal');
                 console.error(error);
             });
 
@@ -139,8 +140,6 @@ export default function Meteoro({ route, navigation }) {
 
         if (!close) {
             await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[sinalDaVez]._id, 'false');
-            //mandar para resultado;
-
         }
     }
 
@@ -173,14 +172,10 @@ export default function Meteoro({ route, navigation }) {
                     <Cronometro hoursMinSecs={hoursMinSecs} validaTempo={validaTempo} />
                 </View>
                 <View style={estilos.meteoros}>
-                    <Animated.Image source={require('../Images/meteoro/A.png')} style={[positionLento.getLayout(), estilos.meteoro]} />
-                    <Animated.Image source={require('../Images/meteoro/A.png')} style={[positionRapido.getLayout(), estilos.meteoro]} />
-                    <Animated.Image source={require('../Images/meteoro/A.png')} style={[positionMedio.getLayout(), estilos.meteoro]} />                   
+                    <Animated.Image source={require('../../assets/images/meteoro/A.png')} style={[positionLento.getLayout(), estilos.meteoro]} />
+                    <Animated.Image source={require('../../assets/images/meteoro/A.png')} style={[positionRapido.getLayout(), estilos.meteoro]} />
+                    <Animated.Image source={require('../../assets/images/meteoro/A.png')} style={[positionMedio.getLayout(), estilos.meteoro]} />                   
                 </View>
-                {/* <View style={estilos.meteoros}>
-                    <Image source={require('../Images/meteoro/A.png')} style={estilos.meteoro} />
-                    <Image source={require('../Images/meteoro/A.png')} style={estilos.meteoro} />
-                </View> */}
                 <View style={estilos.limite}>
 
                 </View>
