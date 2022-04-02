@@ -19,8 +19,7 @@ export default function Quiz({ route, navigation }) {
     const [listaPergunta, setListaPergunta] = useState([]);
     const [perguntaDaVez, setPerguntaDaVez] = useState(0);
     const [respostaCerta, setRespostaCerta] = useState(false);
-    const [respostaErrada, setRespostaErrada] = useState(false);
-    const [isLibracoins, setIsLibracoins] = useState(0);
+    const [respostaErrada, setRespostaErrada] = useState(false);    
     const [acertos, setAcertos] = useState(0);
     const [erros, setErros] = useState(0);
 

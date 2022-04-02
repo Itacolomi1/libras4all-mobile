@@ -11,7 +11,9 @@ import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
 import MestreMando from '../MestreMando';
 import TransicaoCertoMestre from '../TransicaoCertoMestre';
-import {adicionaHistorico} from '../../services/historic.service';
+import TransicaoErradoMestre from '../TransicaoErradoMestre';
+import { adicionaHistorico } from '../../services/historic.service';
+
 
 
 
@@ -23,7 +25,10 @@ export default function MestreMandoWrap({ route, navigation }) {
     const [sinalDaVez, setSinal] = useState(0);
     const [mestreMandou, setMestreMandou] = useState(false);
     const [transicaoAcertou, setTransicaoAcertou] = useState(false);
-    const [isLibracoins, setIsLibracoins] = useState(0);
+    const [transicaoErrou, setTransicaoErrou] = useState(false);
+    const [acertos, setAcertos] = useState(0);
+    const [erros, setErros] = useState(0);
+
 
     let sinaisId = [];
 
@@ -98,21 +103,24 @@ export default function MestreMandoWrap({ route, navigation }) {
     }
     //#endregion
 
-   async function ValidaMestre(close) {
+    async function ValidaMestre(close) {
 
         setMestreMandou(false);
         // validar com o close se é um acerto ou um erro
-        if(close){
-            setIsLibracoins(isLibracoins + 1);
+        if (close) {
+            setAcertos(acertos + 1);
             setTransicaoAcertou(true);
-            await adicionaHistorico(token,salaID,userID,'Mestre Mandou',listaSinais[sinalDaVez]._id,'true')
+            await adicionaHistorico(token, salaID, userID, 'Mestre Mandou', listaSinais[sinalDaVez]._id, 'true')
+
+        } else {
+            setErros(erros + 1);
+            setTransicaoErrou(true);
+            await adicionaHistorico(token, salaID, userID, 'Mestre Mandou', listaSinais[sinalDaVez]._id, 'false')
 
         }
     }
 
-    function TrocaLetra(close) {
-        setTransicaoAcertou(close);
-        //trocar a letra
+    function efetuaTrocaLetra() {
         if ((sinalDaVez + 1) >= listaSinais.length) {
             //manda pra tela Resultado
             navigation.navigate('Resultado',
@@ -120,12 +128,23 @@ export default function MestreMandoWrap({ route, navigation }) {
                     userID: userID,
                     token: token,
                     salaID: salaID,
-                    isLibracoins: (isLibracoins > 0) ? true : false
+                    acertos: acertos,
+                    erros: erros
                 })
             return;
         }
         setSinal(sinalDaVez + 1);
         setMestreMandou(true);
+    }
+
+    function TrocaLetra(close) {
+        setTransicaoAcertou(close);        
+        efetuaTrocaLetra();
+    }
+
+    function TrocarLetraErro(close) {
+        setTransicaoErrou(close);
+        efetuaTrocaLetra();
     }
 
 
@@ -134,7 +153,12 @@ export default function MestreMandoWrap({ route, navigation }) {
         return <>
             <TransicaoCertoMestre TrocaLetra={TrocaLetra} />
         </>
+    }
 
+    if (transicaoErrou) {
+        return <>
+            <TransicaoErradoMestre TrocarLetraErro={TrocarLetraErro} />
+        </>
     }
 
     if (mestreMandou) {
@@ -150,7 +174,6 @@ export default function MestreMandoWrap({ route, navigation }) {
             </SafeAreaView>
         </>
     } else {
-        console.log(mestreMandou);
         return <>
             <View><Text>Besteira Qualquer</Text></View>
         </>
