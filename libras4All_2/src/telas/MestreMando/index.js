@@ -254,9 +254,9 @@ export default function MestreMando({ ValidaMestre, Letra }) {
       <View style={styles.barraSinais}>
         <Text style={styles.texto}>Faça a letra {Letra}</Text>
       </View>
-      <View>
+      {/* <View>
         <Cronometro hoursMinSecs={hoursMinSecs} validaTempo={validaTempo}/>
-      </View>
+      </View> */}
       <View style={styles.container}>
         <TensorCamera
           ref={camRef}
