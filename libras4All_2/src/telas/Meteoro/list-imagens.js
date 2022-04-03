@@ -105,5 +105,9 @@ export function listaImagens(){
             id: '621be606b1bdfe7e0c1d1f83',
             image: require('../../assets/images/meteoro/z.png'),
         },
+        {
+            id: '666',
+            image: require('../../assets/images/meteoro/explocao.gif'),
+        },
     ]
 }

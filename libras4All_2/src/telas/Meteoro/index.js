@@ -21,14 +21,9 @@ export default function Meteoro({ route, navigation }) {
     const [positionMedio, setPostioMedio] = useState(new Animated.ValueXY(0, 0));
     const [positionRapido, setPostioRapido] = useState(new Animated.ValueXY(0, 0));
 
-    const[idMeteoroLento,setIdMeteoroLento] = useState();
-    const[imageMeteoroLento,setImageMeteoroLento] = useState();
 
-    const[idMeteoroMedio,setIdMeteoroMedio] = useState();
-    const[imageMeteorMedio,setImageMeteoroMedio] = useState();
-
-    const[idMeteoroRapido,setIdMeteoroRapido] = useState();
-    const[imageMeteoroRapido,setImageMeteoroRapido] = useState();
+    const[teste,setTeste] = useState(true);
+    const[teste2,setTeste2] = useState(false);
 
     const hoursMinSecs = { hours: 0, minutes: 0, seconds: 20 }
 
@@ -69,17 +64,6 @@ export default function Meteoro({ route, navigation }) {
         startAnimationRapido();
     }
 
-    function setMeteoroInicial(){
-        setIdMeteoroLento(idImage(0));
-        setImageMeteoroLento(pathImage(0));
-
-        setIdMeteoroMedio(idImage(1));
-        setImageMeteoroMedio(pathImage(1));
-
-        setIdMeteoroRapido(idImage(2));
-        setImageMeteoroRapido(pathImage(2));
-    }
-
     function getMeteoro() {
 
         try {
@@ -116,8 +100,7 @@ export default function Meteoro({ route, navigation }) {
             let pergunta = await getSinal(element);
             sinaisMeteoro.push(pergunta);
         }
-        setListaSinais(sinaisMeteoro);
-        setMeteoroInicial();
+        setListaSinais(sinaisMeteoro);       
         setLoading(false);
         letItFall();
     }
@@ -169,7 +152,7 @@ export default function Meteoro({ route, navigation }) {
     function pathImage(id) {
 
         let lista = listaImagens();
-        let imageTemp = lista.filter(x => x.id === sinaisMeteoro[id]._id);
+        let imageTemp = lista.filter(x => x.id === listaSinais[id]._id);
 
         if (imageTemp[0] != undefined) {
             return imageTemp[0].image;
@@ -179,7 +162,12 @@ export default function Meteoro({ route, navigation }) {
     }
 
     function idImage(id) {        
-        return sinaisMeteoro[id]._id;
+        return listaSinais[id]._id;
+    }
+    function explode(){
+        setTeste(false);
+        setTeste2(true);
+
     }
 
 
@@ -213,16 +201,23 @@ export default function Meteoro({ route, navigation }) {
                     <Cronometro hoursMinSecs={hoursMinSecs} validaTempo={validaTempo} />
                 </View>
                 <View style={estilos.meteoros}>
-                    <Animated.Image key={idMeteoroLento} source={imageMeteoroLento} style={[positionLento.getLayout(), estilos.meteoro]} />
-                    <Animated.Image key={idMeteoroMedio} source={imageMeteorMedio} style={[positionRapido.getLayout(), estilos.meteoro]} />
-                    <Animated.Image key={idMeteoroRapido} source={imageMeteoroRapido} style={[positionMedio.getLayout(), estilos.meteoro]} />                   
+                    { teste &&
+                       
+                        <Animated.Image key={idImage(0)} source={pathImage(0)} style={[positionLento.getLayout(), estilos.meteoro]} />
+                    }
+                    {
+                        teste2 && <Animated.Image source={require('../../assets/images/meteoro/explocao.gif')} style={[positionLento.getLayout(), estilos.meteoro]} />
+                    }
+                    
+                    <Animated.Image key={idImage(1)} source={pathImage(1)} style={[positionRapido.getLayout(), estilos.meteoro]} />
+                    <Animated.Image key={idImage(2)} source={pathImage(2)} style={[positionMedio.getLayout(), estilos.meteoro]} />                   
                 </View>
                 <View style={estilos.limite}>
 
                 </View>
                 <View style={[estilos.teclado, estilos.elevation]}>
                     <View style={estilos.campo}>
-                        <TouchableOpacity onPress={()=>{letItFall()}} style={estilos.btn}><Text style={estilos.btnText}>1</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{explode('lento')}} style={estilos.btn}><Text style={estilos.btnText}>1</Text></TouchableOpacity>
                         <TouchableOpacity style={estilos.btn}><Text style={estilos.btnText}>2</Text></TouchableOpacity>
                         <TouchableOpacity style={estilos.btn}><Text style={estilos.btnText}>3</Text></TouchableOpacity>
                         <TouchableOpacity style={estilos.btn}><Text style={estilos.btnText}>4</Text></TouchableOpacity>
