@@ -6,11 +6,11 @@ export default StyleSheet.create({
     fundo:{
         backgroundColor: "rgb(35, 36, 95)",
         height: "100%",
-        justifyContent: "space-between",
+        justifyContent: "center",
         color: "black", 
     },
     bloco:{
-        marginTop: "30%"
+      marginBottom: 10,
     },
     titulo:{
         color: "white",

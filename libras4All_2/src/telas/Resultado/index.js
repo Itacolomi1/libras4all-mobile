@@ -8,15 +8,17 @@ import carregar from '../Images/carregar.json';
 import * as settings from '../../assets/config/appSettings.json'
 export default function Resultado({route,navigation}) {
     //Get parameter
-    const { userID, token, salaID, isLibracoins} = route.params;
+    const { userID, token, salaID, acertos,erros} = route.params;
 
     const [loading, setLoading] = useState(true);
-    const [pontuacao,setPontuacao] = useState();
+    const [bau,setBau] = useState();
 
     useEffect(()=>{
         const unsubscribe = navigation.addListener('focus', () => {
             //do something here
-            getPontos();
+            //getPontos();
+            setBau((acertos > 0)? acertou:errou);
+            setLoading(false);
         });
 
         return unsubscribe;
@@ -41,7 +43,7 @@ export default function Resultado({route,navigation}) {
             .then(responseJson => {
                 if(responseJson){
                     console.log('retorno do Resultado');
-                    setPontuacao(responseJson);
+                  
                 }else {
                     console.log('something bad happen with resultd');
                 }
@@ -60,16 +62,10 @@ export default function Resultado({route,navigation}) {
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });
     }
+    
     function gotoJogos() {
         navigation.navigate('Jogos', { userID: userID, token: token });
     }
-
-    function bau(){
-        console.log('chegou aqui ' + isLibracoins);
-        return isLibracoins? acertou:errou;
-    }
-
-
 
     if(loading){
         return<>
@@ -91,15 +87,15 @@ export default function Resultado({route,navigation}) {
             <Text style={estilos.titulo}>Resultado</Text>
             <View style={[estilos.bloco, estilos.elevation]}>
                 <Text style={estilos.txt}>Acertos:</Text>
-                <Text style={estilos.qtd_acertos}>{pontuacao.quantidadeAcertos}</Text>
+                <Text style={estilos.qtd_acertos}>{acertos}</Text>
                
             </View>
             <View style={[estilos.bloco, estilos.elevation]}>
                 <Text style={estilos.txt}>Erros:</Text>
-                <Text style={estilos.qtd_erros}>{pontuacao.quantidadeErros}</Text>               
+                <Text style={estilos.qtd_erros}>{erros}</Text>               
             </View>
  
-            <Lottie  style={estilos.carregar_animate} source={bau()} autoPlay loop renderMode='contain' autoSize />
+            <Lottie  style={estilos.carregar_animate} source={bau} autoPlay loop renderMode='contain' autoSize />
             
             <View style={estilos.icon_area}>
                 <TouchableOpacity onPress={() => {gotToHome()}}>

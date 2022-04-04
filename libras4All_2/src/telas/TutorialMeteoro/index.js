@@ -6,7 +6,7 @@ export default function TutorialMeteoro({ route, navigation }) {
 
     const { userID, token } = route.params;
         // Sala chumbada para jogos Geral
-        const salaID = '621bf0572d53a30016a0b575';
+        const salaID = '6248b1bafa664b001694f846';
 
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });
@@ -38,17 +38,7 @@ export default function TutorialMeteoro({ route, navigation }) {
                     <Text style={estilos.texto_button}>Jogar</Text>
                 </TouchableOpacity>
             </View>
-            <View style={estilos.icon_area}>
-                <TouchableOpacity onPress={() => {gotToHome()}}>
-                    <Image source={require('../Images/home.png')} style={estilos.icon_home} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {gotoPin()}}>
-                    <Image source={require('../Images/pin.png')} style={estilos.icon_pin} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {gotoJogos()}}>
-                    <Image source={require('../Images/game.png')} style={estilos.icon_game} />
-                </TouchableOpacity>
-            </View>
+            
         </SafeAreaView>
     </>
 }
