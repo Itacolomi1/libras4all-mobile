@@ -163,9 +163,9 @@ export default function MestreMando({ ValidaMestre, Letra }) {
     // faz a previsão.
     const obj = await net.executeAsync(expanded);
 
-    const boxes = await obj[1].array();
-    const classes = await obj[5].array();
-    const scores = await obj[2].array();
+    const boxes = await obj[3].array();
+    const classes = await obj[1].array();
+    const scores = await obj[5].array();
 
     // Draw mesh
     canvasRef.current.width = videoWidth;
