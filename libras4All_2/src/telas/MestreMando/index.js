@@ -253,10 +253,9 @@ export default function MestreMando({ ValidaMestre, Letra }) {
     <>
       <View style={styles.barraSinais}>
         <Text style={styles.texto}>Faça a letra {Letra}</Text>
-      </View>
-      {/* <View>
         <Cronometro hoursMinSecs={hoursMinSecs} validaTempo={validaTempo}/>
-      </View> */}
+      </View>
+     
       <View style={styles.container}>
         <TensorCamera
           ref={camRef}
@@ -319,9 +318,9 @@ const styles = StyleSheet.create({
   },
   texto: {
     fontSize: 20,
-    color: 'black',
-    textAlign: "center",
-    fontWeight: "bold"
+    color: 'white',
+    fontWeight: "bold",
+    marginLeft: 10
   },
   canvas: {
     position: "absolute",
@@ -331,9 +330,11 @@ const styles = StyleSheet.create({
   },
   barraSinais: {
     width: '100%',
-    backgroundColor: 'white',
+    backgroundColor: "rgb(35, 36, 95)",
     height: 50,
-    justifyContent: "center"
+    flexDirection: 'row',
+    justifyContent: "space-around",
+    alignItems: 'center'
 
   },
   carregar_animate: {
