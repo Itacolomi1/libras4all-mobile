@@ -17,6 +17,14 @@ export default StyleSheet.create({
         height: 50
         
     },
+    cadastro__data:{
+        fontSize: 15,       
+        color: "black",
+        width: "80%",
+        alignSelf: "center",
+        marginLeft: 5
+        
+    },
     
     icon_area:{
         width: "80%",        

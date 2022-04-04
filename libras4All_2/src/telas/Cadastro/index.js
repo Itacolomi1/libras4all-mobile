@@ -4,7 +4,7 @@ import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
-import DatePicker from 'react-native-date-picker'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function Cadastro({ navigation }) {
     const [userNome, setUserNome] = useState('');
@@ -14,6 +14,29 @@ export default function Cadastro({ navigation }) {
     const [loading, setLoading] = useState(false);
     const [dataNascimento, setDataNascimento] = useState(new Date());
     const [modal, setModal] = useState(false);
+    const [show, setShow] = useState(false);
+    const [mode, setMode] = useState('date');
+    const [textoData, setTextoData] = useState();
+
+    const showPicker = () => {
+        setIsPickerShow(true);
+      };
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || dataNascimento;
+        setShow(Platform.OS === 'ios');
+        setDataNascimento(currentDate);
+    
+        let tempDate = new Date(currentDate);
+        
+        let dataSQL =  tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/'  + tempDate.getFullYear()
+        setTextoData(dataSQL)
+      };
+
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+    };
 
 
     const Cadastrar = () => {
@@ -75,7 +98,10 @@ export default function Cadastro({ navigation }) {
             Alert.alert('Informe um nickname!');
             return false;
         }
-
+        if(textoData == undefined || textoData.length == 0){
+            Alert.alert('Informe sua Data de Nascimento!');
+            return false;
+        }
         return true;
     }
 
@@ -147,7 +173,7 @@ export default function Cadastro({ navigation }) {
                         secureTextEntry={true} />
                 </View>
                 <View style={estilos.icon_area}>
-                    <Image source={require('../Images/cadeado.png')} style={estilos.input_icon} />
+                    <Image source={require('../Images/user.png')} style={estilos.input_icon} />
 
                     <TextInput
                         style={estilos.cadastro__input}
@@ -157,26 +183,32 @@ export default function Cadastro({ navigation }) {
                         defaultValue={nickname}
                     />
                 </View>
-                <View style={estilos.icon_area}>
-                    {/* Data de Nascimento */}
-                    <TouchableOpacity onPress={() => {setModal(true)}}>
-                        <Image source={require('../Images/email.png')} style={estilos.input_date} />
-                    </TouchableOpacity>
-                    <DatePicker
-                        date={dataNascimento}
-                        onDateChange={setDataNascimento}
-                        mode="date"
-                        modal
-                        open={modal}
-                        locale="pt"
-                        onConfirm={(date) => {
-                            setModal(false)
-                            setDataNascimento(date)
-                        }}
-                        onCancel={() => {
-                            setModal(false);
-                        }} />
+                <View>
+                   
+                    <View style={estilos.icon_area}>
+                    
+                        <TouchableOpacity onPress={() => showMode('date')} title="Data">
+                        <Image source={require('../Images/calendario.png')} style={estilos.input_icon} />
+
+                        </TouchableOpacity>
+                        <Text style={estilos.cadastro__data}>{textoData}</Text>
+                    </View>
+
+                    {show && (
+                        <DateTimePicker
+                        testID="dateTimePicker"
+                        format="YYYY-MM-DD"
+                        value={dataNascimento}
+                        mode={mode}
+                        is24Hour={true}
+                        display="default"
+                        onChange={onChange} 
+                        />
+                    )}
                 </View>
+
+
+
                 <View style={estilos.botao}>
                     <TouchableOpacity
                         style={estilos.salvar_button}
