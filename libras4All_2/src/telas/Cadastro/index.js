@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert, Linking } from 'react-native';
 import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import CheckBox from '@react-native-community/checkbox';
+
+
 
 export default function Cadastro({ navigation }) {
     const [userNome, setUserNome] = useState('');
@@ -17,21 +20,22 @@ export default function Cadastro({ navigation }) {
     const [show, setShow] = useState(false);
     const [mode, setMode] = useState('date');
     const [textoData, setTextoData] = useState();
+    const [aceitouTermo, setAceitouTermo] = useState(false);
 
     const showPicker = () => {
         setIsPickerShow(true);
-      };
+    };
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || dataNascimento;
         setShow(Platform.OS === 'ios');
         setDataNascimento(currentDate);
-    
+
         let tempDate = new Date(currentDate);
-        
-        let dataSQL =  tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/'  + tempDate.getFullYear()
+
+        let dataSQL = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear()
         setTextoData(dataSQL)
-      };
+    };
 
     const showMode = (currentMode) => {
         setShow(true);
@@ -48,12 +52,13 @@ export default function Cadastro({ navigation }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ 
-                    "nome": userNome.trim(),
-                    "email": userEmail.trim(),
-                    "senha": password,
-                    "nickname": nickname.trim(),
-                    "dataNascimento": dataNascimento})
+            body: JSON.stringify({
+                "nome": userNome.trim(),
+                "email": userEmail.trim(),
+                "senha": password,
+                "nickname": nickname.trim(),
+                "dataNascimento": dataNascimento
+            })
         })
             .then(response => {
                 setLoading(false);
@@ -94,14 +99,20 @@ export default function Cadastro({ navigation }) {
             return false;
         }
 
-        if(nickname.length == 0){
+        if (nickname.length == 0) {
             Alert.alert('Informe um nickname!');
             return false;
         }
-        if(textoData == undefined || textoData.length == 0){
+        if (textoData == undefined || textoData.length == 0) {
             Alert.alert('Informe sua Data de Nascimento!');
             return false;
         }
+
+        if(!aceitouTermo){
+            Alert.alert('Leia os termos antes de se cadastrar');
+            return false;
+        }
+
         return true;
     }
 
@@ -184,11 +195,11 @@ export default function Cadastro({ navigation }) {
                     />
                 </View>
                 <View>
-                   
+
                     <View style={estilos.icon_area}>
-                    
+
                         <TouchableOpacity onPress={() => showMode('date')} title="Data">
-                        <Image source={require('../Images/calendario.png')} style={estilos.input_icon} />
+                            <Image source={require('../Images/calendario.png')} style={estilos.input_icon} />
 
                         </TouchableOpacity>
                         <Text style={estilos.cadastro__data}>{textoData}</Text>
@@ -196,17 +207,32 @@ export default function Cadastro({ navigation }) {
 
                     {show && (
                         <DateTimePicker
-                        testID="dateTimePicker"
-                        format="YYYY-MM-DD"
-                        value={dataNascimento}
-                        mode={mode}
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChange} 
+                            testID="dateTimePicker"
+                            format="YYYY-MM-DD"
+                            value={dataNascimento}
+                            mode={mode}
+                            is24Hour={true}
+                            display="default"
+                            onChange={onChange}
                         />
                     )}
                 </View>
 
+
+                <View style={estilos.termo}>
+                    <CheckBox
+                        disabled={false}
+                        value={aceitouTermo}
+                        onValueChange={(newValue) => setAceitouTermo(newValue)}
+                    />
+                    <Text                       
+                        onPress={() => {
+                            Linking.openURL('https://libras4all-web.herokuapp.com/HomePage/Privacy');
+                        }}>
+                        Declaro que li e aceito o  <Text style={estilos.hyperlink}>Termo de Política de Privacidade.</Text>
+                    </Text>
+                    
+                </View>
 
 
                 <View style={estilos.botao}>
