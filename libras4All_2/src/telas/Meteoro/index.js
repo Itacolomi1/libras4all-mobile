@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Text, View, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert, Animated } from 'react-native';
+import { Text, View, TouchableOpacity, SafeAreaView, StatusBar, Dimensions, Image, Alert, Animated } from 'react-native';
 import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
 import { adicionaHistorico } from '../../services/historic.service';
@@ -43,7 +43,8 @@ export default function Meteoro({ route, navigation }) {
     const [verificaLimite,setVerificaLimite] = useState(false);
 
     const hoursMinSecs = { hours: 0, minutes: 0, seconds: 20 }
-
+    const windowHeight = Dimensions.get('window').height * 0.75 ;
+    const windowHeightM = windowHeight- (Dimensions.get('window').width * 0.3) - 65;
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -55,7 +56,7 @@ export default function Meteoro({ route, navigation }) {
 
     function startAnimationLento() {
         Animated.timing(positionLento, {
-            toValue: { x: 0, y: 420 },
+            toValue: { x: 0, y: windowHeightM },
             duration: 11000,
         }).start(() => {
             killMeteoro('lento');
@@ -67,7 +68,7 @@ export default function Meteoro({ route, navigation }) {
 
     function startAnimationMedio() {
         Animated.timing(positionMedio, {
-            toValue: { x: 0, y: 420 },
+            toValue: { x: 0, y: windowHeightM  },
             duration: 8000,
         }).start(() => {
             killMeteoro('medio');
@@ -78,7 +79,7 @@ export default function Meteoro({ route, navigation }) {
 
     function startAnimationRapido() {
         Animated.timing(positionRapido, {
-            toValue: { x: 0, y: 420 },
+            toValue: { x: 0, y: windowHeightM },
             duration: 6500,
         }).start(() => {
             killMeteoro('rapido');
@@ -317,16 +318,16 @@ export default function Meteoro({ route, navigation }) {
             <SafeAreaView style={estilos.fundo}>
                 <StatusBar backgroundColor="rgb(35, 36, 95)" />
 
-                <View style={estilos.topo}>
+                 <View style={estilos.topo}>
                     <Image source={require('../Images/meteoro_icon.png')} style={estilos.icon_categotia} />
                     <Text style={estilos.titulo}></Text>
                     <Cronometro hoursMinSecs={hoursMinSecs} validaTempo={validaTempo} />
-                </View>
+                </View> 
                 <View style={estilos.meteoros}>
                     {/* Meteoro Lento */}
                     {
                         meteoroLento && <Animated.Image key={idImage(0)} source={pathImage(0)} style={[positionLento.getLayout(), estilos.meteoro]} />
-                    }
+                      }
                     {
                         gifMeteoroLento && <Animated.Image source={require('../../assets/images/meteoro/explocao.gif')} style={[positionLento.getLayout(), estilos.meteoro]} />
                     }
@@ -347,7 +348,7 @@ export default function Meteoro({ route, navigation }) {
                         gifMeteoroMedio && <Animated.Image source={require('../../assets/images/meteoro/explocao.gif')} style={[positionMedio.getLayout(), estilos.meteoro]} />
                     }
                 </View>
-                <View style={estilos.limite}>
+                <View style={{height: 5,  backgroundColor: "red", width: "100%", position: "absolute", top: windowHeight}}>
 
                 </View>
                 <View style={[estilos.teclado, estilos.elevation]}>
@@ -396,7 +397,7 @@ export default function Meteoro({ route, navigation }) {
                         <TouchableOpacity onPress={() => { validaResposta('M') }} style={estilos.btn}><Text style={estilos.btnText}>M</Text></TouchableOpacity>
                     </View>
 
-                </View>
+                </View> 
             </SafeAreaView>
         </>
 
