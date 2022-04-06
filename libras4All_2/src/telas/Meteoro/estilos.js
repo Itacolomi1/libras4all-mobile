@@ -1,6 +1,6 @@
 import { BottomTabBar } from "@react-navigation/bottom-tabs";
 import { AutoFocus } from "expo-camera/build/Camera.types";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 export default StyleSheet.create({
@@ -8,7 +8,8 @@ export default StyleSheet.create({
         backgroundColor:"#C1E2FF",
         height: "100%",
         justifyContent: "space-between",
-        color: "black",      
+        color: "black", 
+        flex: 1   
     },
     titulo:{
         color: "white",
@@ -61,12 +62,14 @@ export default StyleSheet.create({
         justifyContent: "space-evenly",
         alignContent:"space-between",
         position: "absolute",        
-        top: 0
+        top: 65,
     }, 
     meteoro:{
-        width: "30%",
+        width: Dimensions.get('window').width * 0.3,
+        height: Dimensions.get('window').width * 0.3,
         resizeMode : 'contain',
-        alignItems: 'center',
+        marginBottom: 0
+       // alignItems: 'center',
         //position:'absolute',
         //paddingLeft: '15%'
     },
@@ -99,7 +102,7 @@ textAlign: "center"
         backgroundColor: "red",
         width: "100%",
         position: "absolute",
-        bottom: "25%"
+        bottom: "0%"
 
     },
     icon_game:{        
