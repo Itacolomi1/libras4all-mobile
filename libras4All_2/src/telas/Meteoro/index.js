@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, SafeAreaView, StatusBar, Dimensions, Image, Alert, Animated } from 'react-native';
 import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
@@ -6,6 +6,7 @@ import { adicionaHistorico } from '../../services/historic.service';
 import Cronometro from '../../componentes/cronometro';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
+import coin from '../Images/coin.json';
 import { listaImagens } from './list-imagens';
 
 
@@ -26,25 +27,28 @@ export default function Meteoro({ route, navigation }) {
 
     const [meteoroLento, setMeteoroLento] = useState(true);
     const [gifMeteoroLento, setGifMeteoroLento] = useState(false);
+    const [coinMeteoroLento, setCoinMeteoroLento] = useState(false);
     const [acertoMeteoroLento, setAcertoMeteoroLento] = useState(false);
     const [limiteMeteoroLento, setLimiteMeteoroLento] = useState(false);
 
     const [meteoroMedio, setMeteoroMedio] = useState(true);
     const [gifMeteoroMedio, setGifMeteoroMedio] = useState(false);
+    const [coinMeteoroMedio, setCoinMeteoroMedio] = useState(false);
     const [acertoMeteoroMedio, setAcertoMeteoroMedio] = useState(false);
     const [limiteMeteoroMedio, setLimiteMeteoroMedio] = useState(false);
 
     const [meteoroRapido, setMeteoroRapido] = useState(true);
     const [gifMeteoroRapido, setGifMeteoroRapido] = useState(false);
+    const [coinMeteoroRapido, setCoinMeteoroRapido] = useState(false);
     const [acertoMeteoroRapido, setAcertoMeteoroRapido] = useState(false);
     const [limiteMeteoroRapido, setLimiteMeteoroRapido] = useState(false);
 
-    const [verifica,setVerifica] = useState(false);
-    const [verificaLimite,setVerificaLimite] = useState(false);
+    const [verifica, setVerifica] = useState(false);
+    const [verificaLimite, setVerificaLimite] = useState(false);
 
     const hoursMinSecs = { hours: 0, minutes: 0, seconds: 20 }
-    const windowHeight = Dimensions.get('window').height * 0.75 ;
-    const windowHeightM = windowHeight- (Dimensions.get('window').width * 0.3) - 65;
+    const windowHeight = Dimensions.get('window').height * 0.75;
+    const windowHeightM = windowHeight - (Dimensions.get('window').width * 0.3) - 65;
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -58,22 +62,37 @@ export default function Meteoro({ route, navigation }) {
         Animated.timing(positionLento, {
             toValue: { x: 0, y: windowHeightM },
             duration: 11000,
-        }).start(() => {
-            killMeteoro('lento');
-            setLimiteMeteoroLento(true);
-            setVerificaLimite(!verificaLimite);
+        }).start(({ finished }) => {
+            if (finished) {
+                killMeteoro('lento');
+                setLimiteMeteoroLento(true);
+                setVerificaLimite(!verificaLimite);
+            }
         });
+
+
+
+
+
+
+
         setLoading(false);
     }
 
+
+
     function startAnimationMedio() {
         Animated.timing(positionMedio, {
-            toValue: { x: 0, y: windowHeightM  },
+            toValue: { x: 0, y: windowHeightM },
             duration: 8000,
         }).start(() => {
-            killMeteoro('medio');
-            setLimiteMeteoroMedio(true);
-            setVerificaLimite(!verificaLimite);
+            console.log(acertoMeteoroMedio)
+            if (!acertoMeteoroMedio) {
+                killMeteoro('medio');
+                setLimiteMeteoroMedio(true);
+                setVerificaLimite(!verificaLimite);
+            }
+
         });
     }
 
@@ -82,12 +101,16 @@ export default function Meteoro({ route, navigation }) {
             toValue: { x: 0, y: windowHeightM },
             duration: 6500,
         }).start(() => {
-            killMeteoro('rapido');
-            setLimiteMeteoroRapido(true);
-            setVerificaLimite(!verificaLimite);
+            console.log(acertoMeteoroRapido)
+            if (!acertoMeteoroRapido) {
+                killMeteoro('rapido');
+                setLimiteMeteoroRapido(true);
+                setVerificaLimite(!verificaLimite);
+            }
+
         });
     }
-    function stopAnimations(){
+    function stopAnimations() {
         Animated.timing(positionLento).stop();
         Animated.timing(positionMedio).stop();
         Animated.timing(positionRapido).stop();
@@ -183,33 +206,33 @@ export default function Meteoro({ route, navigation }) {
         return listaSinais[id]._id;
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log('passou pelo useEffect');
-        validaFimJogo();  
-    },[verifica]);
+        validaFimJogo();
+    }, [verifica]);
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log('passou pelo useEffect');
-        validaLimiteJogo();  
-    },[verificaLimite]);
+        validaLimiteJogo();
+    }, [verificaLimite]);
 
-    function validaFimJogo(){
+    function validaFimJogo() {
         let tempLento = acertoMeteoroLento;
         let tempMedio = acertoMeteoroMedio;
         let tempRapido = acertoMeteoroRapido;
-        if(tempLento && tempMedio && tempRapido){
+        if (tempLento && tempMedio && tempRapido) {
             goToResultado();
             return;
 
         }
     }
 
-    function validaLimiteJogo(){
+    function validaLimiteJogo() {
         let tempLento = limiteMeteoroLento;
         let tempMedio = limiteMeteoroMedio;
         let tempRapido = limiteMeteoroRapido;
 
-        if(tempLento && tempMedio && tempRapido){
+        if (tempLento && tempMedio && tempRapido) {
             goToResultado();
             return;
         }
@@ -224,21 +247,21 @@ export default function Meteoro({ route, navigation }) {
             switch (letra) {
 
                 case listaSinais[0].descricao:
-                    killMeteoro('lento');
+                    coinMeteoro('lento');
                     setAcertoMeteoroLento(true);
                     await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[0]._id, 'true');
                     setVerifica(!verifica);
                     break;
 
                 case listaSinais[1].descricao:
-                    killMeteoro('rapido');
+                    coinMeteoro('rapido');
                     setAcertoMeteoroRapido(true);
                     await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[1]._id, 'true');
                     setVerifica(!verifica);
                     break;
 
                 case listaSinais[2].descricao:
-                    killMeteoro('medio');
+                    coinMeteoro('medio');
                     setAcertoMeteoroMedio(true);
                     await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[2]._id, 'true');
                     setVerifica(!verifica);
@@ -248,12 +271,34 @@ export default function Meteoro({ route, navigation }) {
         }
 
     }
-    function killMeteoro(meteoro) {
+    function coinMeteoro(meteoro) {
         switch (meteoro) {
 
             case 'lento':
                 setMeteoroLento(false);
+                setCoinMeteoroLento(true);
+                break;
+            case 'medio':
+                setMeteoroMedio(false);
+                setCoinMeteoroMedio(true);
+                break;
+
+            case 'rapido':
+                setMeteoroRapido(false);
+                setCoinMeteoroRapido(true);
+                break;
+        }
+
+    }
+
+    function killMeteoro(meteoro) {
+        switch (meteoro) {
+
+            case 'lento':
+                if(acertoMeteoroLento == false){
+                setMeteoroLento(false);
                 setGifMeteoroLento(true);
+                }
                 break;
             case 'medio':
                 setMeteoroMedio(false);
@@ -268,23 +313,23 @@ export default function Meteoro({ route, navigation }) {
 
     }
 
-    function goToResultado(){
+    function goToResultado() {
         navigation.navigate('Resultado',
-        {
-            userID: userID,
-            token: token,
-            salaID: salaID,
-            acertos: acertos,
-            erros: erros
-        });  
+            {
+                userID: userID,
+                token: token,
+                salaID: salaID,
+                acertos: acertos,
+                erros: erros
+            });
     }
 
 
 
     async function validaTempo(close) {
-        
+
         if (!close) {
-            
+
             // if (!acertoMeteoroLento) {
             //     await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[0]._id, 'false');
             //     setErros(erros + 1);
@@ -299,11 +344,11 @@ export default function Meteoro({ route, navigation }) {
             //     await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[1]._id, 'false');
             //     setErros(erros + 1);
             // }
-            stopAnimations();
+           // stopAnimations();
             setErros(3 - acertos);
             goToResultado();
-           
-     
+
+
         }
     }
 
@@ -318,18 +363,21 @@ export default function Meteoro({ route, navigation }) {
             <SafeAreaView style={estilos.fundo}>
                 <StatusBar backgroundColor="rgb(35, 36, 95)" />
 
-                 <View style={estilos.topo}>
+                <View style={estilos.topo}>
                     <Image source={require('../Images/meteoro_icon.png')} style={estilos.icon_categotia} />
                     <Text style={estilos.titulo}></Text>
                     <Cronometro hoursMinSecs={hoursMinSecs} validaTempo={validaTempo} />
-                </View> 
+                </View>
                 <View style={estilos.meteoros}>
                     {/* Meteoro Lento */}
                     {
                         meteoroLento && <Animated.Image key={idImage(0)} source={pathImage(0)} style={[positionLento.getLayout(), estilos.meteoro]} />
-                      }
+                    }
                     {
                         gifMeteoroLento && <Animated.Image source={require('../../assets/images/meteoro/explocao.gif')} style={[positionLento.getLayout(), estilos.meteoro]} />
+                    }
+                    {
+                        coinMeteoroLento && <Animated.View style={positionLento.getLayout()}><Lottie style={estilos.meteoro} source={coin} autoPlay loop renderMode='contain' autoSize /></Animated.View>
                     }
                     {/* Meteoro Rápido */}
 
@@ -339,6 +387,9 @@ export default function Meteoro({ route, navigation }) {
                     {
                         gifMeteoroRapido && <Animated.Image source={require('../../assets/images/meteoro/explocao.gif')} style={[positionRapido.getLayout(), estilos.meteoro]} />
                     }
+                    {
+                        coinMeteoroRapido && <Animated.View style={positionRapido.getLayout()}><Lottie style={estilos.meteoro} source={coin} autoPlay loop renderMode='contain' autoSize /></Animated.View>
+                    }
                     {/* Meteoro Médio */}
 
                     {
@@ -347,8 +398,11 @@ export default function Meteoro({ route, navigation }) {
                     {
                         gifMeteoroMedio && <Animated.Image source={require('../../assets/images/meteoro/explocao.gif')} style={[positionMedio.getLayout(), estilos.meteoro]} />
                     }
+                    {
+                        coinMeteoroMedio && <Animated.View style={positionMedio.getLayout()}><Lottie style={estilos.meteoro} source={coin} autoPlay loop renderMode='contain' autoSize /></Animated.View>
+                    }
                 </View>
-                <View style={{height: 5,  backgroundColor: "red", width: "100%", position: "absolute", top: windowHeight}}>
+                <View style={{ height: 5, backgroundColor: "red", width: "100%", position: "absolute", top: windowHeight }}>
 
                 </View>
                 <View style={[estilos.teclado, estilos.elevation]}>
@@ -397,7 +451,7 @@ export default function Meteoro({ route, navigation }) {
                         <TouchableOpacity onPress={() => { validaResposta('M') }} style={estilos.btn}><Text style={estilos.btnText}>M</Text></TouchableOpacity>
                     </View>
 
-                </View> 
+                </View>
             </SafeAreaView>
         </>
 
