@@ -26,8 +26,14 @@ export default function InserirPin({route , navigation}) {
             },    
            
         })
-        .then(response => response.json())
-        .then(responsejson =>{                        
+        .then(response => {
+            if(response.ok){
+                return response.json()
+            }
+            Alert.alert('Código incorreto');
+            })
+        .then(responsejson =>{ 
+                                
             if(responsejson != undefined){                
                 salaId =  responsejson._id;
                 nomeSala = responsejson.descricao;
@@ -38,8 +44,7 @@ export default function InserirPin({route , navigation}) {
             }
         })
         .catch(error => {
-          console.log('deu errado');
-          console.error(error);
+          Alert.alert('Código incorreto');
         });
     }
 
@@ -54,17 +59,23 @@ export default function InserirPin({route , navigation}) {
             body: corpo
            
         })
-        .then(response => response.json())
-        .then(responsejson =>{                        
+        .then(response => {
+            if(response.ok){
+                return response.json()
+            }
+            })
+        .then(responsejson =>{  
+                                    
             if(responsejson){
                 Alert.alert('Seja Bem-Vindo');
                 navigation.navigate('Sala de Espera',{userID: userID,token: token, salaID: salaId, SalaName: nomeSala,tipoJogo: tipoJogoSala});
             }else{
-                Alert.alert('Código incorreto');
+                navigation.navigate('Sala de Espera',{userID: userID,token: token, salaID: salaId, SalaName: nomeSala,tipoJogo: tipoJogoSala});
+          
             }
         })
         .catch(error => {
-          console.log('deu errado');
+          Alert.alert('Código incorreto');
           console.error(error);
         });
 
