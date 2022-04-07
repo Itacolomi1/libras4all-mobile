@@ -14,6 +14,7 @@ export default function Quiz({ route, navigation }) {
     const { userID, token, salaID } = route.params;
 
     let perguntasID = [];
+    let perguntasIDAleatoria=[];
     let perguntasQuiz = [];
     const [loading, setLoading] = useState(true);
     const [listaPergunta, setListaPergunta] = useState([]);
@@ -49,7 +50,17 @@ export default function Quiz({ route, navigation }) {
                 .then(response => response.json())
                 .then(responseJson => {
                     perguntasID = responseJson;
-                    getPerguntas();
+                    if(salaID != '621bf0052d53a30016a0b571'){
+                        getPerguntas();
+                    }else{
+                        //aleatório
+                        for(let i = 0; i < 5; i ++){
+                            perguntasIDAleatoria.push(responseJson[Math.floor(Math.random() * responseJson.length)]);
+                        }
+                        getPerguntasAleatorias();
+                        
+
+                    }
                 })
                 .catch(error => {
                     console.log('deu errado');
@@ -61,6 +72,17 @@ export default function Quiz({ route, navigation }) {
             console.log(e);
         }
 
+    }
+
+    async function getPerguntasAleatorias() {
+
+        for (let index = 0; index < perguntasIDAleatoria.length; index++) {
+            const element = perguntasIDAleatoria[index];
+            let pergunta = await getPergunta(element);
+            perguntasQuiz.push(pergunta);
+        }
+        setListaPergunta(perguntasQuiz);
+        setLoading(false);        
     }
 
     async function getPerguntas() {
