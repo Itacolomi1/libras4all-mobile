@@ -14,6 +14,7 @@ export default function Meteoro({ route, navigation }) {
     const { userID, token, salaID } = route.params;
 
     let sinaisID = [];
+    let sinaisIDAleatorio = [];
     let sinaisMeteoro = [];
     const [listaSinais, setListaSinais] = useState([]);
     const [sinalDaVez, setSinal] = useState(0);
@@ -22,7 +23,7 @@ export default function Meteoro({ route, navigation }) {
     const [loading, setLoading] = useState(true);
     const [positionLento, setPostioLento] = useState(new Animated.ValueXY(0, 0));
     const [positionMedio, setPostioMedio] = useState(new Animated.ValueXY(0, 0));
-    const [positionRapido, setPostioRapido] = useState(new Animated.ValueXY(0, 0));
+    const [positionRapido, setPostioRapido] = useState(new Animated.ValueXY(0, 0)); 
 
 
     const [meteoroLento, setMeteoroLento] = useState(true);
@@ -47,6 +48,7 @@ export default function Meteoro({ route, navigation }) {
     const [verificaLimite, setVerificaLimite] = useState(false);
 
     const hoursMinSecs = { hours: 0, minutes: 0, seconds: 11 }
+    const quantidadeSinais = 3;
     const windowHeight = Dimensions.get('window').height * 0.75;
     const windowHeightM = windowHeight - (Dimensions.get('window').width * 0.3) - 65;
 
@@ -121,11 +123,6 @@ export default function Meteoro({ route, navigation }) {
     },[limiteMeteoroMedio])
 
 
-    function stopAnimations() {
-        Animated.timing(positionLento).stop();
-        Animated.timing(positionMedio).stop();
-        Animated.timing(positionRapido).stop();
-    }
     function letItFall() {
         startAnimationLento();
         startAnimationMedio();
@@ -147,7 +144,20 @@ export default function Meteoro({ route, navigation }) {
                 .then(responseJson => {
                     sinaisID = responseJson;
                     console.log(sinaisID);
-                    getSinais();
+                    if(salaID != '6248b1bafa664b001694f846'){
+                        getSinais();
+                    }else{
+                        //aleatório
+                        console.log('é um jogo aleatório');
+                        sinaisIDAleatorio.push(responseJson[Math.floor(Math.random() * responseJson.length)]);
+                        sinaisIDAleatorio.push(responseJson[Math.floor(Math.random() * responseJson.length)]);
+                        sinaisIDAleatorio.push(responseJson[Math.floor(Math.random() * responseJson.length)]);
+              
+                        getSinaisAleatorios();
+                        
+
+                    }
+                    
                 })
                 .catch(error => {
                     console.log('deu errado no get Meteoro');
@@ -159,6 +169,20 @@ export default function Meteoro({ route, navigation }) {
             console.log(e);
         }
 
+    }
+
+    async function getSinaisAleatorios() {
+
+        for (let index = 0; index < sinaisIDAleatorio.length; index++) {
+            const element = sinaisIDAleatorio[index];
+            let pergunta = await getSinal(element);
+            sinaisMeteoro.push(pergunta);
+        }
+        console.log('----------Sinais Aleatórios-------------');
+        console.log(sinaisMeteoro);
+        setListaSinais(sinaisMeteoro);
+        setLoading(false);
+        letItFall();
     }
 
     async function getSinais() {

@@ -82,27 +82,27 @@ export function listaImagens(){
             image: require('../../assets/images/meteoro/t.png'),
         },
         {
-            id: '621be5e1b1bdfe7e0c1d1f7e',
+            id: '624b8ea69f4f91001638cbdb',
             image: require('../../assets/images/meteoro/u.png'),
         },
         {
-            id: '621be5e8b1bdfe7e0c1d1f7f',
+            id: '624b8eb09f4f91001638cbdc',
             image: require('../../assets/images/meteoro/v.png'),
         },
         {
-            id: '621be5eeb1bdfe7e0c1d1f80',
+            id: '624b90b09f4f91001638cbdf',
             image: require('../../assets/images/meteoro/w.png'),
         },
         {
-            id: '621be5f8b1bdfe7e0c1d1f81',
+            id: '624b8eb79f4f91001638cbdd',
             image: require('../../assets/images/meteoro/x.png'),
         },
         {
-            id: '621be5feb1bdfe7e0c1d1f82',
+            id: '624b90b99f4f91001638cbe0',
             image: require('../../assets/images/meteoro/y.png'),
         },
         {
-            id: '621be606b1bdfe7e0c1d1f83',
+            id: '624b8edb9f4f91001638cbde',
             image: require('../../assets/images/meteoro/z.png'),
         },
         {
