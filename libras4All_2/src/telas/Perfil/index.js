@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Dimensions, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
+import { Text, View, Dimensions, ScrollView, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
 import estilos from './estilos';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
@@ -112,6 +112,7 @@ export default function Perfil({ route, navigation }) {
     } else {
 
         return <>
+        <ScrollView style={estilos.rolagem}>
             <SafeAreaView style={estilos.fundo}>
                 <StatusBar backgroundColor="rgb(35, 36, 95)" />
                 <View style={estilos.topo}>
@@ -174,6 +175,7 @@ export default function Perfil({ route, navigation }) {
                 </View>
 
             </SafeAreaView>
+            </ScrollView>
         </>
     }
 

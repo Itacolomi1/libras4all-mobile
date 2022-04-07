@@ -12,6 +12,11 @@ export default StyleSheet.create({
     titulo:{
         color: "white",
     },
+    rolagem:{
+        width: "100%",
+        height: "100%",
+        backgroundColor: "white",
+    },
     logo:{
         height: 120,
         width: "50%",
@@ -31,7 +36,8 @@ export default StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "center",
         alignItems: "center",
-        paddingTop: 15
+        paddingTop: 15,
+        marginTop: 10
     },
     salas:{        
         alignSelf:"center",
@@ -42,7 +48,8 @@ export default StyleSheet.create({
         flexWrap: "wrap",
         paddingTop: 15,
         paddingBottom: 15,
-        paddingLeft: 20
+        paddingLeft: 20,
+        marginTop: 10
     },
     engloba:{
         flexDirection: 'row',
@@ -70,6 +77,7 @@ export default StyleSheet.create({
         alignSelf: "center",
         marginBottom: 30,
         height: 50,
+        marginTop: 10
     },
     texto_button:{
         color: "#fff",
@@ -85,7 +93,8 @@ export default StyleSheet.create({
         paddingTop: 15,
         paddingBottom: 15,
         flexDirection: 'row',
-        paddingLeft: 20
+        paddingLeft: 20,
+        marginTop: 10
        
     },
     dados:{        
@@ -99,6 +108,7 @@ export default StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "center",
         alignItems: "flex-start",
+        marginTop: 10
        
     },
     elevation:{
@@ -176,7 +186,8 @@ export default StyleSheet.create({
             width: "89%",
             alignSelf: "center",
             height: 110,
-            marginBottom: 35
+            marginBottom: 35,
+            marginTop: 10
     
         },
     icon_nivel:{

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert, Linking } from 'react-native';
+import { Text, View, ScrollView, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image, Alert, Linking } from 'react-native';
 import estilos from './estilos';
 import * as settings from '../../assets/config/appSettings.json'
 import Lottie from 'lottie-react-native';
@@ -146,6 +146,7 @@ export default function Cadastro({ navigation }) {
 
     } else {
         return <>
+        <ScrollView style={estilos.rolagem}>
             <SafeAreaView style={estilos.fundo}>
                 <StatusBar backgroundColor="rgb(35, 36, 95)" />
 
@@ -245,6 +246,7 @@ export default function Cadastro({ navigation }) {
                 </View>
 
             </SafeAreaView>
+            </ScrollView>
         </>
 
     }

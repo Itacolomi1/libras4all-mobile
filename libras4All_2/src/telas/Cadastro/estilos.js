@@ -8,7 +8,12 @@ export default StyleSheet.create({
         justifyContent: "center",
         color: "black"
     },
-
+    rolagem:{
+        paddingTop: 20,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "white",
+    },
     cadastro__input: {
         fontSize: 15,
         color: "black",
