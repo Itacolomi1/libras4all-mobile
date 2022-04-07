@@ -20,14 +20,15 @@ export default StyleSheet.create({
         fontWeight: "bold",
     },
     img_pergunta:{
-        width: "27%",
-        height: "40%",
+        width: "40%",
+        height: "50%",
         resizeMode : 'contain',
         alignSelf: 'center',
     },
     texto_pergunta:{
         color: "black",
         alignSelf: 'center',
+        fontSize: 18,
         padding: 10,
     },
     pergunta:{

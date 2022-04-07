@@ -46,7 +46,7 @@ export default function Meteoro({ route, navigation }) {
     const [verifica, setVerifica] = useState(false);
     const [verificaLimite, setVerificaLimite] = useState(false);
 
-    const hoursMinSecs = { hours: 0, minutes: 0, seconds: 20 }
+    const hoursMinSecs = { hours: 0, minutes: 0, seconds: 11 }
     const windowHeight = Dimensions.get('window').height * 0.75;
     const windowHeightM = windowHeight - (Dimensions.get('window').width * 0.3) - 65;
 
@@ -61,20 +61,11 @@ export default function Meteoro({ route, navigation }) {
     function startAnimationLento() {
         Animated.timing(positionLento, {
             toValue: { x: 0, y: windowHeightM },
-            duration: 11000,
-        }).start(({ finished }) => {
-            if (finished) {
-                killMeteoro('lento');
-                setLimiteMeteoroLento(true);
-                setVerificaLimite(!verificaLimite);
-            }
+            duration: 12000,
+        }).start(() => {
+            setLimiteMeteoroLento(true);
+      
         });
-
-
-
-
-
-
 
         setLoading(false);
     }
@@ -84,14 +75,11 @@ export default function Meteoro({ route, navigation }) {
     function startAnimationMedio() {
         Animated.timing(positionMedio, {
             toValue: { x: 0, y: windowHeightM },
-            duration: 8000,
+            duration: 9000,
         }).start(() => {
             console.log(acertoMeteoroMedio)
-            if (!acertoMeteoroMedio) {
-                killMeteoro('medio');
-                setLimiteMeteoroMedio(true);
-                setVerificaLimite(!verificaLimite);
-            }
+            setLimiteMeteoroMedio(true);
+
 
         });
     }
@@ -99,17 +87,40 @@ export default function Meteoro({ route, navigation }) {
     function startAnimationRapido() {
         Animated.timing(positionRapido, {
             toValue: { x: 0, y: windowHeightM },
-            duration: 6500,
+            duration: 7500,
         }).start(() => {
-            console.log(acertoMeteoroRapido)
-            if (!acertoMeteoroRapido) {
-                killMeteoro('rapido');
-                setLimiteMeteoroRapido(true);
-                setVerificaLimite(!verificaLimite);
-            }
-
+            setLimiteMeteoroRapido(true);
         });
     }
+
+    // usseEffects Meteoros
+
+    useEffect(()=> {
+        if (!coinMeteoroLento && limiteMeteoroLento) {
+            killMeteoro('lento');
+        
+            //setVerificaLimite(!verificaLimite);
+        }
+
+    },[limiteMeteoroLento])
+
+    useEffect(()=> {
+        if (!acertoMeteoroRapido && limiteMeteoroRapido) {
+            killMeteoro('rapido');            
+            //setVerificaLimite(!verificaLimite);
+        }
+
+    },[limiteMeteoroRapido])
+
+    useEffect(()=> {
+        if (!acertoMeteoroMedio  && limiteMeteoroMedio) {
+            killMeteoro('medio');      
+            //setVerificaLimite(!verificaLimite);
+        }
+
+    },[limiteMeteoroMedio])
+
+
     function stopAnimations() {
         Animated.timing(positionLento).stop();
         Animated.timing(positionMedio).stop();
@@ -212,7 +223,7 @@ export default function Meteoro({ route, navigation }) {
     }, [verifica]);
 
     useEffect(() => {
-        console.log('passou pelo useEffect');
+        console.log('passou pelo useEffect Limite');
         validaLimiteJogo();
     }, [verificaLimite]);
 
