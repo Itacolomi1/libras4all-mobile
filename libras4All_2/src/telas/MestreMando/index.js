@@ -13,7 +13,7 @@ import {
   Alert,
   SafeAreaView
 } from 'react-native';
-
+import ModelSingleton from '../../shared/model.singleton';
 
 //import {drawRect} from './utilities';
 import Canvas from 'react-native-canvas';
@@ -40,39 +40,7 @@ export default function MestreMando({ ValidaMestre, Letra }) {
   let requestAnimationFrameId = 0;
   const hoursMinSecs = { hours: 0, minutes: 0, seconds: 20 }
   console.log('A Letra recebida foi ' + Letra);
-
-  //#endregion
-  const getModel = async () => {
-    console.log('Começa a carregar o tensorflow');
-
-    try {
-
-      await tf.ready();
-      // Signal to the app that tensorflow.js can now be used.
-      console.log('ready is on');
-
-      await tf.setBackend('rn-webgl');
-      console.log('backend is on');
-
-      // Get reference to bundled model assets 
-      const modelJson = require('../../assets/model/model.json');
-      const modelWeights = require('../../assets/model/group-shard.bin');
-
-
-      // 3. TODO - Load network
-      // const net = await tf.loadGraphModel('https://libras4alltfod.s3.br-sao.cloud-object-storage.appdomain.cloud/model.json')
-      const net = await tf.loadGraphModel(
-        bundleResourceIO(modelJson, modelWeights));
-      console.log('modelo is on');
-      setLoading(false);
-
-      modeloTensorFlow = net;
-
-    } catch (err) {
-      console.log('erro no tensorflow');
-      console.log(err);
-    }
-  };
+   
 
   const handleCameraStream = (images, updatePreview, gl) => {
     console.log('entrou no stream handle');
@@ -217,8 +185,14 @@ export default function MestreMando({ ValidaMestre, Letra }) {
   }, []);
 
   useEffect(() => {
-    getModel();
+    let modelo = ModelSingleton.getInstance();
+    modeloTensorFlow = modelo.getModelo();
+    console.log('pegou modelo da Home');
+    setLoading(false);  
+    //getModel();
   }, []);
+
+
 
   useEffect(() => {
     return () => {

@@ -4,6 +4,9 @@ import estilos from './estilos';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
 import * as settings from '../../assets/config/appSettings.json';
+import ModelSingleton from '../../shared/model.singleton';
+import * as tf from '@tensorflow/tfjs';
+import {bundleResourceIO } from '@tensorflow/tfjs-react-native';
 
 export default function Home({ route, navigation }) {
     //Get parameter
@@ -18,6 +21,11 @@ export default function Home({ route, navigation }) {
 
         return unsubscribe;
     }, [navigation]);
+
+    //Carregar a Rede Neural
+    useEffect(() => {
+        getModel();
+    },[])
 
     function getUser() {
 
@@ -66,6 +74,36 @@ export default function Home({ route, navigation }) {
     function gotoRankingGeral() {
         navigation.navigate('Ranking Geral', { userID: userID, token: token });
     }
+
+    getModel = async () => {
+        console.log('Começa a carregar o tensorflow');
+
+        try {    
+          await tf.ready();
+          // Signal to the app that tensorflow.js can now be used.
+          console.log('ready is on');
+    
+          await tf.setBackend('rn-webgl');
+          console.log('backend is on');
+    
+          // Get reference to bundled model assets 
+          const modelJson = require('../../assets/model/model.json');
+          const modelWeights = require('../../assets/model/group-shard.bin');
+    
+    
+          // 3. TODO - Load network      
+          const net = await tf.loadGraphModel(
+            bundleResourceIO(modelJson, modelWeights));
+          console.log('modelo is on');
+          
+          let modelo = ModelSingleton.getInstance();
+          modelo.setModelo(net);
+    
+        } catch (err) {
+          console.log('erro no tensorflow');
+          console.log(err);
+        }
+    };
 
     if(loading){
         return <>
