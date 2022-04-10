@@ -123,8 +123,8 @@ export default function SalaEspera({ route, navigation }) {
     function goToMestreMando(){
         navigation.navigate('Mestre Mando',{userID: userID,token: token, salaID: salaID});
     }
-    function goToMeteoro(){
-        navigation.navigate('Quiz',{userID: userID,token: token, salaID: salaID});
+    function gotoMeteoro() {
+        navigation.navigate('Meteoro', {userID: userID,token: token, salaID: salaID});
     }
     async function goToJogo(){
         let sala = await getSala();
@@ -134,7 +134,7 @@ export default function SalaEspera({ route, navigation }) {
                     goToQuiz();
                     break;
                 case 'Meteoro':
-                    Alert.alert('Mestre Mandou ainda não esta pronto');
+                    gotoMeteoro();
                     break;
                 case'Mestre Mandou':                
                     goToMestreMando();
