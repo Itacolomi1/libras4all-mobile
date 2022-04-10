@@ -11,49 +11,22 @@ export default function Resultado({route,navigation}) {
     const { userID, token, salaID, acertos,erros} = route.params;
 
     const [loading, setLoading] = useState(true);
+    const [tempAcertos, setTempAcertos] = useState(0);
+    const [tempErros, setTempErros] = useState(0);
     const [bau,setBau] = useState();
 
     useEffect(()=>{
-        const unsubscribe = navigation.addListener('focus', () => {
-            //do something here
-            //getPontos();
+        const unsubscribe = navigation.addListener('focus', () => {         
             setBau((acertos > 0)? acertou:errou);
+            setTempAcertos(acertos);
+            setTempErros(erros);
             setLoading(false);
         });
 
         return unsubscribe;
     },[navigation]);
 
-    function getPontos() {
-        fetch(settings.backend.url + `/historico/quantidadePorAluno/${salaID}/${userID}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
 
-        })
-            .then(response => {
-                console.log('retorno dos resultados');
-                
-                if(response.ok){                
-                    return response.json()
-                }
-            } )
-            .then(responseJson => {
-                if(responseJson){
-                    console.log('retorno do Resultado');
-                  
-                }else {
-                    console.log('something bad happen with resultd');
-                }
-                setLoading(false);
-            })
-            .catch(error => {
-                console.log('deu errado');
-                console.error(error);
-            });
-    }
 
     function gotToHome() {
         navigation.navigate('Home', { userID: userID, token: token });
@@ -87,12 +60,12 @@ export default function Resultado({route,navigation}) {
             <Text style={estilos.titulo}>Resultado</Text>
             <View style={[estilos.bloco, estilos.elevation]}>
                 <Text style={estilos.txt}>Acertos:</Text>
-                <Text style={estilos.qtd_acertos}>{acertos}</Text>
+                <Text style={estilos.qtd_acertos}>{tempAcertos}</Text>
                
             </View>
             <View style={[estilos.bloco, estilos.elevation]}>
                 <Text style={estilos.txt}>Erros:</Text>
-                <Text style={estilos.qtd_erros}>{erros}</Text>               
+                <Text style={estilos.qtd_erros}>{tempErros}</Text>               
             </View>
  
             <Lottie  style={estilos.carregar_animate} source={bau} autoPlay loop renderMode='contain' autoSize />
