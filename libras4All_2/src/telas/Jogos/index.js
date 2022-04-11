@@ -18,7 +18,7 @@ export default function Jogos({ route, navigation }) {
     }
 
     function goToTutorialMestreMando() {
-        navigation.navigate('Tutorial Mestre Mando', { userID: userID, token: token });
+        navigation.navigate('Tutorial Mestre Mandou', { userID: userID, token: token });
     }
 
     function gotoPin() {

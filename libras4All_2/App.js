@@ -290,7 +290,7 @@ export default function App () {
               <Stack.Screen name='Quiz' component={Quiz} options={{headerShown:false}}/>
               <Stack.Screen name='Tutorial Quiz' component={TutorialQuiz}/>
               <Stack.Screen name='Tutorial Meteoro' component={TutorialMeteoro}/>              
-              <Stack.Screen name='Tutorial Mestre Mando' component={TutorialMestreMando}/>
+              <Stack.Screen name='Tutorial Mestre Mandou' component={TutorialMestreMando}/>
               <Stack.Screen name='Jogos' component={Jogos}/>
               <Stack.Screen name='Ranking Geral' component={RankingGeral} options={{headerShown:false}}/>
               <Stack.Screen name='Mestre Mando' component={MestreMandoWrap} options={{headerShown:false}}/>
