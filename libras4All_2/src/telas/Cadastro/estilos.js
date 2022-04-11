@@ -44,7 +44,14 @@ export default StyleSheet.create({
         borderRadius: 5,
         marginBottom: 30
     },
+    
+  
+    termo_text:{
+        color: 'black',
+    },
     termo: {
+        
+        backgroundColor: "#e9e9e9",
         width: "80%",
         alignSelf: "center",
         color: 'black',
@@ -55,7 +62,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         height: 50,
         borderRadius: 5,
-        marginBottom: 30
+        marginBottom: 30        
     },
     input_icon: {
         padding: 10,

@@ -239,8 +239,10 @@ export default function Cadastro({ navigation }) {
                         disabled={false}
                         value={aceitouTermo}
                         onValueChange={(newValue) => setAceitouTermo(newValue)}
+                        tintColors={{ true: 'green', false: 'black' }}
                     />
-                    <Text                       
+                    <Text      
+                       style={estilos.termo_text}                 
                         onPress={() => {
                             Linking.openURL('https://libras4all-web.herokuapp.com/HomePage/Privacy');
                         }}>
