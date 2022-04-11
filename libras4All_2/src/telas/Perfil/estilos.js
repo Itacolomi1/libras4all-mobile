@@ -15,7 +15,7 @@ export default StyleSheet.create({
     rolagem:{
         width: "100%",
         height: "100%",
-        backgroundColor: "white",
+        backgroundColor:"#e3f2ff",
     },
     logo:{
         height: 120,
@@ -37,7 +37,8 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         paddingTop: 15,
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 10
     },
     salas:{        
         alignSelf:"center",
@@ -49,7 +50,8 @@ export default StyleSheet.create({
         paddingTop: 15,
         paddingBottom: 15,
         paddingLeft: 20,
-        marginTop: 10
+        marginTop: 10,        
+        marginBottom: 10
     },
     engloba:{
         flexDirection: 'row',
@@ -94,7 +96,9 @@ export default StyleSheet.create({
         paddingBottom: 15,
         flexDirection: 'row',
         paddingLeft: 20,
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 10
+
        
     },
     dados:{        
@@ -108,7 +112,8 @@ export default StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "center",
         alignItems: "flex-start",
-        marginTop: 10
+        marginTop: 10,        
+        marginBottom: 10
        
     },
     elevation:{

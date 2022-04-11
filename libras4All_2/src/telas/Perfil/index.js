@@ -112,14 +112,14 @@ export default function Perfil({ route, navigation }) {
     } else {
 
         return <>
-        <ScrollView style={estilos.rolagem}>
+       
             <SafeAreaView style={estilos.fundo}>
                 <StatusBar backgroundColor="rgb(35, 36, 95)" />
                 <View style={estilos.topo}>
 
                     <Image source={require('../Images/logo.png')} style={estilos.logo} />
                 </View>
-
+                <ScrollView style={estilos.rolagem}>
                 <View style={[estilos.dados, estilos.elevation]}>
                     <View style={estilos.bloco}>
                         <Text style={estilos.texto_bold}>Nome:</Text>
@@ -158,6 +158,7 @@ export default function Perfil({ route, navigation }) {
                     <Text style={estilos.qtd_meteoro}>{getNumeroMeteoro()}</Text>
 
                 </View>
+                </ScrollView>
                 <TouchableOpacity style={estilos.sessao_button} onPress={() => { logOut() }}>
                     <Text style={estilos.texto_button}>Encerrar sessão</Text>
                 </TouchableOpacity>
@@ -175,7 +176,7 @@ export default function Perfil({ route, navigation }) {
                 </View>
 
             </SafeAreaView>
-            </ScrollView>
+          
         </>
     }
 
