@@ -73,10 +73,24 @@ export default function Cadastro({ navigation }) {
                     ]);
 
                 } else {
-                    Alert.alert('Erro ao realizar cadastro');
+                    return response.json();
+                    // Alert.alert('Erro ao realizar cadastro');
                 }
 
-            })
+            }).
+            then( responseJson => {
+                if(responseJson)
+                {
+                    Alert.alert(responseJson.mensagem);
+
+                }else{
+                    Alert.alert('Erro no processo de cadastro');
+
+                }
+              
+                
+            }
+            )
             .catch(error => {
                 Alert.alert('Erro ao realizar cadastro');
                 console.error(error);

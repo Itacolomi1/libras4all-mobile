@@ -47,6 +47,7 @@ export default StyleSheet.create({
     termo: {
         width: "80%",
         alignSelf: "center",
+        color: 'black',
         flexDirection: 'row',        
         borderColor: "#acacac",
         borderRadius: 5,
@@ -108,8 +109,6 @@ export default StyleSheet.create({
     engloba: {
         width: "100%",
         backgroundColor: "white",
-
-
     },
     botao: {
         marginBottom: 5,
