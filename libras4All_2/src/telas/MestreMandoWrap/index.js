@@ -175,7 +175,7 @@ export default function MestreMandoWrap({ route, navigation }) {
         </>
     } else {
         return <>
-            <View><Text>Besteira Qualquer</Text></View>
+            <View><Text>     </Text></View>
         </>
     }
 
