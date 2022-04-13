@@ -48,6 +48,7 @@ export default StyleSheet.create({
   
     termo_text:{
         color: 'black',
+        width: "85%"
     },
     termo: {
         
@@ -55,14 +56,14 @@ export default StyleSheet.create({
         width: "80%",
         alignSelf: "center",
         color: 'black',
-        flexDirection: 'row',        
+        flexDirection: 'row',                
         borderColor: "#acacac",
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
         height: 50,
         borderRadius: 5,
-        marginBottom: 30        
+        marginBottom: 30,      
     },
     input_icon: {
         padding: 10,

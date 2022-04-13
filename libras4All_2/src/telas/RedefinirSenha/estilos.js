@@ -6,37 +6,30 @@ export default StyleSheet.create({
         backgroundColor:"white",
         height: "100%",
         justifyContent: "center",
-        color: "black"
+        color: "black",
+        backgroundColor: "rgb(35, 36, 95)",
     },
-    login__logomarca:{
-        marginBottom: 10
+    logo:{
+        width: "100%"
     },
-    login__msg:(text='none')=>({
-        fontWeight:"bold",
-        fontSize: 22,
-        color:"red",
-        marginBottom: 15,
-        display: text
-    }),
-    login__form:{
-        width: "80%"
-    },
-    link:{
-        color:"#0000ff",
-        textDecorationLine: 'underline',
-        textAlign: 'center',
-        width: "100%",
-        marginTop: 10
-    },
-    login__input:{
+   titulo:{
+    color:"white",
+    fontSize: 20,
+    textAlign: 'center',
+    width: "100%"
+   },
+    input:{
+        
         fontSize: 15,       
         color: "black",
         width: "80%",
         alignSelf: "center",
-        height: 50
+        height: 48,
+        backgroundColor: "white"
         
     },
     icon_area:{
+        marginTop: 30,
         width: "80%",        
         alignSelf: "center",
     flexDirection: 'row',
@@ -47,7 +40,8 @@ export default StyleSheet.create({
     alignItems: 'center',
     height: 50,
     borderRadius: 5 ,
-    marginBottom: 30
+    marginBottom: 30,
+    backgroundColor: "white"
     },
     input_icon:{
         padding: 10,
@@ -64,18 +58,8 @@ export default StyleSheet.create({
         
         
     },
-    login_button:{
-        justifyContent: 'center',
-        backgroundColor: "rgb(35, 36, 95)",
-        alignSelf:"center",
-        borderRadius: 5,
-        width: "80%",
-        alignSelf: "center",
-        marginBottom: 30,
-        height: 50,
-
-    },
-    cadastro_button:{
+    
+    button:{
         justifyContent: 'center',
         backgroundColor: "#037ca9",
         alignSelf:"center",
@@ -98,7 +82,6 @@ export default StyleSheet.create({
     },
     engloba:{
         width: "100%",
-        backgroundColor: "white",
         
         
     },
@@ -107,15 +90,5 @@ export default StyleSheet.create({
         width: "100%",
         alignItems: "center",
         alignSelf: "center"
-    },
-    carregando:{
-        backgroundColor:"#e3f2ff",
-        flex: 1, 
-        justifyContent: 'center', 
-        alignItems: 'center'
-    },
-    carregar_animate:{
-        alignSelf: "center",
-        width: "100%"
-    },
+    }
 });

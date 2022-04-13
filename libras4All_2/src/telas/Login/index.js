@@ -82,7 +82,9 @@ export default function Login({ navigation }) {
     function goToCadastro() {
         navigation.navigate('Cadastro');
     }
-
+    function goToRedefinirSenha() {
+        navigation.navigate('Redefinir Senha');
+    }
     if (loading) {
         return <>
             <SafeAreaView style={estilos.carregando}>
@@ -127,11 +129,16 @@ export default function Login({ navigation }) {
                     >
                         <Text style={estilos.texto_button}>Logar</Text>
                     </TouchableOpacity>
+                    
                     <TouchableOpacity
                         style={estilos.cadastro_button}
                         onPress={goToCadastro}
                     >
+                        
                         <Text style={estilos.texto_button}>Cadastre-se</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {goToRedefinirSenha() }}>
+                    <Text style={estilos.link}>Esqueceu a senha ?</Text>
                     </TouchableOpacity>
                 </View>
 

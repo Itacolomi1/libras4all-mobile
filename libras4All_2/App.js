@@ -266,6 +266,7 @@ import TransicaoErrado from './src/telas/TransicaoErrado';
 import TransicaoCertoMestre from './src/telas/TransicaoCertoMestre';
 import TransicaoErradoMestre from './src/telas/TransicaoErradoMestre';
 import MestreMandoWrap from './src/telas/MestreMandoWrap';
+import RedefinirSenha from './src/telas/RedefinirSenha';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cadastro from './src/telas/Cadastro';
@@ -292,6 +293,7 @@ export default function App () {
               <Stack.Screen name='Tutorial Meteoro' component={TutorialMeteoro}/>              
               <Stack.Screen name='Tutorial Mestre Mandou' component={TutorialMestreMando}/>
               <Stack.Screen name='Jogos' component={Jogos}/>
+              <Stack.Screen name='Redefinir Senha' component={RedefinirSenha}/>
               <Stack.Screen name='Ranking Geral' component={RankingGeral} options={{headerShown:false}}/>
               <Stack.Screen name='Mestre Mando' component={MestreMandoWrap} options={{headerShown:false}}/>
               <Stack.Screen name='Meteoro' component={Meteoro} options={{headerShown:false}}/>
