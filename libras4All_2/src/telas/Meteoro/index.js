@@ -17,6 +17,7 @@ export default function Meteoro({ route, navigation }) {
     let sinaisIDAleatorio = [];
     let sinaisMeteoro = [];
     const [listaSinais, setListaSinais] = useState([]);
+    const [listaSinaisAcertos, setListaSinaisAcertos] = useState([]);
     const [sinalDaVez, setSinal] = useState(0);
     const [acertos, setAcertos] = useState(0);
     const [erros, setErros] = useState(0);
@@ -285,33 +286,42 @@ export default function Meteoro({ route, navigation }) {
     async function validaResposta(letra) {
 
         resposta = listaSinais.find(x => x.descricao === letra);
+      
 
         if (resposta) {
-            setAcertos(acertos + 1);
-            switch (letra) {
 
-                case listaSinais[0].descricao:
-                    coinMeteoro('lento');
-                    setAcertoMeteoroLento(true);
-                    await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[0]._id, 'true');
-                    setVerifica(!verifica);
-                    break;
+            if(!listaSinaisAcertos.find(x => x === resposta)){
+                listaSinaisAcertos.push(resposta);
+                setAcertos(acertos + 1);
 
-                case listaSinais[1].descricao:
-                    coinMeteoro('rapido');
-                    setAcertoMeteoroRapido(true);
-                    await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[1]._id, 'true');
-                    setVerifica(!verifica);
-                    break;
 
-                case listaSinais[2].descricao:
-                    coinMeteoro('medio');
-                    setAcertoMeteoroMedio(true);
-                    await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[2]._id, 'true');
-                    setVerifica(!verifica);
-                    break;
+                switch (letra) {
 
+                    case listaSinais[0].descricao:
+                        coinMeteoro('lento');
+                        setAcertoMeteoroLento(true);
+                        await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[0]._id, 'true');
+                        setVerifica(!verifica);
+                        break;
+    
+                    case listaSinais[1].descricao:
+                        coinMeteoro('rapido');
+                        setAcertoMeteoroRapido(true);
+                        await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[1]._id, 'true');
+                        setVerifica(!verifica);
+                        break;
+    
+                    case listaSinais[2].descricao:
+                        coinMeteoro('medio');
+                        setAcertoMeteoroMedio(true);
+                        await adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[2]._id, 'true');
+                        setVerifica(!verifica);
+                        break;
+    
+                }
             }
+
+
         }
 
     }
