@@ -72,13 +72,7 @@ export default function Resultado({route,navigation}) {
             
             <View style={estilos.icon_area}>
                 <TouchableOpacity onPress={() => {gotToHome()}}>
-                    <Image source={require('../Images/home.png')} style={estilos.icon_home} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => { gotoPin() }}>
-                    <Image source={require('../Images/pin.png')} style={estilos.icon_pin} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => { gotoJogos() }}>
-                    <Image source={require('../Images/game.png')} style={estilos.icon_game} />
+                  <Text style={estilos.area_text}> Retornar para a Página Inicial</Text>
                 </TouchableOpacity>
             </View>
 

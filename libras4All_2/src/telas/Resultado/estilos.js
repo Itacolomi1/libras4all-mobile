@@ -23,7 +23,9 @@ export default StyleSheet.create({
         alignSelf: "center"
         
     },
-    
+    area_text:{
+        color: 'white'
+    },
     bloco:{
         alignSelf:"center",
             width: "89%",
