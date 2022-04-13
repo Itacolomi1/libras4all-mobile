@@ -25,7 +25,7 @@ export default function RedefinirSenha({ navigation }) {
             })
             .then(responseJson => {
                 if (responseJson) {
-                    Alert.alert('Atenção', 'O email para redefinir senha foi enviado', [
+                    Alert.alert('Atenção', 'Caso exista uma conta com o email informado, iremos enviar instruções para a troca de senha', [
                         {
                             text: 'Ok!',
                             onPress: () => {
