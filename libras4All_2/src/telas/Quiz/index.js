@@ -55,7 +55,12 @@ export default function Quiz({ route, navigation }) {
                     }else{
                         //aleatório
                         for(let i = 0; i < 5; i ++){
-                            perguntasIDAleatoria.push(responseJson[Math.floor(Math.random() * responseJson.length)]);
+                            let pergunta = responseJson[Math.floor(Math.random() * responseJson.length)];
+                            if(perguntasIDAleatoria.find(x => x === pergunta)){
+                                i--;
+                            }else{
+                                perguntasIDAleatoria.push(pergunta);
+                            }
                         }
                         getPerguntasAleatorias();
                         

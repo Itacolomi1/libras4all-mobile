@@ -69,7 +69,7 @@ export default function Meteoro({ route, navigation }) {
       
         });
 
-        setLoading(false);
+        //setLoading(false);
     }
 
 
@@ -147,14 +147,20 @@ export default function Meteoro({ route, navigation }) {
                     if(salaID != '6248b1bafa664b001694f846'){
                         getSinais();
                     }else{
-                        //aleatório
-                        console.log('é um jogo aleatório');
-                        sinaisIDAleatorio.push(responseJson[Math.floor(Math.random() * responseJson.length)]);
-                        sinaisIDAleatorio.push(responseJson[Math.floor(Math.random() * responseJson.length)]);
-                        sinaisIDAleatorio.push(responseJson[Math.floor(Math.random() * responseJson.length)]);
-              
-                        getSinaisAleatorios();
-                        
+                        //aleatório                 
+
+                        for(let i = 0; i < 3; i ++){
+                            let sinalTemp = responseJson[Math.floor(Math.random() * responseJson.length)];
+                            if(sinaisIDAleatorio.find(x => x === sinalTemp)){
+                                i--;
+                            }else{
+                                sinaisIDAleatorio.push(sinalTemp);
+                            }
+                        }
+                        console.log('-----------Sinais ID Aleatório -------------------');
+                        console.log(sinaisIDAleatorio);
+
+                        getSinaisAleatorios();                        
 
                     }
                     
@@ -380,7 +386,7 @@ export default function Meteoro({ route, navigation }) {
             //     setErros(erros + 1);
             // }
            // stopAnimations();
-            setErros(3 - acertos);
+           setErros(3 - acertos);                      
             goToResultado();
 
 
