@@ -83,11 +83,7 @@ export default function Cadastro({ navigation }) {
                 {
                     Alert.alert(responseJson.mensagem);
 
-                }else{
-                    Alert.alert('Erro no processo de cadastro');
-
-                }
-              
+                }        
                 
             }
             )
