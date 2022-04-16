@@ -9,7 +9,7 @@ export default function TransicaoErradoMestre({TrocarLetraErro}) {
             <View  style={estilos.bloco}>  
                      
             <View style={[estilos.tipo , estilos.elevation]}>  
-            <Text style={estilos.titulo}>Você não atingiu o minimo de 75%</Text>       
+            <Text style={estilos.titulo}>Você não atingiu o minimo de 80%</Text>       
             <Image source={require('../Images/perdeu.png')} style={estilos.icon} />  
               
             </View> 

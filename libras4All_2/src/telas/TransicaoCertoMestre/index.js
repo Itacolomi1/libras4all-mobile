@@ -9,7 +9,7 @@ export default function TransicaoCertoMestre({TrocaLetra}) {
             <View  style={estilos.bloco}>  
                      
             <View style={[estilos.tipo , estilos.elevation]}>  
-            <Text style={estilos.titulo}>80% Correto!</Text>       
+            <Text style={estilos.titulo}>Atingiu o mínimo de 80%!</Text>       
             <Image source={require('../Images/coins.png')} style={estilos.icon} />    
             </View> 
             <TouchableOpacity onPress={() => {TrocaLetra(false)}} style={estilos.jogar_button}>
