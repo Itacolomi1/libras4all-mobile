@@ -4,11 +4,14 @@ import * as settings from '../../assets/config/appSettings.json'
 import estilos from './estilos';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
+import show from '../Images/eye.png';
+import hide from '../Images/hide.png';
 
 export default function Login({ navigation }) {
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [exibirSenha, setExibirSenha] = useState(false);
     
     useEffect(()=>{
         const unsubscribe = navigation.addListener('focus', () => {      
@@ -120,7 +123,12 @@ export default function Login({ navigation }) {
                         placeholderTextColor="#acacac"
                         onChangeText={novoPassword => setPassword(novoPassword)}
                         defaultValue={password}
-                        secureTextEntry={true} />
+                        secureTextEntry={!exibirSenha} />
+                         <TouchableOpacity
+            style={estilos.visualizar}
+            onPress={() => setExibirSenha(!exibirSenha)}>
+            <Image source={exibirSenha ? hide : show} style={estilos.icon_olho} />
+          </TouchableOpacity>
                 </View>
                 <View style={estilos.botao}>
                     <TouchableOpacity
