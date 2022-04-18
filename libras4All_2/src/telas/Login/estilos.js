@@ -11,6 +11,15 @@ export default StyleSheet.create({
     login__logomarca:{
         marginBottom: 10
     },
+    visualizar:{
+        position: "absolute",
+        right: 5
+
+    },
+    icon_olho: {
+        width: 32,
+        height: 32,
+    }, 
     login__msg:(text='none')=>({
         fontWeight:"bold",
         fontSize: 22,
@@ -33,8 +42,8 @@ export default StyleSheet.create({
         color: "black",
         width: "80%",
         alignSelf: "center",
-        height: 50
-        
+        height: 50,
+        paddingRight: 30
     },
     icon_area:{
         width: "80%",        
