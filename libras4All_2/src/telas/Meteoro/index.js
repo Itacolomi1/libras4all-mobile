@@ -102,6 +102,7 @@ export default function Meteoro({ route, navigation }) {
         if (!coinMeteoroLento && limiteMeteoroLento) {
             killMeteoro('lento');
             setErros(erros + 1);
+            adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[0]._id, 'false');
         
             //setVerificaLimite(!verificaLimite);
         }
@@ -113,6 +114,7 @@ export default function Meteoro({ route, navigation }) {
             killMeteoro('rapido');
             setErros(erros + 1);            
             //setVerificaLimite(!verificaLimite);
+            adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[1]._id, 'false');
         }
 
     },[limiteMeteoroRapido])
@@ -120,7 +122,8 @@ export default function Meteoro({ route, navigation }) {
     useEffect(()=> {
         if (!acertoMeteoroMedio  && limiteMeteoroMedio) {
             setErros(erros + 1);
-            killMeteoro('medio');      
+            killMeteoro('medio');
+            adicionaHistorico(token, salaID, userID, 'Meteoro', listaSinais[2]._id, 'false');  
             //setVerificaLimite(!verificaLimite);
         }
 
@@ -266,6 +269,7 @@ export default function Meteoro({ route, navigation }) {
         let tempMedio = acertoMeteoroMedio;
         let tempRapido = acertoMeteoroRapido;
         if (tempLento && tempMedio && tempRapido) {
+            // salvar erros
             goToResultado();
             return;
 
@@ -383,8 +387,6 @@ export default function Meteoro({ route, navigation }) {
     async function validaTempo(close) {
 
         if (!close) {
-
-
            //setErros(3 - acertos);                      
             goToResultado();
 
