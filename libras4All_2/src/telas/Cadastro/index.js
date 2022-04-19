@@ -6,10 +6,12 @@ import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CheckBox from '@react-native-community/checkbox';
-
+import showw from '../Images/eye.png';
+import hide from '../Images/hide.png';
 
 
 export default function Cadastro({ navigation }) {
+    const [confirmarSenha, setConfirmarSenha] = useState('');
     const [userNome, setUserNome] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,6 +23,8 @@ export default function Cadastro({ navigation }) {
     const [mode, setMode] = useState('date');
     const [textoData, setTextoData] = useState();
     const [aceitouTermo, setAceitouTermo] = useState(false);
+    const [exibirSenha, setExibirSenha] = useState(false);    
+    const [exibirCSenha, setExibirCSenha] = useState(false);
 
     const showPicker = () => {
         setIsPickerShow(true);
@@ -36,7 +40,7 @@ export default function Cadastro({ navigation }) {
         let dataSQL = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear()
         setTextoData(dataSQL)
     };
-
+    
     const showMode = (currentMode) => {
         setShow(true);
         setMode(currentMode);
@@ -122,7 +126,10 @@ export default function Cadastro({ navigation }) {
             Alert.alert('Leia os termos antes de se cadastrar');
             return false;
         }
-
+        if (password !== confirmarSenha) {
+            Alert.alert('A senha de confirmação escrita está diferente.');
+            return false;
+          }
         return true;
     }
 
@@ -192,7 +199,28 @@ export default function Cadastro({ navigation }) {
                         placeholderTextColor="#acacac"
                         onChangeText={novoPassword => setPassword(novoPassword)}
                         defaultValue={password}
-                        secureTextEntry={true} />
+                        secureTextEntry={!exibirSenha} />
+                         <TouchableOpacity
+            style={estilos.visualizar}
+            onPress={() => setExibirSenha(!exibirSenha)}>
+            <Image source={exibirSenha ? hide : showw} style={estilos.icon_olho} />
+          </TouchableOpacity>
+                </View>
+                <View style={estilos.icon_area}>
+                    <Image source={require('../Images/cadeado.png')} style={estilos.input_icon} />
+
+                    <TextInput
+                        style={estilos.cadastro__input}
+                        placeholder='Confirmar Senha'
+                        placeholderTextColor="#acacac"
+                        defaultValue={password}
+                        secureTextEntry={!exibirCSenha}
+                        onChangeText={(texto) => setConfirmarSenha(texto)} value={confirmarSenha} />
+                         <TouchableOpacity
+            style={estilos.visualizar}
+            onPress={() => setExibirCSenha(!exibirCSenha)}>
+            <Image source={exibirCSenha ? hide : showw} style={estilos.icon_olho} />
+          </TouchableOpacity>
                 </View>
                 <View style={estilos.icon_area}>
                     <Image source={require('../Images/user.png')} style={estilos.input_icon} />

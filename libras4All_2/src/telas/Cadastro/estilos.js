@@ -19,7 +19,8 @@ export default StyleSheet.create({
         color: "black",
         width: "80%",
         alignSelf: "center",
-        height: 50
+        height: 50,        
+        paddingRight: 30
 
     },
     cadastro__data: {
@@ -92,6 +93,15 @@ export default StyleSheet.create({
 
 
     },
+    visualizar:{
+        position: "absolute",
+        right: 5
+
+    },
+    icon_olho: {
+        width: 32,
+        height: 32,
+    }, 
     salvar_button: {
         justifyContent: 'center',
         backgroundColor: "rgb(35, 36, 95)",
