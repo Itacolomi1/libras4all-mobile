@@ -9,7 +9,7 @@ const imageWidth = dimensions.width;
 
 export default function InserirPin({route , navigation}) {
 
-    const [pin,setPin] = useState('0');
+    const [pin,setPin] = useState('');
     let salaId = '0';
     let nomeSala = '';
     let tipoJogoSala = '';     
