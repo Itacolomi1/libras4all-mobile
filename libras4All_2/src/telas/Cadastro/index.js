@@ -21,7 +21,7 @@ export default function Cadastro({ navigation }) {
     const [modal, setModal] = useState(false);
     const [show, setShow] = useState(false);
     const [mode, setMode] = useState('date');
-    const [textoData, setTextoData] = useState();
+    const [textoData, setTextoData] = useState('Data de Nascimento');
     const [aceitouTermo, setAceitouTermo] = useState(false);
     const [exibirSenha, setExibirSenha] = useState(false);    
     const [exibirCSenha, setExibirCSenha] = useState(false);
@@ -241,7 +241,7 @@ export default function Cadastro({ navigation }) {
                             <Image source={require('../Images/calendario.png')} style={estilos.input_icon} />
 
                         </TouchableOpacity>
-                        <Text style={estilos.cadastro__data}>{textoData}</Text>
+                        <Text  style={estilos.cadastro__data}>{textoData}</Text>
                     </View>
 
                     {show && (
