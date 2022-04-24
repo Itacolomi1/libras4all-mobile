@@ -251,6 +251,9 @@ import TelaPadrao from './src/componentes/TelaPadrao';
 import Login from './src/telas/Login';
 import InserirPin from './src/telas/InserirPin';
 import Meteoro from './src/telas/Meteoro';
+import Aprendizado from './src/telas/Aprendizado';
+import Alfabeto from './src/telas/Alfabeto';
+import Numerais from './src/telas/Numerais';
 import Home from './src/telas/Home'
 import Perfil from './src/telas/Perfil'
 import SalaEspera from './src/telas/SalaEspera';
@@ -297,6 +300,9 @@ export default function App () {
               <Stack.Screen name='Ranking Geral' component={RankingGeral} options={{headerShown:false}}/>
               <Stack.Screen name='Mestre Mando' component={MestreMandoWrap} options={{headerShown:false}}/>
               <Stack.Screen name='Meteoro' component={Meteoro} options={{headerShown:false}}/>
+              <Stack.Screen name='Aprendizado' component={Aprendizado}/>
+              <Stack.Screen name='Alfabeto' component={Alfabeto}/>
+              <Stack.Screen name='Numerais' component={Numerais}/>
               </Stack.Navigator>
             </TelaPadrao> 
           </NavigationContainer>

@@ -56,7 +56,7 @@ export default function Home({ route, navigation }) {
         navigation.navigate('Perfil', { userID: userID, token: token });
     }
     function gotoJogos() {
-        navigation.navigate('Jogos', { userID: userID, token: token });
+        navigation.navigate('Aprendizado', { userID: userID, token: token });
     }
 
     function goToTutorialQuiz() {
@@ -153,7 +153,7 @@ export default function Home({ route, navigation }) {
                     <Image source={require('../Images/pin.png')} style={estilos.icon_pin} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { gotoJogos() }}>
-                    <Image source={require('../Images/game.png')} style={estilos.icon_game} />
+                    <Image source={require('../Images/learning.png')} style={estilos.icon_game} />
                 </TouchableOpacity>
             </View>
 
