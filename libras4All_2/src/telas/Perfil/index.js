@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Dimensions, ScrollView, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
+import { Text, View, Dimensions, Alert, ScrollView, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
 import estilos from './estilos';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
@@ -112,7 +112,7 @@ export default function Perfil({ route, navigation }) {
     } else {
 
         return <>
-       
+
             <SafeAreaView style={estilos.fundo}>
                 <StatusBar backgroundColor="rgb(35, 36, 95)" />
                 <View style={estilos.topo}>
@@ -120,46 +120,62 @@ export default function Perfil({ route, navigation }) {
                     <Image source={require('../Images/logo.png')} style={estilos.logo} />
                 </View>
                 <ScrollView style={estilos.rolagem}>
-                <View style={[estilos.dados, estilos.elevation]}>
-                    <View style={estilos.bloco}>
-                        <Text style={estilos.texto_bold}>Nome:</Text>
-                        <Text style={estilos.nome}>{usuario.nome}</Text>
+                    <View style={[estilos.dados, estilos.elevation]}>
+                        <View style={estilos.bloco}>
+                            <Text style={estilos.texto_bold}>Nome:</Text>
+                            <Text style={estilos.nome}>{usuario.nome}</Text>
+                        </View>
+                        <View style={estilos.bloco}>
+                            <Text style={estilos.texto_bold}>Email:</Text>
+                            <Text style={estilos.email}>{usuario.email}</Text>
+                        </View>
+
                     </View>
-                    <View style={estilos.bloco}>
-                        <Text style={estilos.texto_bold}>Email:</Text>
-                        <Text style={estilos.email}>{usuario.email}</Text>
+
+                    <View style={[estilos.nivel, estilos.elevation]}>
+                        <Image source={require('../Images/bronze.png')} style={estilos.icon_nivel} />
+                        <Text style={estilos.qtd_pontos}>{usuario.libracoins} Libracoins</Text>
+                        <Text style={estilos.txt}>Jogue mais e ganhe Libracoins para subir de nivel</Text>
                     </View>
+                    <View style={[estilos.salas, estilos.elevation]}>
+                        <Image source={require('../Images/sala.png')} style={estilos.icon_nivel} />
+                        <Text style={estilos.texto}>Numero de Salas:</Text>
+                        <Text style={estilos.qtd_sala}>{numeroSala}</Text>
+                    </View>
+                    <View style={[estilos.jogos, estilos.elevation]}>
+                        <Image source={require('../Images/choose.png')} style={estilos.icon_nivel} />
+                        <Text style={estilos.texto}>Quiz:</Text>
+                        <Text style={estilos.qtd_quiz}>{getNumeroQuiz()}</Text>
+                    </View>
+                    <View style={[estilos.jogos, estilos.elevation]}>
+                        <Image source={require('../Images/megafone.png')} style={estilos.icon_nivel} />
+                        <Text style={estilos.texto}>Mestre Mandou:</Text>
+                        <Text style={estilos.qtd_mestre}>{getNumeroMestreMando()}</Text>
+                    </View>
+                    <View style={[estilos.jogos, estilos.elevation]}>
+                        <Image source={require('../Images/meteoro_icon.png')} style={estilos.icon_nivel} />
+                        <Text style={estilos.texto}>Meteoro:</Text>
+                        <Text style={estilos.qtd_meteoro}>{getNumeroMeteoro()}</Text>
 
-                </View>
-
-                <View style={[estilos.nivel, estilos.elevation]}>
-                    <Image source={require('../Images/bronze.png')} style={estilos.icon_nivel} />
-                    <Text style={estilos.qtd_pontos}>{usuario.libracoins} Libracoins</Text>
-                    <Text style={estilos.txt}>Jogue mais e ganhe Libracoins para subir de nivel</Text>
-                </View>
-                <View style={[estilos.salas, estilos.elevation]}>
-                    <Image source={require('../Images/sala.png')} style={estilos.icon_nivel} />
-                    <Text style={estilos.texto}>Numero de Salas:</Text>
-                    <Text style={estilos.qtd_sala}>{numeroSala}</Text>
-                </View>
-                <View style={[estilos.jogos, estilos.elevation]}>
-                    <Image source={require('../Images/choose.png')} style={estilos.icon_nivel} />
-                    <Text style={estilos.texto}>Quiz:</Text>
-                    <Text style={estilos.qtd_quiz}>{getNumeroQuiz()}</Text>
-                </View>
-                <View style={[estilos.jogos, estilos.elevation]}>
-                    <Image source={require('../Images/megafone.png')} style={estilos.icon_nivel} />
-                    <Text style={estilos.texto}>Mestre Mandou:</Text>
-                    <Text style={estilos.qtd_mestre}>{getNumeroMestreMando()}</Text>
-                </View>
-                <View style={[estilos.jogos, estilos.elevation]}>
-                    <Image source={require('../Images/meteoro_icon.png')} style={estilos.icon_nivel} />
-                    <Text style={estilos.texto}>Meteoro:</Text>
-                    <Text style={estilos.qtd_meteoro}>{getNumeroMeteoro()}</Text>
-
-                </View>
+                    </View>
                 </ScrollView>
-                <TouchableOpacity style={estilos.sessao_button} onPress={() => { logOut() }}>
+                <TouchableOpacity style={estilos.sessao_button} onPress={() => {
+                    Alert.alert('Atenção !!', 'Deseja realmente sair?', [
+
+                        {
+                            text: "Sim",
+                            onPress: () => {
+                                logOut();
+                            }
+                        },
+                        {
+                            text: "Não",
+                            onPress: () => console.log("Cancel Pressed"),
+                            style: "cancel"
+                        }
+
+                    ]);
+                }}>
                     <Text style={estilos.texto_button}>Encerrar sessão</Text>
                 </TouchableOpacity>
 
@@ -176,7 +192,7 @@ export default function Perfil({ route, navigation }) {
                 </View>
 
             </SafeAreaView>
-          
+
         </>
     }
 
