@@ -19,6 +19,9 @@ export default function RankingGeral({ route, navigation }) {
 
     const [listaRanking, setListaRanking] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [posicaoUser, setPosicaoUser] = useState();
+    const [nicknameUser, setNickname] = useState();
+    const [libracoinsUser, setLibracoins] = useState();
 
 
     React.useEffect(() => {
@@ -60,8 +63,10 @@ export default function RankingGeral({ route, navigation }) {
             .then(response => response.json())
             .then(responseJson => {
                 console.log('Deu certo');
-                console.log(responseJson);
-
+                //console.log(responseJson);
+                setPosicaoUser((responseJson.find(x => x._id === userID)).posicao);
+                setNickname((responseJson.find(x => x._id === userID)).nickname);
+                setLibracoins((responseJson.find(x => x._id === userID)).libracoins);
                 setListaRanking(responseJson);
                 setLoading(false);
 
@@ -90,6 +95,11 @@ export default function RankingGeral({ route, navigation }) {
                 <StatusBar backgroundColor="rgb(35, 36, 95)" />
                 <View>
                     <Text style={estilos.titulo}>Ranking <Image source={require('../Images/trofeu.png')} style={estilos.icon} />  </Text>
+                </View>
+                <View style={[estilos.elevation, estilos.foco]}>
+                    <Text style={estilos.itemfoco}>{posicaoUser}º</Text>
+                    <Text style={estilos.itemfoco}>{nicknameUser}</Text>
+                    <Text style={estilos.pontosfoco}>{libracoinsUser}</Text>
                 </View>
                 <View>
                     <FlatList

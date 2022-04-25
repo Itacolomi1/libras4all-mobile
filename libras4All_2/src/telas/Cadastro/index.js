@@ -67,7 +67,7 @@ export default function Cadastro({ navigation }) {
             .then(response => {
                 setLoading(false);
                 if (response.ok) {
-                    Alert.alert('Parabens !!', 'Cadastro realizado com sucesso !', [
+                    Alert.alert('Parabéns !!', 'Cadastro realizado com sucesso !', [
                         {
                             text: 'Ok!',
                             onPress: () => {
