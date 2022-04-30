@@ -13,23 +13,43 @@ export default function Aprendizado({ route, navigation }) {
     function gotoNumerais() {
         navigation.navigate('Numerais', { userID: userID, token: token });
     }
+    function gotoSaudacoes() {
+        navigation.navigate('Saudacoes', { userID: userID, token: token });
+    }
+    function gotoMeses() {
+        navigation.navigate('Meses', { userID: userID, token: token });
+    }
+    function gotoSemana() {
+        navigation.navigate('Semana', { userID: userID, token: token });
+    }
 
     return <>
         <SafeAreaView style={estilos.fundo}>
 
             <TouchableOpacity
                 style={estilos.tema_button}
-                onPress={gotoAlfabeto}
-            >
-
+                onPress={gotoAlfabeto} >
                 <Text style={estilos.texto_button}>Alfabeto</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={estilos.tema_button}
-                onPress={gotoNumerais}
-            >
-
+                onPress={gotoNumerais} >
                 <Text style={estilos.texto_button}>Números</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={estilos.tema_button}
+                onPress={gotoSaudacoes} >
+                <Text style={estilos.texto_button}>Saudações</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={estilos.tema_button}
+                onPress={gotoMeses} >
+                <Text style={estilos.texto_button}>Meses</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={estilos.tema_button}
+                onPress={gotoSemana} >
+                <Text style={estilos.texto_button}>Dias da Semana</Text>
             </TouchableOpacity>
 
 

@@ -253,7 +253,10 @@ import InserirPin from './src/telas/InserirPin';
 import Meteoro from './src/telas/Meteoro';
 import Aprendizado from './src/telas/Aprendizado';
 import Alfabeto from './src/telas/Alfabeto';
+import Saudacoes from './src/telas/Saudacoes';
 import Numerais from './src/telas/Numerais';
+import Meses from './src/telas/Meses';
+import Semana from './src/telas/DiasSemana';
 import Home from './src/telas/Home'
 import Perfil from './src/telas/Perfil'
 import SalaEspera from './src/telas/SalaEspera';
@@ -303,6 +306,9 @@ export default function App () {
               <Stack.Screen name='Aprendizado' component={Aprendizado}/>
               <Stack.Screen name='Alfabeto' component={Alfabeto}/>
               <Stack.Screen name='Numerais' component={Numerais}/>
+              <Stack.Screen name='Saudacoes' component={Saudacoes}/>
+              <Stack.Screen name='Meses' component={Meses}/>
+              <Stack.Screen name='Semana' component={Semana}/>
               </Stack.Navigator>
             </TelaPadrao> 
           </NavigationContainer>
