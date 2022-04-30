@@ -26,6 +26,8 @@ export default function Aprendizado({ route, navigation }) {
     return <>
         <SafeAreaView style={estilos.fundo}>
 
+        <Image source={require('../Images/logo.png')} style={estilos.logo} />
+
             <TouchableOpacity
                 style={estilos.tema_button}
                 onPress={gotoAlfabeto} >

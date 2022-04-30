@@ -11,13 +11,15 @@ export default StyleSheet.create({
     },    
     picker:{
         borderWidth: 2, 
-        borderColor: "rgb(35, 36, 95)", 
+        borderColor:"#87CEFA", 
+        backgroundColor:"#FFF",
         borderRadius: 4,
-        height: '5%', 
-        width: '40%',
+        height: '8%', 
+        width: '80%',
     },
     campoLetra: {
         width: "95%",
+        height:"80%",
         justifyContent: "center",
         marginLeft:'auto',
         marginTop:'auto',
@@ -32,9 +34,9 @@ export default StyleSheet.create({
 
    
     texto: {
-        fontSize: 20,
+        fontSize: 15,
         color: "black",
-        marginBottom:'1%',
+        marginBottom:'3%',
     },
 
    

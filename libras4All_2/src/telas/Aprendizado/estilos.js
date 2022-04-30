@@ -4,15 +4,22 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     fundo: {
-        backgroundColor: "#C1E2FF",
+        backgroundColor: "rgb(35, 36, 95)",
         height: "100%",
         justifyContent: "center",
         color: "black",
     },
+
+    logo:{
+        height: "30%",
+        alignSelf: "center",
+        resizeMode: "contain"
+        
+    },
     
     tema_button:{
         justifyContent: 'center',
-        backgroundColor: "#037ca9",
+        backgroundColor: "#C1E2FF",
         alignSelf:"center",
         borderRadius: 5,
         width: "80%",
@@ -23,8 +30,9 @@ export default StyleSheet.create({
     },
 
     texto_button: {
-        color: "#fff",
+        color: "rgb(35, 36, 95)",
         fontSize: 15,
+        fontWeight:"bold",
         alignSelf: "center",
 
     },
