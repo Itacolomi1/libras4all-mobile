@@ -277,6 +277,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cadastro from './src/telas/Cadastro';
 import Resultado from './src/telas/Resultado';
+import Tutorial from './src/telas/Tutorial';
 const Stack = createNativeStackNavigator();
 
 export default function App () {
@@ -309,6 +310,7 @@ export default function App () {
               <Stack.Screen name='Saudacoes' component={Saudacoes}/>
               <Stack.Screen name='Meses' component={Meses}/>
               <Stack.Screen name='Semana' component={Semana}/>
+              <Stack.Screen name='Tutorial' component={Tutorial}/>
               </Stack.Navigator>
             </TelaPadrao> 
           </NavigationContainer>

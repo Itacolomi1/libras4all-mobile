@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Dimensions, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
+import { Text, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
 import estilos from './estilos';
 
 
@@ -53,7 +53,6 @@ export default function Aprendizado({ route, navigation }) {
                 onPress={gotoSemana} >
                 <Text style={estilos.texto_button}>Dias da Semana</Text>
             </TouchableOpacity>
-
 
         </SafeAreaView>
     </>

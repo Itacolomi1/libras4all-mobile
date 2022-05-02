@@ -74,6 +74,9 @@ export default function Home({ route, navigation }) {
     function gotoRankingGeral() {
         navigation.navigate('Ranking Geral', { userID: userID, token: token });
     }
+    function gotoTutorial(){
+        navigation.navigate('Tutorial', { userID: userID, token: token });
+    }
 
     getModel = async () => {
         console.log('Começa a carregar o tensorflow');
@@ -126,6 +129,12 @@ export default function Home({ route, navigation }) {
                 <Image source={require('../Images/trofeu.png')} style={estilos.icon_ranking} />
                 </TouchableOpacity>
             </View>
+            <TouchableOpacity
+                style={estilos.tema_button}
+                onPress={gotoTutorial} >
+                <Text style={estilos.texto_button}>Novo por aqui? Acesse o tutorial</Text>
+            </TouchableOpacity>
+
             <View style={[estilos.nivel, estilos.elevation]}>
                 <Image source={require('../Images/bronze.png')} style={estilos.icon_nivel} />
                 <Text style={estilos.qtd_pontos}>{usuario.libracoins} Libracoins</Text>
