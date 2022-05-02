@@ -12,6 +12,19 @@ export default StyleSheet.create({
     lista:{
         height: "50%",        
     },
+    foco:{
+        backgroundColor: "rgb(35, 36, 95)",
+        alignSelf:"center",
+        width: "89%",
+        borderRadius: 10,
+        paddingVertical: 5,
+        flexDirection: 'row',
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 10,
+        color: "white"
+    },
     itens:{
         alignSelf:"center",
         width: "89%",
@@ -59,8 +72,18 @@ export default StyleSheet.create({
         marginLeft: 15
         
     },
+    itemfoco:{
+        color:"white",
+        marginLeft: 15
+        
+    },
     pontos:{
         color:"black",
+        fontWeight: "bold",
+        marginRight: 15
+    },
+    pontosfoco:{
+        color:"white",
         fontWeight: "bold",
         marginRight: 15
     },
