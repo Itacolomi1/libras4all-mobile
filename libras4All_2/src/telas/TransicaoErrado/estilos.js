@@ -15,6 +15,24 @@ export default StyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
+    resposta_certa:{
+        color: "black",
+        alignSelf: "center",
+        fontWeight: "bold",
+        fontSize: 20,        
+        marginBottom: 5,
+        width: "100%",
+        textAlign: "center"
+    },
+    resposta_certa_verde:{
+        color: "green",
+        alignSelf: "center",
+        fontWeight: "bold",
+        fontSize: 20,        
+        marginBottom: 5,
+        width: "100%",
+        textAlign: "center"
+    },
     titulo:{ 
         color: "black",
         alignSelf: "center",

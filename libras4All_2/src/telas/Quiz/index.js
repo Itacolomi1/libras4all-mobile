@@ -192,6 +192,10 @@ export default function Quiz({ route, navigation }) {
         proximaPergunta();
     }
 
+    function getrespostaCerta(){
+        return listaPergunta[perguntaDaVez].alternativas.find(x => x.perguntaCorreta === 'true').descricao
+    }
+
 
     if (respostaCerta) {
         return <>
@@ -201,7 +205,7 @@ export default function Quiz({ route, navigation }) {
 
     if (respostaErrada) {
         return <>
-            <TransicaoErrado erraQuestao={erraQuestao} ></TransicaoErrado>
+            <TransicaoErrado erraQuestao={erraQuestao} getrespostaCerta={getrespostaCerta} ></TransicaoErrado>
         </>
     }
 
