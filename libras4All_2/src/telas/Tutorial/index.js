@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     Alert,
     Text,
+    ScrollView,
     View
 } from 'react-native';
 
@@ -124,6 +125,7 @@ export default function Tutorial({ route, navigation }) {
     return (
         <>
             <StatusBar barStyle="light-content" />
+            <ScrollView style={estilos.rolagem}> 
             <ImageBackground
                 //   source={imgChange(background)}
                 style={imgStyle}
@@ -164,6 +166,7 @@ export default function Tutorial({ route, navigation }) {
                     <Text style={style.texto_button}>Fechar Tutorial</Text>
                 </TouchableOpacity>
             </View>
+            </ScrollView>
         </>
 
     );

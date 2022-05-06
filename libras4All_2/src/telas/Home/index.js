@@ -1,5 +1,5 @@
 import React, { useState, useEffect }from 'react';
-import { Text, View, Dimensions, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
+import { Text, View, ScrollView, Dimensions, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
 import estilos from './estilos';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
@@ -130,7 +130,7 @@ export default function Home({ route, navigation }) {
                 </TouchableOpacity>
             </View>
             <TouchableOpacity
-                style={estilos.tema_button}
+                style={[estilos.tema_button, estilos.elevation]}
                 onPress={gotoTutorial} >
                 <Text style={estilos.texto_button}>Novo por aqui? Acesse o tutorial</Text>
             </TouchableOpacity>
@@ -153,7 +153,6 @@ export default function Home({ route, navigation }) {
                     <Image source={require('../Images/meteoro.png')} style={estilos.btn_jogo} />
                 </TouchableOpacity>
             </View>
-
             <View style={estilos.icon_area}>
                 <TouchableOpacity>
                     <Image source={require('../Images/home.png')} style={estilos.icon_home} />

@@ -21,23 +21,21 @@ export default StyleSheet.create({
         
     },
     tema_button:{
-        justifyContent: 'center',
-        backgroundColor: "#87CEFA",
+        marginTop: 5,
+        marginBottom: 5,
+        paddingBottom: 5,
         alignSelf:"center",
-        borderRadius: 8,
-        width: "50%",
-        alignSelf: "center",
-        height: 30,
-        margin:2,
+            width: "89%",
+            backgroundColor: "white",
+            borderRadius: 15,
+            flexDirection: 'row',
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: 5
 
     },
-    texto_button: {
-        color: 'black',
-        fontSize: 15,
-        fontWeight:"bold",
-        alignSelf: "center",
-
-    },
+   
     relogio:{
         color: "black",
         position: "absolute",
@@ -69,9 +67,14 @@ export default StyleSheet.create({
         position: "relative",
         height: 45,
     },
+    rolagem:{
+        width: "100%",
+        height: "100%",
+        backgroundColor:"#e3f2ff",
+    },
     nivel:{        
-        paddingTop: 15,
-        paddingBottom: 15,
+        paddingTop: 5,
+        paddingBottom: 5,
         alignSelf:"center",
             width: "89%",
             backgroundColor: "white",
@@ -80,7 +83,6 @@ export default StyleSheet.create({
             flexWrap: "wrap",
             justifyContent: "center",
             alignItems: "center",
-            paddingTop: 15
     },
     elevation:{
         elevation: 20,
@@ -145,8 +147,10 @@ export default StyleSheet.create({
         alignItems: "center",
     },
     texto_button:{
-        color: "white",
+        color: "black",
         alignSelf: "center",
+        fontSize: 16,
+        fontWeight:"bold",
     },
     alternativa_button:{
         width: "80%",
