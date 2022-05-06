@@ -81,10 +81,10 @@ export default function MestreMando({ ValidaMestre, Letra }) {
         ctx.font = '30px Arial'
 
         // DRAW!!
-        ctx.beginPath()
-        ctx.fillText(labelMap[text]['name'] + ' - ' + Math.round(scores[i] * 100) / 100, x * imgWidth, y * imgHeight - 10)
-        ctx.rect(x * imgWidth, y * imgHeight, width * imgWidth / 2, height * imgHeight / 2);
-        ctx.stroke()
+        // ctx.beginPath()
+        // ctx.fillText(labelMap[text]['name'] + ' - ' + Math.round(scores[i] * 100) / 100, x * imgWidth, y * imgHeight - 10)
+        // ctx.rect(x * imgWidth, y * imgHeight, width * imgWidth / 2, height * imgHeight / 2);
+        // ctx.stroke()
 
         // if(labelMap[text]['name'] === listaSinais[sinalDaVez].descricao){
         //    //Salva o resultado do Mestre Mando;
