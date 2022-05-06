@@ -278,9 +278,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cadastro from './src/telas/Cadastro';
 import Resultado from './src/telas/Resultado';
 import Tutorial from './src/telas/Tutorial';
+import { useEffect } from 'react';
+import { BackHandler } from 'react-native';
 const Stack = createNativeStackNavigator();
 
+
 export default function App () {
+  useEffect(() => {
+    BackHandler.addEventListener('backPress', () => true)
+    return () => BackHandler.removeEventListener('backPress', () => true)
+  }, [])
   return <NavigationContainer>
             <TelaPadrao>              
               <Stack.Navigator>

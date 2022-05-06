@@ -9,6 +9,7 @@ export default StyleSheet.create({
         justifyContent: "flex-end",
         color: "black",
     },
+   
     campo: {
         height: 32,
         backgroundColor: "black",
