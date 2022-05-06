@@ -56,7 +56,7 @@ export default function Home({ route, navigation }) {
         navigation.navigate('Perfil', { userID: userID, token: token });
     }
     function gotoJogos() {
-        navigation.navigate('Jogos', { userID: userID, token: token });
+        navigation.navigate('Aprendizado', { userID: userID, token: token });
     }
 
     function goToTutorialQuiz() {
@@ -73,6 +73,9 @@ export default function Home({ route, navigation }) {
 
     function gotoRankingGeral() {
         navigation.navigate('Ranking Geral', { userID: userID, token: token });
+    }
+    function gotoTutorial(){
+        navigation.navigate('Tutorial', { userID: userID, token: token });
     }
 
     getModel = async () => {
@@ -126,6 +129,12 @@ export default function Home({ route, navigation }) {
                 <Image source={require('../Images/trofeu.png')} style={estilos.icon_ranking} />
                 </TouchableOpacity>
             </View>
+            <TouchableOpacity
+                style={estilos.tema_button}
+                onPress={gotoTutorial} >
+                <Text style={estilos.texto_button}>Novo por aqui? Acesse o tutorial</Text>
+            </TouchableOpacity>
+
             <View style={[estilos.nivel, estilos.elevation]}>
                 <Image source={require('../Images/bronze.png')} style={estilos.icon_nivel} />
                 <Text style={estilos.qtd_pontos}>{usuario.libracoins} Libracoins</Text>
@@ -153,7 +162,7 @@ export default function Home({ route, navigation }) {
                     <Image source={require('../Images/pin.png')} style={estilos.icon_pin} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { gotoJogos() }}>
-                    <Image source={require('../Images/game.png')} style={estilos.icon_game} />
+                    <Image source={require('../Images/learning.png')} style={estilos.icon_game} />
                 </TouchableOpacity>
             </View>
 

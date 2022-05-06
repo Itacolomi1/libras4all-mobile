@@ -20,6 +20,24 @@ export default StyleSheet.create({
         resizeMode: "contain"
         
     },
+    tema_button:{
+        justifyContent: 'center',
+        backgroundColor: "#87CEFA",
+        alignSelf:"center",
+        borderRadius: 8,
+        width: "50%",
+        alignSelf: "center",
+        height: 30,
+        margin:2,
+
+    },
+    texto_button: {
+        color: 'black',
+        fontSize: 15,
+        fontWeight:"bold",
+        alignSelf: "center",
+
+    },
     relogio:{
         color: "black",
         position: "absolute",
