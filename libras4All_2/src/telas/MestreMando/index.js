@@ -22,6 +22,7 @@ import carregar from '../Images/carregar.json';
 import Cronometro from '../../componentes/cronometro';
 
 
+
 const TensorCamera = cameraWithTensors(Camera);
 let modeloTensorFlow = null;
 const { width, height } = Dimensions.get('window');
@@ -37,6 +38,8 @@ const labelMap = {
 export default function MestreMando({ ValidaMestre, Letra }) {
 
   const [loading, setLoading] = useState(true);
+  const[classePrevista, setClassePrevista] = useState('-');
+  const[porcentagemClasse, setPorcentagemClasse] = useState(0);
   let requestAnimationFrameId = 0;
   const hoursMinSecs = { hours: 0, minutes: 0, seconds: 20 }
   console.log('A Letra recebida foi ' + Letra);
@@ -71,7 +74,9 @@ export default function MestreMando({ ValidaMestre, Letra }) {
 
         console.log('Previsão');
         console.log(labelMap[text]['name'] + ' ' + Math.round(scores[i] * 100) / 100);
-
+        
+        setClassePrevista(labelMap[text]['name']);
+        setPorcentagemClasse((Math.round(scores[i] * 100) / 100)*100);
 
 
         // Set styling
@@ -257,6 +262,10 @@ export default function MestreMando({ ValidaMestre, Letra }) {
             </TouchableOpacity>
           </View>
         </TensorCamera>
+        <View style={styles.barraPrevisoes}>
+              <Text>{classePrevista}</Text>
+              <Text>{porcentagemClasse}%</Text>
+        </View>
         <Canvas ref={canvasRef}
           style={styles.canvas} />
       </View>
@@ -309,7 +318,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: "space-around",
     alignItems: 'center'
-
+  },
+  barraPrevisoes: {
+    width: '100%',
+    backgroundColor: "rgb(255, 255, 255)",
+    height: 30,
+    flexDirection: 'row',
+    justifyContent: "space-around",
+    alignItems: 'center',
+    elevation: 10,
   },
   carregar_animate: {
     alignSelf: "center",
