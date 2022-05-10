@@ -37,9 +37,9 @@ export default function Saudacoes({ route, navigation }) {
           imagem={imagem}          
           onValueChange={(itemValue, itemIndex) => setImagem(itemValue)}
         >
-          <Picker.Item label="Bom dia" value="0" />
-          <Picker.Item label="Boa tarde" value="1" />
-          <Picker.Item label="Boa noite" value="2" />
+          <Picker.Item style={estilos.picker_txt} label="Bom dia" value="0" />
+          <Picker.Item style={estilos.picker_txt} label="Boa tarde" value="1" />
+          <Picker.Item style={estilos.picker_txt} label="Boa noite" value="2" />
 
         </Picker>
       </View>

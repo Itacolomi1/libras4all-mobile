@@ -5,10 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default StyleSheet.create({
     fundo: {
-        backgroundColor: "#C1E2FF",
-        height: "100%",
-        alignItems: "center",
-        paddingBottom: '10%',
+      backgroundColor:"white",
+      height: "100%",
     },
     campoImg: {
         width: "95%",
@@ -50,7 +48,7 @@ export default StyleSheet.create({
 
 export const Title = styled.Text`
   align-self: center;
-  margin-top: 60px;
+  margin-top: 45px;
   font-size: 30px;
   font-weight: bold;
   color: rgb(35, 36, 95);
@@ -73,7 +71,7 @@ export const CarouselIcon = styled(Icon)`
 `;
 export const Information = styled.View`
   align-self: center;
-  margin-top: 10px;
+  margin-top: 0px;
   padding: 10px 14px;
   width: 94%;
   border-radius: 8px;

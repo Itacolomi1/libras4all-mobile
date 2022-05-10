@@ -4,6 +4,7 @@ import estilos from './estilos';
 import Lottie from 'lottie-react-native';
 import carregar from '../Images/carregar.json';
 import * as settings from '../../assets/config/appSettings.json'
+import { listaImagens } from './list-imagens';
 
 export default function Perfil({ route, navigation }) {
     const { userID, token } = route.params;
@@ -11,7 +12,7 @@ export default function Perfil({ route, navigation }) {
     const [usuario, setUsuario] = useState(null);
     const [listaSalas, setListaSalas] = useState([]);
     const [numeroSala, setNumeroSalas] = useState(0);
-
+    const [nivel, setNivel] = useState();
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -35,6 +36,7 @@ export default function Perfil({ route, navigation }) {
             .then(response => response.json())
             .then(responseJson => {
                 setUsuario(responseJson);
+                obterNivel(responseJson.libracoins);
                 getSalas();
             })
             .catch(error => {
@@ -42,6 +44,37 @@ export default function Perfil({ route, navigation }) {
                 console.error(error);
             });
     }
+    function pathImage(caracter) {
+     
+        let lista = listaImagens();
+        let imageTemp =  lista.filter(x => x.id === caracter);
+
+        if (imageTemp[0] != undefined) {
+            
+            return imageTemp[0].image;
+        } else {
+            return null;
+        }
+        
+    }
+    function obterNivel(resultado){
+        if(parseInt(resultado) < 100){
+            setNivel('Bronze');
+        }
+        else if(parseInt(resultado) < 400){
+            setNivel('Prata');
+        }
+        else if(parseInt(resultado) < 800){
+            setNivel('Ouro');
+        }
+        else if(parseInt(resultado) < 1100){
+            setNivel('Rubi');
+        }
+        else {
+            setNivel('Diamante');
+        }
+    }
+
 
     function getSalas() {
 
@@ -88,7 +121,9 @@ export default function Perfil({ route, navigation }) {
         return listaSalas.filter(x => x.tipoJogo === 'Mestre Mandou').length
     }
 
-
+    function gotoTutorialPin(){
+        navigation.navigate('Tutorial Pin', { userID: userID, token: token });
+    }
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });
     }
@@ -133,7 +168,7 @@ export default function Perfil({ route, navigation }) {
                     </View>
 
                     <View style={[estilos.nivel, estilos.elevation]}>
-                        <Image source={require('../Images/bronze.png')} style={estilos.icon_nivel} />
+                    <Image key={nivel} source={pathImage(nivel)} style={estilos.icon_nivel}/>
                         <Text style={estilos.qtd_pontos}>{usuario.libracoins} Libracoins</Text>
                         <Text style={estilos.txt}>Jogue mais e ganhe Libracoins para subir de nivel</Text>
                     </View>
@@ -144,17 +179,17 @@ export default function Perfil({ route, navigation }) {
                     </View>
                     <View style={[estilos.jogos, estilos.elevation]}>
                         <Image source={require('../Images/choose.png')} style={estilos.icon_nivel} />
-                        <Text style={estilos.texto}>Quiz:</Text>
+                        <Text style={estilos.texto}>Sala Quiz:</Text>
                         <Text style={estilos.qtd_quiz}>{getNumeroQuiz()}</Text>
                     </View>
                     <View style={[estilos.jogos, estilos.elevation]}>
                         <Image source={require('../Images/megafone.png')} style={estilos.icon_nivel} />
-                        <Text style={estilos.texto}>Mestre Mandou:</Text>
+                        <Text style={estilos.texto}>Sala Mestre Mandou:</Text>
                         <Text style={estilos.qtd_mestre}>{getNumeroMestreMando()}</Text>
                     </View>
                     <View style={[estilos.jogos, estilos.elevation]}>
                         <Image source={require('../Images/meteoro_icon.png')} style={estilos.icon_nivel} />
-                        <Text style={estilos.texto}>Meteoro:</Text>
+                        <Text style={estilos.texto}>Sala Meteoro:</Text>
                         <Text style={estilos.qtd_meteoro}>{getNumeroMeteoro()}</Text>
 
                     </View>
@@ -183,7 +218,7 @@ export default function Perfil({ route, navigation }) {
                     <TouchableOpacity onPress={() => { gotToHome() }}>
                         <Image source={require('../Images/home.png')} style={estilos.icon_home} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { gotoPin() }}>
+                    <TouchableOpacity onPress={() => { gotoTutorialPin() }}>
                         <Image source={require('../Images/pin.png')} style={estilos.icon_pin} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { gotoJogos() }}>

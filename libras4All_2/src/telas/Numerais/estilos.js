@@ -6,7 +6,7 @@ export default StyleSheet.create({
     fundo: {
         backgroundColor: "#C1E2FF",
         height: "100%",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
         color: "black",
     },
     campo: {
@@ -16,15 +16,22 @@ export default StyleSheet.create({
         justifyContent: "center",
     },
 
-    campoLetra: {
-        width: "95%",
+    centraliza:{
+        width: "100%",
+        alignItems: "center",
         justifyContent: "center",
-        marginLeft:'auto',
-    
-        marginTop:'auto',
-        marginBottom:'auto',
-        
+        height: "60%",
+        marginTop: 50
+ 
     },
+     campoLetra: {
+         width: "95%",
+         justifyContent: "center",
+         backgroundColor: "white",
+         borderRadius: 15,
+         height: "100%",
+         alignItems: "center"
+     },
     letra: {
         resizeMode: "contain",
         height: "95%",

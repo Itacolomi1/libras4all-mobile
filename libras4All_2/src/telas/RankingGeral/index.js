@@ -45,7 +45,9 @@ export default function RankingGeral({ route, navigation }) {
     function gotoJogos() {
         navigation.navigate('Jogos', { userID: userID, token: token });
     }
-
+    function gotoTutorialPin(){
+        navigation.navigate('Tutorial Pin', { userID: userID, token: token });
+    }
 
 
 
@@ -114,7 +116,7 @@ export default function RankingGeral({ route, navigation }) {
                     <TouchableOpacity onPress={() => {gotToHome()}}>
                         <Image source={require('../Images/home.png')} style={estilos.icon_home} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { gotoPin() }}>
+                    <TouchableOpacity onPress={() => { gotoTutorialPin() }}>
                         <Image source={require('../Images/pin.png')} style={estilos.icon_pin} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { gotoJogos() }}>

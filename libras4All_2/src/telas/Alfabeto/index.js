@@ -23,11 +23,11 @@ export default function Aprendizado({ route, navigation }) {
 
     return <>
         <SafeAreaView style={estilos.fundo}>
-
-            <View style={[estilos.campoLetra]} >
+        <View style={estilos.centraliza} >
+            <View style={[estilos.campoLetra,  estilos.elevation]} >
                 <Image key={letra} source={pathImage(letra)} style={estilos.letra} />
             </View>
-
+            </View>
             <View style={[estilos.teclado, estilos.elevation]}>
               
                 <View style={estilos.campo}>

@@ -15,6 +15,7 @@ import SalaEspera from './src/telas/SalaEspera';
 import Quiz from './src/telas/Quiz';
 import TutorialQuiz from './src/telas/TutorialQuiz';
 import TutorialMeteoro from './src/telas/TutorialMeteoro';
+import TutorialPin from './src/telas/TutorialPin';
 import TutorialMestreMando from './src/telas/TutorialMestreMando';
 import MestreMando from './src/telas/MestreMando';
 import RankingGeral from './src/telas/RankingGeral';
@@ -56,6 +57,7 @@ export default function App () {
               <Stack.Screen name='Sala de Espera' component={SalaEspera}/>
               <Stack.Screen name='Quiz' component={Quiz} options={{headerShown:false}}/>
               <Stack.Screen name='Tutorial Quiz' component={TutorialQuiz}/>
+              <Stack.Screen name='Tutorial Pin' component={TutorialPin}/>
               <Stack.Screen name='Tutorial Meteoro' component={TutorialMeteoro}/>              
               <Stack.Screen name='Tutorial Mestre Mandou' component={TutorialMestreMando}/>
               <Stack.Screen name='Jogos' component={Jogos}/>

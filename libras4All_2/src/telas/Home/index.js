@@ -7,13 +7,15 @@ import * as settings from '../../assets/config/appSettings.json';
 import ModelSingleton from '../../shared/model.singleton';
 import * as tf from '@tensorflow/tfjs';
 import {bundleResourceIO } from '@tensorflow/tfjs-react-native';
+import { listaImagens } from './list-imagens';
 
 export default function Home({ route, navigation }) {
     //Get parameter
     const { userID, token } = route.params;
     const [usuario, setUsuario] = useState(null);
     const [loading, setLoading] = useState(true);
-    
+    const [nivel, setNivel] = useState();
+     
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             getUser();
@@ -40,12 +42,44 @@ export default function Home({ route, navigation }) {
             .then(response => response.json())
             .then(responseJson => {
                 setUsuario(responseJson);
-                setLoading(false);            
+                obterNivel(responseJson.libracoins);
+                setLoading(false);       
+                 
             })
             .catch(error => {
                 console.log('deu errado');
                 console.error(error);
             });
+    }
+    function pathImage(caracter) {
+     
+        let lista = listaImagens();
+        let imageTemp =  lista.filter(x => x.id === caracter);
+
+        if (imageTemp[0] != undefined) {
+            
+            return imageTemp[0].image;
+        } else {
+            return null;
+        }
+        
+    }
+    function obterNivel(resultado){
+        if(parseInt(resultado) < 100){
+            setNivel('Bronze');
+        }
+        else if(parseInt(resultado) < 400){
+            setNivel('Prata');
+        }
+        else if(parseInt(resultado) < 800){
+            setNivel('Ouro');
+        }
+        else if(parseInt(resultado) < 1100){
+            setNivel('Rubi');
+        }
+        else {
+            setNivel('Diamante');
+        }
     }
 
     function gotoPin() {
@@ -76,6 +110,9 @@ export default function Home({ route, navigation }) {
     }
     function gotoTutorial(){
         navigation.navigate('Tutorial', { userID: userID, token: token });
+    }
+    function gotoTutorialPin(){
+        navigation.navigate('Tutorial Pin', { userID: userID, token: token });
     }
 
     getModel = async () => {
@@ -136,7 +173,7 @@ export default function Home({ route, navigation }) {
             </TouchableOpacity>
 
             <View style={[estilos.nivel, estilos.elevation]}>
-                <Image source={require('../Images/bronze.png')} style={estilos.icon_nivel} />
+                <Image key={nivel} source={pathImage(nivel)} style={estilos.icon_nivel}/>
                 <Text style={estilos.qtd_pontos}>{usuario.libracoins} Libracoins</Text>
                 <Text style={estilos.txt}>Jogue mais e ganhe Libracoins para subir de nivel</Text>
             </View>
@@ -157,7 +194,7 @@ export default function Home({ route, navigation }) {
                 <TouchableOpacity>
                     <Image source={require('../Images/home.png')} style={estilos.icon_home} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { gotoPin() }}>
+                <TouchableOpacity onPress={() => { gotoTutorialPin() }}>
                     <Image source={require('../Images/pin.png')} style={estilos.icon_pin} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { gotoJogos() }}>

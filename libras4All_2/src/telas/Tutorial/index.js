@@ -124,6 +124,7 @@ export default function Tutorial({ route, navigation }) {
 
     return (
         <>
+        <View style={estilos.fundo}>
             <StatusBar barStyle="light-content" />
             <ScrollView style={estilos.rolagem}> 
             <ImageBackground
@@ -167,6 +168,7 @@ export default function Tutorial({ route, navigation }) {
                 </TouchableOpacity>
             </View>
             </ScrollView>
+            </View>
         </>
 
     );

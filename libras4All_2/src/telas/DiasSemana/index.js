@@ -38,13 +38,13 @@ export default function Numerais({ route, navigation }) {
         imagem={imagem}
         onValueChange={(itemValue, itemIndex) => setImagem(itemValue)}
       >
-        <Picker.Item label="Segunda" value="seg" />
-        <Picker.Item label="Terça" value="ter" />
-        <Picker.Item label="Quarta" value="qua" />
-        <Picker.Item label="Quinta" value="qui" />
-        <Picker.Item label="Sexta" value="sex" />
-        <Picker.Item label="Sábado" value="sab" />
-        <Picker.Item label="Domingo" value="dom" />
+        <Picker.Item style={estilos.picker_txt} label="Segunda" value="seg" />
+        <Picker.Item style={estilos.picker_txt} label="Terça" value="ter" />
+        <Picker.Item style={estilos.picker_txt} label="Quarta" value="qua" />
+        <Picker.Item style={estilos.picker_txt} label="Quinta" value="qui" />
+        <Picker.Item style={estilos.picker_txt} label="Sexta" value="sex" />
+        <Picker.Item style={estilos.picker_txt} label="Sábado" value="sab" />
+        <Picker.Item style={estilos.picker_txt} label="Domingo" value="dom" />
       </Picker>
       </View>
 

@@ -241,7 +241,7 @@ export default function Cadastro({ navigation }) {
                             <Image source={require('../Images/calendario.png')} style={estilos.input_icon} />
 
                         </TouchableOpacity>
-                        <Text  style={estilos.cadastro__data}>{textoData}</Text>
+                        <Text  onPress={() => showMode('date')} style={estilos.cadastro__data}>{textoData}</Text>
                     </View>
 
                     {show && (

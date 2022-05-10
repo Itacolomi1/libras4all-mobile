@@ -36,18 +36,18 @@ export default function Saudacoes({ route, navigation }) {
           imagem={imagem}
           onValueChange={(itemValue, itemIndex) => setImagem(itemValue)}
         >
-          <Picker.Item label="Janeiro" value="jan" />
-          <Picker.Item label="Fevereiro" value="fev" />
-          <Picker.Item label="Março" value="mar" />
-          <Picker.Item label="Abril" value="abr" />
-          <Picker.Item label="Maio" value="mai" />
-          <Picker.Item label="Junho" value="jun" />
-          <Picker.Item label="Julho" value="jul" />
-          <Picker.Item label="Agosto" value="ago" />
-          <Picker.Item label="Setembro" value="set" />
-          <Picker.Item label="Outubro" value="out" />
-          <Picker.Item label="Novembro" value="nov" />
-          <Picker.Item label="Dezembro" value="dez" />
+          <Picker.Item style={estilos.picker_txt} label="Janeiro" value="jan" />
+          <Picker.Item style={estilos.picker_txt} label="Fevereiro" value="fev" />
+          <Picker.Item style={estilos.picker_txt} label="Março" value="mar" />
+          <Picker.Item style={estilos.picker_txt} label="Abril" value="abr" />
+          <Picker.Item style={estilos.picker_txt} label="Maio" value="mai" />
+          <Picker.Item style={estilos.picker_txt} label="Junho" value="jun" />
+          <Picker.Item style={estilos.picker_txt} label="Julho" value="jul" />
+          <Picker.Item style={estilos.picker_txt} label="Agosto" value="ago" />
+          <Picker.Item style={estilos.picker_txt} label="Setembro" value="set" />
+          <Picker.Item style={estilos.picker_txt} label="Outubro" value="out" />
+          <Picker.Item style={estilos.picker_txt} label="Novembro" value="nov" />
+          <Picker.Item style={estilos.picker_txt} label="Dezembro" value="dez" />
         </Picker>
       </View>
 

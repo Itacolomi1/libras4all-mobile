@@ -11,11 +11,13 @@ export default StyleSheet.create({
     },    
     picker:{
         borderWidth: 2, 
-        borderColor:"#87CEFA", 
-        backgroundColor:"#FFF",
+        backgroundColor: "rgb(35, 36, 95)",
         borderRadius: 4,
         height: '8%', 
         width: '80%',
+    },
+    picker_txt:    {
+        color: "white"
     },
     campoLetra: {
         width: "95%",
