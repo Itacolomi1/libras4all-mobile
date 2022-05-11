@@ -24,6 +24,9 @@ export default function Jogos({ route, navigation }) {
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });
     }
+    function gotoConsulta() {
+        navigation.navigate('Consulta', { userID: userID, token: token });
+    }
     function gotToHome() {
         navigation.navigate('Home', { userID: userID, token: token });
     }
@@ -53,7 +56,9 @@ export default function Jogos({ route, navigation }) {
                 <TouchableOpacity onPress={() => { gotoPin() }}>
                     <Image source={require('../Images/pin.png')} style={estilos.icon_pin} />
                 </TouchableOpacity>
-                <Image source={require('../Images/game.png')} style={estilos.icon_game} />
+                <TouchableOpacity onPress={() => { gotoConsulta() }}>
+                <Image source={require('../Images/learning.png')} style={estilos.icon_game} />
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     </>

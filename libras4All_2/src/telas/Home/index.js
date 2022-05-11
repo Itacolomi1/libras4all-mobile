@@ -90,7 +90,7 @@ export default function Home({ route, navigation }) {
         navigation.navigate('Perfil', { userID: userID, token: token });
     }
     function gotoJogos() {
-        navigation.navigate('Aprendizado', { userID: userID, token: token });
+        navigation.navigate('Consulta', { userID: userID, token: token });
     }
 
     function goToTutorialQuiz() {

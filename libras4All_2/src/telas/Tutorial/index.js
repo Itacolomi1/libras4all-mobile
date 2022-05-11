@@ -62,7 +62,7 @@ export default function Tutorial({ route, navigation }) {
 
 
     function gotoAprendizado() {
-        navigation.navigate('Aprendizado', { userID: userID, token: token });
+        navigation.navigate('Consulta', { userID: userID, token: token });
     }
 
     function gotoRanking() {

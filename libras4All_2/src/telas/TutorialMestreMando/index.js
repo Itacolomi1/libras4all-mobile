@@ -31,7 +31,7 @@ export default function TutorialMestreMando({ route, navigation }) {
                     <Text style={estilos.aviso}> <Image source={require('../Images/aviso.png')} style={estilos.icon_time} /> Atenção nesse jogo é preciso ter acesso a câmera <Image source={require('../Images/camera.png')} style={estilos.icon_time} />   </Text>
                     <Text style={estilos.texto}>O jogo irá pedir para você fazer um sinal para câmera, você terá <Image source={require('../Images/icon-time.png')} style={estilos.icon_time} /> 20s para fazer o sinal, nosso algoritmo irá detectar se o sinal feito para câmera está correto ou não.
                     </Text>
-                    <Text style={estilos.texto}>Se você não atingir um minimo de 70% o sinal será considerado como errado e você não ganhará Libracoins, caso contrário o sinal será considerado correto e você ganhará 10 Libracoins <Image source={require('../Images/coins.png')} style={estilos.icon} />
+                    <Text style={estilos.texto}>Se você não atingir um minimo de 80% o sinal será considerado como errado e você não ganhará Libracoins, caso contrário o sinal será considerado correto e você ganhará 10 Libracoins <Image source={require('../Images/coins.png')} style={estilos.icon} />
 
                     </Text>
                 </View>

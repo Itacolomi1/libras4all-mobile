@@ -29,7 +29,7 @@ export default function TutorialMeteoro({ route, navigation }) {
             <View style={estilos.bloco}>
                 <Text style={estilos.titulo}>Meteoro</Text>
                 <View style={[estilos.tipo, estilos.elevation]}>
-                    <Text style={estilos.texto}>Nesse jogo temos 3 meteoros contendo 3 sinais de letras aleatoriamente escolhidas. Quando o jogo começar os meteoros começam a cair e o jogador tem <Image source={require('../Images/icon-time.png')} style={estilos.icon_time} /> 20s para selecionar no teclado as letras certas correspondentes aos sinais dos meteoros.
+                    <Text style={estilos.texto}>Nesse jogo temos 3 meteoros contendo 3 sinais de letras aleatoriamente escolhidas. Quando o jogo começar os meteoros começam a cair e o jogador tem <Image source={require('../Images/icon-time.png')} style={estilos.icon_time} /> 13s para selecionar no teclado as letras certas correspondentes aos sinais dos meteoros.
                     </Text>
                     <Text style={estilos.texto}>Se o meteoro chegar na linha limite antes de você acertar o sinal, você não ganha Libracoins mas se acertar você ganha 10 Libracoins <Image source={require('../Images/coins.png')} style={estilos.icon} />
                     </Text>

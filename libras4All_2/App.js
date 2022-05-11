@@ -65,7 +65,7 @@ export default function App () {
               <Stack.Screen name='Ranking Geral' component={RankingGeral} options={{headerShown:false}}/>
               <Stack.Screen name='Mestre Mando' component={MestreMandoWrap} options={{headerShown:false}}/>
               <Stack.Screen name='Meteoro' component={Meteoro} options={{headerShown:false}}/>
-              <Stack.Screen name='Aprendizado' component={Aprendizado}/>
+              <Stack.Screen name='Consulta' component={Aprendizado}/>
               <Stack.Screen name='Alfabeto' component={Alfabeto}/>
               <Stack.Screen name='Numerais' component={Numerais}/>
               <Stack.Screen name='Saudacoes' component={Saudacoes}/>

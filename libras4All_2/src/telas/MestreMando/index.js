@@ -263,8 +263,8 @@ export default function MestreMando({ ValidaMestre, Letra }) {
           </View>
         </TensorCamera>
         <View style={styles.barraPrevisoes}>
-              <Text>{classePrevista}</Text>
-              <Text>{porcentagemClasse}%</Text>
+              <Text style={styles.text_previsao}>{classePrevista}</Text>
+              <Text style={styles.text_previsao}>{porcentagemClasse}%</Text>
         </View>
         <Canvas ref={canvasRef}
           style={styles.canvas} />
@@ -280,6 +280,9 @@ export default function MestreMando({ ValidaMestre, Letra }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  text_previsao:{
+    color: 'black'
   },
   camera: {
     flex: 1,

@@ -48,7 +48,7 @@ export default function Meteoro({ route, navigation }) {
     const [verifica, setVerifica] = useState(false);
     const [verificaLimite, setVerificaLimite] = useState(false);
 
-    const hoursMinSecs = { hours: 0, minutes: 0, seconds: 11 }
+    const hoursMinSecs = { hours: 0, minutes: 0, seconds: 13 }
     const quantidadeSinais = 3;
     const windowHeight = Dimensions.get('window').height * 0.75;
     const windowHeightM = windowHeight - (Dimensions.get('window').width * 0.3) - 65;
@@ -64,7 +64,7 @@ export default function Meteoro({ route, navigation }) {
     function startAnimationLento() {
         Animated.timing(positionLento, {
             toValue: { x: 0, y: windowHeightM },
-            duration: 12000,
+            duration: 15000,
         }).start(() => {
             setLimiteMeteoroLento(true);
       
@@ -78,7 +78,7 @@ export default function Meteoro({ route, navigation }) {
     function startAnimationMedio() {
         Animated.timing(positionMedio, {
             toValue: { x: 0, y: windowHeightM },
-            duration: 9000,
+            duration: 12000,
         }).start(() => {
             console.log(acertoMeteoroMedio)
             setLimiteMeteoroMedio(true);
@@ -90,7 +90,7 @@ export default function Meteoro({ route, navigation }) {
     function startAnimationRapido() {
         Animated.timing(positionRapido, {
             toValue: { x: 0, y: windowHeightM },
-            duration: 7500,
+            duration: 10500,
         }).start(() => {
             setLimiteMeteoroRapido(true);
         });

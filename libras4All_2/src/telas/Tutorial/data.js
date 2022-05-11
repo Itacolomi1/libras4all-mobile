@@ -19,7 +19,7 @@ export const data = [
     },
 
     {
-        title: 'Aprendizado',
+        title: 'Consulta',
         text: 'Se deseja ver como fazer alguns sinais, clique no ícone na barra inferior.',
         img: 'img4',
         tela: 'aprendizado',
