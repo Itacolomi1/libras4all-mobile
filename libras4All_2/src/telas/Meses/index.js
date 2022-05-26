@@ -36,18 +36,18 @@ export default function Saudacoes({ route, navigation }) {
           imagem={imagem}
           onValueChange={(itemValue, itemIndex) => setImagem(itemValue)}
         >
-          <Picker.Item style={estilos.picker_txt} label="Janeiro" value="jan" />
-          <Picker.Item style={estilos.picker_txt} label="Fevereiro" value="fev" />
-          <Picker.Item style={estilos.picker_txt} label="Março" value="mar" />
-          <Picker.Item style={estilos.picker_txt} label="Abril" value="abr" />
-          <Picker.Item style={estilos.picker_txt} label="Maio" value="mai" />
-          <Picker.Item style={estilos.picker_txt} label="Junho" value="jun" />
-          <Picker.Item style={estilos.picker_txt} label="Julho" value="jul" />
-          <Picker.Item style={estilos.picker_txt} label="Agosto" value="ago" />
-          <Picker.Item style={estilos.picker_txt} label="Setembro" value="set" />
-          <Picker.Item style={estilos.picker_txt} label="Outubro" value="out" />
-          <Picker.Item style={estilos.picker_txt} label="Novembro" value="nov" />
-          <Picker.Item style={estilos.picker_txt} label="Dezembro" value="dez" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Janeiro" value="jan" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Fevereiro" value="fev" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Março" value="mar" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Abril" value="abr" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Maio" value="mai" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Junho" value="jun" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Julho" value="jul" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Agosto" value="ago" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Setembro" value="set" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Outubro" value="out" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Novembro" value="nov" />
+          <Picker.Item style={estilos.picker_txt} color="#037ca9" label="Dezembro" value="dez" />
         </Picker>
       </View>
 

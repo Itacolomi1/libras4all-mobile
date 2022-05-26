@@ -11,7 +11,8 @@ export default StyleSheet.create({
     },
     picker:{
         borderWidth: 2, 
-        backgroundColor: "rgb(35, 36, 95)",
+        backgroundColor: "#e3f2ff",
+        borderColor:"#037ca9",
         height: '8%', 
         width: '80%',
         color: "white"
