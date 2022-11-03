@@ -6,7 +6,7 @@ export default function TutorialQuiz({ route, navigation }) {
     const { userID, token } = route.params;
 
     // chumbado no código pois entrará sempre na mesma Sala.
-    const salaID = '621bf0052d53a30016a0b571';
+    const salaID = '636439845d3a400016378cc3';
 
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });

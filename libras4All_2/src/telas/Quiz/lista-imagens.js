@@ -2,7 +2,7 @@ export function listaImagens(){
 
     return [
         {
-            id: '621bed41daa6bb2d9096f877',
+            id: '6364382d5d3a400016378cc0',
             image: require('../../assets/images/quiz/A.jpeg'),
         },
         {
@@ -38,7 +38,7 @@ export function listaImagens(){
             image: require('../../assets/images/quiz/Boa-tarde.gif'),
         },
         {
-            id: '621beeb2daa6bb2d9096f881',
+            id: '6363da83bcd6e20016cf4bc5',
             image: require('../../assets/images/quiz/Boa-noite.gif'),
         },
         {
@@ -54,7 +54,7 @@ export function listaImagens(){
             image: require('../../assets/images/quiz/viviane.gif'),
         },
         {
-            id: '6222a0ab7207f2001691aed7',
+            id: '6364387e5d3a400016378cc1',
             image: require('../../assets/images/quiz/5.jpeg'),
         },
         {

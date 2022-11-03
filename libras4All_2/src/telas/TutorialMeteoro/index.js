@@ -6,7 +6,7 @@ export default function TutorialMeteoro({ route, navigation }) {
 
     const { userID, token } = route.params;
         // Sala chumbada para jogos Geral
-        const salaID = '6248b1bafa664b001694f846';
+        const salaID = '63643dea5d3a400016378cc5';
 
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });

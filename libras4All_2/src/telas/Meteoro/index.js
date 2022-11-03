@@ -151,7 +151,7 @@ export default function Meteoro({ route, navigation }) {
                 .then(responseJson => {
                     sinaisID = responseJson;
                     console.log(sinaisID);
-                    if(salaID != '6248b1bafa664b001694f846'){
+                    if(salaID != '63643dea5d3a400016378cc5'){
                         getSinais();
                     }else{
                         //aleatório                 

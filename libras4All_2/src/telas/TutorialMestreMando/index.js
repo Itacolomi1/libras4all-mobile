@@ -7,7 +7,7 @@ export default function TutorialMestreMando({ route, navigation }) {
     const { userID, token } = route.params;
 
     // Sala chumbada para jogos Geral
-    const salaID = '622e41b568627700164e1b9c';
+    const salaID = '63643f3c5d3a400016378cc7';
 
     function gotoPin() {
         navigation.navigate('Inserir Pin', { userID: userID, token: token });

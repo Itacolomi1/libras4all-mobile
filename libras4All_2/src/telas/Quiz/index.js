@@ -50,7 +50,7 @@ export default function Quiz({ route, navigation }) {
                 .then(response => response.json())
                 .then(responseJson => {
                     perguntasID = responseJson;
-                    if(salaID != '621bf0052d53a30016a0b571'){
+                    if(salaID != '636439845d3a400016378cc3'){
                         getPerguntas();
                     }else{
                         //aleatório
