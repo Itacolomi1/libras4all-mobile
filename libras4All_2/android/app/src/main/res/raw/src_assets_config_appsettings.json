@@ -1,5 +1,5 @@
 {
     "backend":{
-        "url": "https://libras4all.herokuapp.com/api"
+        "url": "https://libras4all-api.herokuapp.com/api"
     }
 }
